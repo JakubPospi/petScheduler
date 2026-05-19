@@ -1,4 +1,4 @@
 <?php
 
-echo "Zkouska fungovani php ";
+require_once "./index.phtml";
 ?>
