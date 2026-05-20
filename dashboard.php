@@ -1,4 +1,6 @@
 <?php
+require "./utils/init.php";
+$uzivatel = $_SESSION['user'];
 
 
 require "./layout/header.phtml";
