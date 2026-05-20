@@ -1,58 +1,21 @@
-<<<<<<< HEAD
-<?php
-session_start();
-
-$chyba = false;
-
-$conn = new mysqli("localhost", "root", "", "appkakrmeni");
-if ($conn->connect_error) 
-    die("Chyba přístupu k databázi!");
-
-if (isset($_POST['username'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $passHASH = sha1($password); 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND passwd = ?");
-    $stmt->bind_param("ss", $username, $passHASH);
-    
-    $stmt->execute();
-    $result = $stmt->get_result();     
-    $uzivatel = $result->fetch_assoc(); 
-
-    if ($uzivatel) {
-        $_SESSION['uzivatel'] = $uzivatel['username'];
-        header("Location: index.phhtml");
-        exit;
-    } 
-    else {
-        $chyba = true;
-    }
-    $stmt->close();
-}
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Přihlášení</title>
-=======
->>>>>>> ec820a5ed38325b524de954aacac3ec139179044
 </head>
 <body>
     <h1>Přihlášení</h1>
 
     <?php if ($chyba) echo "<b>Chybné přihlašovací údaje!</b><br>"; ?>
-
+    
     <form method="post">
         <label>Username: <input type="text" name="username" required></label><br>
         <label>Password: <input type="password" name="password" required></label><br>
         <input type="submit" value="Přihlásit se">
     </form>
-<<<<<<< HEAD
+
 </body>
 </html>
-=======
 </div>
->>>>>>> ec820a5ed38325b524de954aacac3ec139179044
+
