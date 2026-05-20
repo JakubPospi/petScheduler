@@ -1,6 +1,4 @@
 <?php
-
-
 require "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
 
@@ -12,8 +10,7 @@ if ($uzivatel === null || empty($uzivatel["family_id"])) {
 $stmt = $db->prepare("SELECT username, role_id FROM users WHERE family_id = ?");
 $stmt->execute([$uzivatel["family_id"]]);
 
-$clenove = $stmt->fetchAll(); // fetchAll nám vrátí pole všech nalezených řádků
-
+$clenove = $stmt->get_result(); 
 require "./layout/header2.phtml";
 require "./familyList.phtml";
 require "./layout/footer.phtml";
