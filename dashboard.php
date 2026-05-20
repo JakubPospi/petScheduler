@@ -12,7 +12,7 @@ if ($uzivatel !== null && !empty($uzivatel["family_id"])) {
     
     if ($rodina) {
         // Tady musíme použít ['name'], protože to jsme vybrali v SQL dotazu
-        $nazev_rodiny = $rodina["name"]; 
+        $nazev_rodiny = $rodina["family_name"]; 
     }
 }
 
