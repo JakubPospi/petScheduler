@@ -198,3 +198,64 @@
 .login-box a:hover {
     text-decoration: underline;
 }
+
+.dropdown-toggle::-webkit-details-marker {
+    display: none;
+}
+.dropdown-toggle {
+    list-style: none; /* Pro Firefox a moderní prohlížeče */
+}
+
+/* Pozicování položky v seznamu */
+.user-menu-item {
+    list-style: none;
+    position: relative;
+}
+
+/* Samotný klikací prvek (ikonka + jméno) */
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e2e8f0;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.dropdown-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Samotné vyskakovací menu */
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 120%;
+    background-color: #243447; /* Tmavé pozadí webu */
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* Položka "Odhlásit se" uvnitř menu */
+.dropdown-item {
+    display: block;
+    padding: 10px 16px;
+    color: #ff8080; /* Červený text */
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    text-align: left;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ff4d4d;
+}
