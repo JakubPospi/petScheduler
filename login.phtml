@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Přihlášení</title>
-</head>
 <body>
+<<<<<<< HEAD
     <h1>Přihlášení</h1>
     
     <form method="post">
@@ -17,5 +12,19 @@ Nemáš účet? <a href="registrace.php">Zaregistruj se</a>
 
 </body>
 </html>
+=======
+    <div class="login-page-wrapper">
+<div class="login-box">
+        <h1>Přihlášení</h1>
+
+        <?php if ($chyba) echo "<span class='error-msg'>Chybné přihlašovací údaje!</span>"; ?>
+        
+        <form method="post">
+            <label>Username: <input type="text" name="username" required></label>
+            <label>Password: <input type="password" name="password" required></label>
+            <input type="submit" value="Přihlásit se">
+        </form>
+    </div>
+>>>>>>> 062eb71678b23d9bc02df5a0445fcb4ab7e5fdc8
 </div>
 
