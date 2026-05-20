@@ -1,41 +1,51 @@
+<?php
+session_start();
+
+$chyba = false;
+
+$conn = new mysqli("localhost", "root", "", "appkakrmeni");
+if ($conn->connect_error) 
+    die("Chyba přístupu k databázi!");
+
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $passHASH = sha1($password); 
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND passwd = ?");
+    $stmt->bind_param("ss", $username, $passHASH);
+    
+    $stmt->execute();
+    $result = $stmt->get_result();     
+    $uzivatel = $result->fetch_assoc(); 
+
+    if ($uzivatel) {
+        $_SESSION['uzivatel'] = $uzivatel['username'];
+        header("Location: index.phhtml");
+        exit;
+    } 
+    else {
+        $chyba = true;
+    }
+    $stmt->close();
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="cs">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Přihlášení</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
-        h2 { text-align: center; margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 5px; }
-        .input-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { width: 100%; padding: 10px; background-color: #007BFF; border: none; color: white; border-radius: 4px; cursor: pointer; }
-        .btn:hover { background-color: #0056b3; }
-        .error { color: red; text-align: center; margin-bottom: 15px; }
-    </style>
 </head>
 <body>
+    <h1>Přihlášení</h1>
 
-<div class="login-container">
-    <h2>Přihlášení</h2>
-    
-    <?php if (!empty($error)): ?>
-        <div class="error"><?php echo htmlspecialchars($error); ?></div>
-    <?php endif; ?>
+    <?php if ($chyba) echo "<b>Chybné přihlašovací údaje!</b><br>"; ?>
 
-    <form action="login.php" method="POST">
-        <div class="input-group">
-            <label for="username">Uživatelské jméno:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="input-group">
-            <label for="password">Heslo:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn">Přihlásit se</button>
+    <form method="post">
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Password: <input type="password" name="password" required></label><br>
+        <input type="submit" value="Přihlásit se">
     </form>
-</div>
-
 </body>
 </html>
