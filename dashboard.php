@@ -1,6 +1,6 @@
 <?php
 require "./utils/init.php";
-$uzivatel = $_SESSION['user'];
+$uzivatel = $_SESSION['uzivatel'];
 
 
 require "./layout/header.phtml";
