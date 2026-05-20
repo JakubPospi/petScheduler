@@ -24,6 +24,7 @@ if (isset($_POST['username'])) {
     $stmt->close();
 }
 
+if ($chyba) echo "<b>Chybné přihlašovací údaje!</b><br>"; 
 
 require "./layout/header.phtml";
 require "./login.phtml";
