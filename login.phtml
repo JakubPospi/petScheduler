@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Přihlášení</title>
-</head>
-<body>
-    <h1>Přihlášení</h1>
+<div class="login-box">
+        <h1>Přihlášení</h1>
 
-    <?php if ($chyba) echo "<b>Chybné přihlašovací údaje!</b><br>"; ?>
-    
-    <form method="post">
-        <label>Username: <input type="text" name="username" required></label><br>
-        <label>Password: <input type="password" name="password" required></label><br>
-        <input type="submit" value="Přihlásit se">
-    </form>
-
-</body>
-</html>
-</div>
+        <?php if ($chyba) echo "<span class='error-msg'>Chybné přihlašovací údaje!</span>"; ?>
+        
+        <form method="post">
+            <label>Username: <input type="text" name="username" required></label>
+            <label>Password: <input type="password" name="password" required></label>
+            <input type="submit" value="Přihlásit se">
+        </form>
+    </div>
 
