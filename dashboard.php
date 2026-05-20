@@ -6,7 +6,7 @@ $nazev_rodiny = "Žádná rodina";
 
 if ($uzivatel !== null && !empty($uzivatel["family_id"])) {
 
-    $stmt = $db->prepare("SELECT family_name FROM family WHERE ID = ?");
+    $stmt = $db->prepare("SELECT family_name FROM family WHERE id = ?");
     $stmt->execute([$uzivatel["family_id"]]);
     
     $vysledek = $stmt->get_result();
