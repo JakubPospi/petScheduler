@@ -34,7 +34,7 @@ if (isset($_POST['username'])) {
 
         $_SESSION['uzivatel'] = $uzivatel['username'];
 
-        header("Location: index.php");
+        header("Location: dashboard.php");
         exit;
 
     } else {
