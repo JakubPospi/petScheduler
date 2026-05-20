@@ -59,7 +59,7 @@
 <body>
 
     <div class="navbar">
-        Přihlášený uživatel: <strong><?= htmlspecialchars($uzivatel["username"]) ?></strong>
+        Přihlášený uživatel: <strong><?= htmlspecialchars($uzivatel) ?></strong>
     </div>
 
     <div class="container">
@@ -69,7 +69,7 @@
 
         <div class="user-box">
             Aktuálně jsi přihlášen jako:
-            <strong><?= htmlspecialchars($uzivatel["username"]) ?></strong>
+            <strong><?= htmlspecialchars($uzivatel) ?></strong>
         </div>
 
         <a class="logout-btn" href="./logout.php">

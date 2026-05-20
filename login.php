@@ -32,7 +32,7 @@ if (isset($_POST['username'])) {
 
     if ($uzivatel && password_verify($password, $uzivatel['passwd'])) {
 
-        $_SESSION['uzivatel'] = $uzivatel['username'];
+        $_SESSION['uzivatel'] = $uzivatel;
 
         header("Location: dashboard.php");
         exit;
