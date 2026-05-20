@@ -2,7 +2,7 @@
 require "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
 
-if($uzivatel ?? null){
+if($uzivatel === null){
 require "./layout/header.phtml";
 }
 else{
