@@ -304,3 +304,43 @@ h2 {
     border-radius: 4px;
     font-size: 13px;
 }
+
+/* Zarovnání hlavní navigace */
+.navbar {
+    background: #2c3e50;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between; /* Levá část se přitiskne doleva, pravá doprava */
+    align-items: center;
+}
+
+/* Obal pro logo a odkaz na levé straně */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Mezera mezi nápisem Pet Scheduler a odkazem Rodina */
+}
+
+/* Stylování samotného odkazu Rodina */
+.nav-link {
+    color: #ffffff; /* Bílá barva, aby to ladilo s textem v menu */
+    text-decoration: none;
+    font-size: 16px;
+    opacity: 0.8; /* Lehce ztlumené, aby logo dominantně vyčnívalo */
+    transition: opacity 0.2s, color 0.2s;
+}
+
+/* Efekt při najetí na odkaz Rodina */
+.nav-link:hover {
+    opacity: 1;
+    color: #3b82f6; /* Při najetí myší se zbarví do modra */
+    text-decoration: underline;
+}
+
+/* Vyčištění výchozího chování seznamu pro dropdown */
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
