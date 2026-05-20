@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 1. vytvoření rodiny
     $familyName = "rodina 1";
 
-    $sqlFamily = "INSERT INTO family (name) VALUES (?)";
+    $sqlFamily = "INSERT INTO family (family_name) VALUES (?)";
     $stmtFamily = mysqli_prepare($db, $sqlFamily);
 
     mysqli_stmt_bind_param($stmtFamily, "s", $familyName);
