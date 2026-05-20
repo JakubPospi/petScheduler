@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .user-box {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 20px;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        Přihlášený uživatel: <strong><?= htmlspecialchars($username) ?></strong>
+    </div>
+
+    <div class="container">
+        <h1>Dashboard</h1>
+
+        <p>Vítej v administraci.</p>
+
+        <div class="user-box">
+            Aktuálně jsi přihlášen jako:
+            <strong><?= htmlspecialchars($username) ?></strong>
+        </div>
+
+        <a class="logout-btn" href="./logout.php">
+            Odhlásit se
+        </a>
+    </div>
+
+</body>
+</html>
