@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <form method="POST">
-    
-     <label>Username: <input type="text" name="username" required></label><br>
-        <label>Password: <input type="password" name="password" required></label><br>
-        <label>Email: <input type="text" name="email" reuqired></label><br>
-        <input type="submit" value="Zaregistrovat se">
-
-    </form>
-
-</body>
-</html>
+<div class="login-page-wrapper">
+    <div class="login-box">
+        <h1>Registrace</h1>
+        
+        <form method="POST">
+            <label>
+                Username: 
+                <input type="text" name="username" required="username">
+            </label>
+            
+            <label>
+                Email: 
+                <input type="email" name="email" required="email">
+            </label>
+            
+            <label>
+                Password: 
+                <input type="password" name="password" required="new-password">
+            </label>
+            
+            <input type="submit" value="Zaregistrovat se">
+        </form>
+        
+        <div class="register-text">
+            Už máš účet? <a href="login.php">Přihlásit se</a>
+        </div>
+    </div>
+</div>
