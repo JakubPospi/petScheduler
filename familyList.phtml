@@ -1,0 +1,28 @@
+<body>
+    
+    <div class="container">
+    <h2>Členové tvé rodiny</h2>
+    
+    <table class="family-table">
+        <thead>
+            <tr>
+                <th>Jméno člena</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($clenove as $clen): ?>
+                <tr>
+                    <td>
+                        <?php echo htmlspecialchars($clen['username']); ?>
+                    </td>
+                    <td>
+                        <span class="role-badge">
+                            <?php echo htmlspecialchars($clen['role_id'] == 1 ? 'Admin' : 'Člen'); ?>
+                        </span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

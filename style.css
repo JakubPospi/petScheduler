@@ -259,3 +259,48 @@
     background-color: rgba(255, 255, 255, 0.05);
     color: #ff4d4d;
 }
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #243447; /* Tvá tmavá barva */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: #e2e8f0;
+}
+
+h2 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.family-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.family-table th, 
+.family-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.family-table th {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-weight: 600;
+}
+
+.family-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.role-badge {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
