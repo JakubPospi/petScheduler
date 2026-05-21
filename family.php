@@ -7,7 +7,7 @@ if ($uzivatel === null || empty($uzivatel["family_id"])) {
 }
 
 
-$stmt = $db->prepare("SELECT username, role_id FROM users WHERE family_id = ?");
+$stmt = $db->prepare("SELECT username, role_id, id FROM users WHERE family_id = ?");
 $stmt->execute([$uzivatel["family_id"]]);
 
 $clenove = $stmt->get_result(); 

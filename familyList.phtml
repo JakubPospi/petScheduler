@@ -36,7 +36,7 @@
                     <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
                     <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
 
-                    <div class="modal">
+                    <div class="modal modal-add">
                         <div class="modal-content">
                             <label for="modal-toggle" class="close-btn">&times;</label>
                             <h2>Nový člen rodiny</h2>
@@ -70,8 +70,39 @@
                             </form>
                         </div>
                     </div>
-                <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
-                    <label for="modal-toggle" class="add-member-btn">Odebrat člena rodiny</label>
+                <input type="checkbox" id="modal-remove-toggle" class="modal-remove-toggle-checkbox">
+
+<label for="modal-remove-toggle" class="remove-member-btn">Odebrat člena rodiny</label>
+
+<div class="modal modal-remove remove-modal">
+    <div class="modal-content">
+        <label for="modal-remove-toggle" class="close-btn">&times;</label>
+        
+        <h2>Odebrat člena z rodiny</h2>
+        
+        <form action="remove_member.php" method="POST" class="modal-form">
+            <p style="margin-bottom: 20px; color: #cbd5e1; font-size: 0.95em;">
+                Vyber člena, kterého chceš trvale odebrat ze své rodiny:
+            </p>
+            
+            <label>
+                Člen rodiny:
+                <select name="user_to_remove" required>
+                    <option value="" disabled selected>-- Vyber uživatele --</option>
+                    <?php foreach ($clenove as $clen): ?>
+                        <?php if ($clen['username'] !== $uzivatel['username']): ?>
+                            <option value="<?= htmlspecialchars($clen['id']) ?>">
+                                <?= htmlspecialchars($clen['username']) ?> (ID: <?= htmlspecialchars($clen['id']) ?>)
+                            </option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>      
+            </label>
+            
+            <input type="submit" value="Odebrat z rodiny" class="submit-danger">
+        </form>
+    </div>
+</div>
                 <?php } ?>
             </div> <div class="table-column">
                 <h2>Mazlíčci rodiny</h2>
