@@ -41,10 +41,13 @@
     <?php
             if($uzivatel['role_id'] === 1){ 
             ?>
-            <button class="tlacitko-rodina">Přidat člena rodiny</button>
-            <div id="memberModal" class="modal">
+           <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
+
+<label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
+
+<div class="modal">
     <div class="modal-content">
-        <span class="close-btn">&times;</span>
+        <label for="modal-toggle" class="close-btn">&times;</label>
         
         <h2>Nový člen rodiny</h2>
         
@@ -69,11 +72,14 @@
                 <select name="role_id" required>
                     <option value="2">Člen</option>
                     <option value="1">Admin</option>
-                    <option value="3">Rodič</option> </select>
+                    <option value="3">Rodič</option>
+                </select>
             </label>
             
             <input type="submit" value="Vytvořit a přidat">
         </form>
+    </div>
+</div>
     </div>
 </div>
             <?php }?>

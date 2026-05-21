@@ -394,3 +394,126 @@ h2 {
 .prehled-ukolu tbody tr:hover {
   background-color: #f1f5f9;
 }
+
+/* Úplně schováme pomocný checkbox */
+.modal-toggle-checkbox {
+    display: none;
+}
+
+/* Výchozí stav modálu - je schovaný */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+}
+
+/* TATO ČÁST NAHRAZUJE JAVASCRIPT: 
+   Když se checkbox zaškrtne, najdi modál, který je v kódu za ním, a zobraz ho */
+.modal-toggle-checkbox:checked ~ .modal {
+    display: block;
+}
+
+/* --- Zbytek designu okna (stejný jako prve) --- */
+.modal-content {
+    background-color: #1e2640;
+    color: white;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #a0aec0;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #ef4444;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.modal-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    font-size: 0.95em;
+    color: #e0e0e0;
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="email"],
+.modal-form input[type="password"],
+.modal-form select {
+    margin-top: 6px;
+    padding: 11px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #3a4460;
+    border-radius: 6px;
+    color: white;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-form select option {
+    background-color: #1e2640;
+    color: white;
+}
+
+.modal-form input[type="submit"] {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.modal-form input[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+/* Styl pro tvé zelené tlačítko, aby vypadalo jako tlačítko, i když je to teď <label> */
+.add-member-btn {
+    display: inline-block;
+    background-color: #1e6056; /* Zelená barva z tvé fotky */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+
+.add-member-btn:hover {
+    background-color: #14443c;
+}   
