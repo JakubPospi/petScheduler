@@ -141,7 +141,8 @@
 
 /* Styl pro textová políčka (Username a Password) */
 .login-box input[type="text"],
-.login-box input[type="password"] {
+.login-box input[type="email"],
+.login-box input[type="password"]{
     margin-top: 8px;
     padding: 12px;
     background-color: rgba(255, 255, 255, 0.05); /* Lehce průhledné pozadí */
