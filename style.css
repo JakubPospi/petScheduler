@@ -415,8 +415,8 @@ h2 {
 
 /* TATO ČÁST NAHRAZUJE JAVASCRIPT: 
    Když se checkbox zaškrtne, najdi modál, který je v kódu za ním, a zobraz ho */
-.modal-toggle-checkbox:checked ~ .modal {
-    display: block;
+.modal-toggle-checkbox:checked ~ .modal-add {
+    display: flex;
 }
 
 /* --- Zbytek designu okna (stejný jako prve) --- */
@@ -565,10 +565,6 @@ h2 {
   align-items: center;
 }
 
-/* 🔥 MAGIE: Pokud je checkbox zaškrtnutý, zobraz modal */  
-.modal-toggle-checkbox:checked ~ .modal {
-  display: flex;
-}
 
 /* 3. Vzhled samotné karty s formulářem uvnitř okna */
 .modal-content {
