@@ -565,7 +565,7 @@ h2 {
   align-items: center;
 }
 
-/* 🔥 MAGIE: Pokud je checkbox zaškrtnutý, zobraz modal */
+/* 🔥 MAGIE: Pokud je checkbox zaškrtnutý, zobraz modal */  
 .modal-toggle-checkbox:checked ~ .modal {
   display: flex;
 }
@@ -669,11 +669,10 @@ h2 {
     display: none;
 }
 
-/* Když se zaškrtne druhý checkbox, zobraz druhé okno */
+/* Když se zaškrtne druhý checkbox, zobraz druhé okno*/ 
 .modal-remove-toggle-checkbox:checked ~ .remove-modal {
     display: block;
 }
-
 /* Styl pro červené tlačítko "Odebrat člena" na hlavní stránce */
 .remove-member-btn {
     display: inline-block;
@@ -739,3 +738,4 @@ h2 {
 =======
 >>>>>>> 43e3f27188b8e77fe5711c08aef0faf981b02d72
 }
+
