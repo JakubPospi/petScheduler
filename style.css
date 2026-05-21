@@ -397,6 +397,8 @@ h2 {
   background-color: #f1f5f9;
 }
 
+/* ZAČÁTEK zobrazovani oken */
+
 /* Úplně schováme pomocný checkbox */
 .modal-toggle-checkbox {
     display: none;
@@ -417,8 +419,8 @@ h2 {
 
 /* TATO ČÁST NAHRAZUJE JAVASCRIPT: 
    Když se checkbox zaškrtne, najdi modál, který je v kódu za ním, a zobraz ho */
-.modal-toggle-checkbox:checked ~ .modal {
-    display: block;
+.modal-toggle-checkbox:checked ~ .modal-add {
+    display: flex;
 }
 
 /* --- Zbytek designu okna (stejný jako prve) --- */
@@ -567,11 +569,6 @@ h2 {
   align-items: center;
 }
 
-/* 🔥 MAGIE: Pokud je checkbox zaškrtnutý, zobraz modal */
-.modal-toggle-checkbox:checked ~ .modal {
-  display: flex;
-}
-
 /* 3. Vzhled samotné karty s formulářem uvnitř okna */
 .modal-content {
   background-color: #1c2838; /* Stejná tmavá barva jako mají vaše tabulky */
@@ -665,3 +662,40 @@ h2 {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+/* Schováme nový druhý pomocný checkbox */
+.modal-remove-toggle-checkbox {
+    display: none;
+}
+
+/* Když se zaškrtne druhý checkbox, zobraz druhé okno */
+.modal-remove-toggle-checkbox:checked ~ .remove-modal {
+    display: block;
+}
+
+/* Styl pro červené tlačítko "Odebrat člena" na hlavní stránce */
+.remove-member-btn {
+    display: inline-block;
+    background-color: #ef4444; /* Červená */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 10px; /* Mezera od zeleného tlačítka */
+    transition: background 0.2s;
+}
+
+.remove-member-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Destruktivní tlačítko uvnitř formuláře */
+.modal-form .submit-danger {
+    background-color: #ef4444;
+}
+
+.modal-form .submit-danger:hover {
+    background-color: #dc2626;
+}
+
