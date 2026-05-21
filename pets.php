@@ -1,10 +1,14 @@
 <?php
 require "./utils/init.php";
 
-$nazev;
-$druh;
-$datumNarozeni;
-$popis;
+if (!isset($uzivatel) || $uzivatel === null) {
+    die("Chyba: Uživatel není přihlášen nebo se nepodařilo načíst jeho data.");
+}
+
+$nazev = $_POST["name"];
+$druh = $_POST["species"];
+$datumNarozeni = $_POST["birthDate"];
+$popis = $_POST["desc"];
 
 $familyId = $uzivatel['family_id'];
 
@@ -17,7 +21,7 @@ if($stmt === false){
     echo mysqli_error($db);
 }
 
-mysqli_stmt_bind_param($stmt,"ssdsi",$nazev,$druh,$datumNarozeni,$popis,$familyId);
+mysqli_stmt_bind_param($stmt,"ssssi",$nazev,$druh,$datumNarozeni,$popis,$familyId);
 $result = mysqli_execute($stmt);
 
 if($result === false){
@@ -25,4 +29,6 @@ if($result === false){
     echo mysqli_error($db);
     exit;
 }
+
+header("Location: dashboard.php");
 ?>
