@@ -18,7 +18,19 @@
                     </td>
                     <td>
                         <span class="role-badge">
-                            <?php echo htmlspecialchars($clen['role_id'] == 1 ? 'Admin' : 'Člen'); ?>
+                            <?php
+                            if($clen['role_id'] === 1){
+                                echo 'Admin';
+                            }
+                            if($clen['role_id'] === 2){
+                                echo 'Rodič';
+
+                            }
+                            if($clen['role_id'] === 3){
+                                echo 'Dítě';
+
+                            }
+                            ?>
                         </span>
                     </td>
                 </tr>
