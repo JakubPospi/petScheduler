@@ -2,6 +2,7 @@
 
 session_start();
 
+$uzivatel = $_SESSION['uzivatel'];
 $db = mysqli_connect("localhost","root","","appkaKrmeni");
 if($db=== false){
     echo "<h1>Připojení k databázi selhalo</h1>";

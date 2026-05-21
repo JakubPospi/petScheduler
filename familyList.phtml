@@ -107,24 +107,34 @@
             </div> <div class="table-column">
                 <h2>Mazlíčci rodiny</h2>
                 
-                <table class="family-table"> 
-                    <thead>
-                        <tr>
-                            <th>Jméno mazlíčka</th>
-                            <th>Druh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Alík</td>
-                            <td>Pes</td>
-                        </tr>
-                        <tr>
-                            <td>Micka</td>
-                            <td>Kočka</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <table class="family-table">
+        <thead>
+            <tr>
+                <th>Jméno mazlíčka</th>
+                <th>Druh</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($mazlicci)): ?>
+                <?php foreach ($mazlicci as $mazlicek): ?>
+                    <tr>
+                        <td>
+                            <?php echo htmlspecialchars($mazlicek['name']); ?>
+                        </td>
+                        <td>
+                            <?php echo htmlspecialchars($mazlicek['species']); ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2" style="text-align: center; color: #94a3b8; padding: 20px;">
+                        Zatím žádní mazlíčci.
+                    </td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
 
 
     <?php if($uzivatel['role_id'] === 1){ ?>
