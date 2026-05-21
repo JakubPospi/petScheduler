@@ -365,3 +365,32 @@ h2 {
   transform: translateY(-2px); /* Tlačítko se lehce nadzvedne */
   box-shadow: 0 6px 20px rgba(8, 94, 99, 0.6);
 }
+
+.prehled-ukolu {
+  width: 100%;
+  border-collapse: collapse; /* Zruší dvojité okraje */
+  font-family: sans-serif;
+  background-color: #f8fafc; /* Světlé pozadí z obrázku */
+}
+
+/* Styl pro hlavičku */
+.prehled-ukolu th {
+  background-color: #ffffff; /* Čistě bílé pozadí pro odlišení */
+  color: #1e293b; /* Tmavý, dobře čitelný text */
+  text-align: left; /* Zarovnání textu doleva */
+  padding: 12px 16px; /* Dostatečný prostor kolem textu */
+  font-weight: 600; /* Polotučné písmo */
+  border-bottom: 2px solid #e2e8f0; /* Výraznější linka pod hlavičkou */
+}
+
+/* Styl pro datové řádky (záznamy) */
+.prehled-ukolu td {
+  padding: 12px 16px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0; /* Jemná linka mezi záznamy */
+}
+
+/* Efekt při najetí myší na řádek se záznamem */
+.prehled-ukolu tbody tr:hover {
+  background-color: #f1f5f9;
+}
