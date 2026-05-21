@@ -1,86 +1,71 @@
 <body>
     
     <div class="container">
-    <h2>Členové tvé rodiny</h2>
-    
-    <table class="family-table">
-        <thead>
-            <tr>
-                <th>Jméno člena</th>
-                <th>Role</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($clenove as $clen): ?>
-                <tr>
-                    <td>
-                        <?php echo htmlspecialchars($clen['username']); ?>
-                    </td>
-                    <td>
-                        <span class="role-badge">
-                            <?php
-                            if($clen['role_id'] === 1){
-                                echo 'Admin';
-                            }
-                            if($clen['role_id'] === 2){
-                                echo 'Rodič';
-
-                            }
-                            if($clen['role_id'] === 3){
-                                echo 'Dítě';
-
-                            }
-                            ?>
-                        </span>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            
-        </tbody>
-    </table>
-    <?php
-            if($uzivatel['role_id'] === 1){ 
-            ?>
-           <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
-
-<label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
-
-<div class="modal">
-    <div class="modal-content">
-        <label for="modal-toggle" class="close-btn">&times;</label>
+    <div class="tables-layout">
         
-        <h2>Nový člen rodiny</h2>
-        
-        <form action="add_member.php" method="POST" class="modal-form">
-            <label>
-                Jméno:
-                <input type="text" name="username" required placeholder="Uživatelské jméno">
-            </label>
+        <div class="table-column">
+            <h2>Členové tvé rodiny</h2>
             
-            <label>
-                Email:
-                <input type="email" name="email" required placeholder="name@email.com">
-            </label>
+            <table class="family-table">
+                <thead>
+                    <tr>
+                        <th>Jméno člena</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($clenove as $clen): ?>
+                        <tr>
+                            <td>
+                                <?php echo htmlspecialchars($clen['username']); ?>
+                            </td>
+                            <td>
+                                <span class="role-badge">
+                                    <?php
+                                    if($clen['role_id'] === 1) echo 'Admin';
+                                    if($clen['role_id'] === 2) echo 'Rodič';
+                                    if($clen['role_id'] === 3) echo 'Dítě';
+                                    ?>
+                                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <?php if($uzivatel['role_id'] === 1){ ?>
+                <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
+                <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
+
+                <div class="modal">
+                    <div class="modal-content">
+                        <label for="modal-toggle" class="close-btn">&times;</label>
+                        <h2>Nový člen rodiny</h2>
+                        <form action="add_member.php" method="POST" class="modal-form">
+                            <input type="submit" value="Vytvořit a přidat">
+                        </form>
+                    </div>
+                </div>
+            <?php } ?>
+        </div> <div class="table-column">
+            <h2>Mazlíčci rodiny</h2>
             
-            <label>
-                Heslo:
-                <input type="password" name="password" required placeholder="••••••••">
-            </label>
+            <table class="family-table"> <thead>
+                    <tr>
+                        <th>Jméno mazlíčka</th>
+                        <th>Druh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Alík</td>
+                        <td>Pes</td>
+                    </tr>
+                    <tr>
+                        <td>Micka</td>
+                        <td>Kočka</td>
+                    </tr>
+                </tbody>
+            </table>
             
-            <label>
-                Role:
-                <select name="role_id" required>
-                    <option value="2">Člen</option>
-                    <option value="1">Admin</option>
-                    <option value="3">Rodič</option>
-                </select>
-            </label>
-            
-            <input type="submit" value="Vytvořit a přidat">
-        </form>
-    </div>
-</div>
-    </div>
-</div>
-            <?php }?>
-</div>
+            </div> </div> </div> ```
