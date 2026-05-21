@@ -518,31 +518,27 @@ h2 {
 }   
 .container {
   max-width: 1200px;        /* Upravte podle potřeby */
-  margin: 40px auto;        /* Vycentrování na stránce */
-  background: transparent !important; /* Zrušíme tmavé pozadí celku */
-  box-shadow: none !important;        /* Zrušíme stín celku */
+  margin: 40px auto;        
+  background: transparent !important; 
+  box-shadow: none !important;        
   padding: 0;
 }
 
-/* 2. Flexbox, který drží karty vedle sebe */
 .tables-layout {
   display: flex;
   flex-direction: row;
-  gap: 40px;                /* VELIKOST BÍLÉ MEZERY MEZI TABULKAMI */
+  gap: 140px;                
   width: 100%;
   justify-content: space-between;
 }
 
-/* 3. Z každého sloupce uděláme samostatnou tmavou kartu */
 .table-column {
   flex: 1;
-  background-color: #1c2838; /* Tmavě modré pozadí (přesunuto sem) */
-  padding: 24px;             /* Vnitřní prostor, aby text nebyl na okrajích */
-  border-radius: 8px;        /* Zaoblení rohů každé karty */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Stín pod každou kartou zvlášť */
+  background-color: #1c2838; 
+  padding: 24px;           
+  border-radius: 8px;        
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
-
-/* RESPONSIVITA: Na mobilu skočí karty pod sebe a mezera mezi nimi zůstane bílá */
 @media (max-width: 900px) {
   .tables-layout {
     flex-direction: column;
