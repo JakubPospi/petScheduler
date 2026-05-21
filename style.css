@@ -545,3 +545,121 @@ h2 {
     gap: 30px;
   }
 }
+
+.modal-toggle-checkbox {
+  display: none;
+}
+
+/* 2. Základní nastavení modálního okna (overlay - ztmavení pozadí) */
+.modal {
+  display: none; /* Schované v základu */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65); /* Tmavý průhledný závoj */
+  backdrop-filter: blur(4px); /* Moderní jemné rozmazání pozadí webu */
+  z-index: 9999; /* Aby bylo okno stoprocentně nad vším ostatním */
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔥 MAGIE: Pokud je checkbox zaškrtnutý, zobraz modal */
+.modal-toggle-checkbox:checked ~ .modal {
+  display: flex;
+}
+
+/* 3. Vzhled samotné karty s formulářem uvnitř okna */
+.modal-content {
+  background-color: #1c2838; /* Stejná tmavá barva jako mají vaše tabulky */
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px; /* Šířka formuláře */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out; /* Jemný efekt objevení */
+}
+
+/* 4. Zavírací křížek (X) */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-btn:hover {
+  color: #ff4d4d; /* Červená při najetí */
+}
+
+/* 5. Styl formulářových prvků */
+.modal-form label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="date"],
+.modal-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  background-color: #0f172a; /* Ještě o něco tmavší vnitřek inputů */
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #ffffff;
+  font-family: inherit;
+  box-sizing: border-box; /* Aby inputy nepřetékaly ven */
+}
+
+/* Úprava pro textovou oblast popisu */
+.modal-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Styl pro tlačítko "Přidat mazlíčka" (Výrazné azurové) */
+.modal-form input[type="submit"] {
+  width: 100%;
+  background-color: #00adb5;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition:  0.2s;
+}
+.modal-form input[type="submit"]:hover {
+  background-color: #00f4ff;
+}
+
+/* Styl pro otevírací tlačítko "Přidat mazlíčka do rodiny" pod tabulkou */
+.add-pet-btn {
+  display: inline-block;
+  background-color: #2e7d32; /* Zelené jako u lidí, případně změňte */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 15px;
+  transition:  0.2s;
+}
+.add-pet-btn:hover {
+  background-color: #388e3c;
+}
+
+/* Animace pro plynulý pop-up efekt */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

@@ -94,4 +94,42 @@
                         </tr>
                     </tbody>
                 </table>
+
+
+    <?php if($uzivatel['role_id'] === 1){ ?>
+    <input type="checkbox" id="modal-pet-toggle" class="modal-toggle-checkbox">
+    <label for="modal-pet-toggle" class="add-pet-btn">Přidat mazlíčka do rodiny</label>
+
+    <div class="modal">
+        <div class="modal-content">
+            <label for="modal-pet-toggle" class="close-btn">&times;</label>
+            
+            <h2>Nový mazlíček rodiny</h2>
+            
+            <form action="pets.php" method="POST" class="modal-form">
+                <label>
+                    Jméno:
+                    <input type="text" name="name" required placeholder="Jméno mazlíčka">
+                </label>
+                
+                <label>
+                    Druh:
+                    <input type="text" name="species" required placeholder="Kočka, Pes, Křeček">
+                </label>
+                
+                <label>
+                    Datum narození/pořizení:
+                    <input type="date" name="birthDate" required>
+                </label>
+
+                <label>
+                    Popis:
+                    <textarea name="desc" required placeholder="Má černé skvrny, má pěkné tlapky apod."></textarea>
+                </label>    
+
+                <input type="submit" value="Přidat mazlíčka do rodiny">
+            </form>
+        </div>
+    </div>
+<?php } ?>
             </div> </div> </div> </body>
