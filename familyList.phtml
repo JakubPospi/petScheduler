@@ -103,6 +103,65 @@
         </form>
     </div>
 </div>
+
+<div class="modal-wrapper">
+    <input type="checkbox" id="modal-edit-toggle" class="modal-edit-toggle-checkbox">
+    <label for="modal-edit-toggle" class="edit-member-btn">Upravit člena rodiny</label>
+
+    <div class="modal id-modal-edit">
+        <div class="modal-content">
+            <label for="modal-edit-toggle" class="close-btn">&times;</label>
+            
+            <h2>Upravit člena rodiny</h2>
+            
+            <form action="edit_member.php" method="POST" class="modal-form">
+                <p style="margin-bottom: 20px; color: #cbd5e1; font-size: 0.95em;">
+                    Vyber člena rodiny a zadej jeho nové údaje:
+                </p>
+                
+                <label>
+                    Koho chceš upravit:
+                    <select name="user_to_edit" required>
+                        <option value="" disabled selected>-- Vyber uživatele --</option>
+                        <?php foreach ($clenove as $clen): ?>
+                            <option value="<?= htmlspecialchars($clen['id']) ?>">
+                                <?= htmlspecialchars($clen['username']) ?> (ID: <?= htmlspecialchars($clen['id']) ?>)
+                            </option>
+                        <?php endforeach; ?>
+                    </select>      
+                </label>
+
+                <label>
+                    Nové jméno (nebo ponech původní):
+                    <input type="text" name="username" placeholder="Nové uživatelské jméno">
+                </label>
+                
+                <label>
+                    Nový Email:
+                    <input type="email" name="email" placeholder="novy@email.com">
+                </label>
+                
+                <label>
+                    Nové Heslo (vyplň pouze pro změnu):
+                    <input type="password" name="password" placeholder="••••••••">
+                </label>
+
+                <label>
+                    Nová Role:
+                    <select name="role_id">
+                        <option value="" disabled selected>-- Vyber novou roli --</option>
+                        <option value="3">Dítě</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Rodič</option>
+                    </select>      
+                </label>
+                
+                <input type="submit" value="Uložit změny" class="submit-success">
+            </form>
+        </div>
+    </div>
+</div>
+
                 <?php } ?>
             </div> <div class="table-column">
                 <h2>Mazlíčci rodiny</h2>

@@ -699,3 +699,39 @@ h2 {
     background-color: #dc2626;
 }
 
+/* Schování pomocného checkboxu pro editaci */
+.modal-edit-toggle-checkbox {
+    display: none !important;
+}
+
+/* Zobrazení editačního modálu při zaškrtnutí */
+#modal-edit-toggle:checked ~ .id-modal-edit {
+    display: flex !important;
+}
+
+/* Styl pro tlačítko "Upravit člena" na hlavní stránce */
+.edit-member-btn {
+    display: inline-block;
+    background-color: #6366f1; /* Indigo / fialovo-modrá */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 10px; /* Mezera od ostatních tlačítek */
+    transition: background 0.2s;
+}
+
+.edit-member-btn:hover {
+    background-color: #4f46e5;
+}
+
+/* Styl pro potvrzovací tlačítko uvnitř editačního formuláře */
+.modal-form .submit-success {
+    background-color: #6366f1;
+}
+
+.modal-form .submit-success:hover {
+    background-color: #4f46e5;
+}
