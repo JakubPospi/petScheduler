@@ -1,90 +1,589 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-        background-image:url('./imgs/background-image.png');
-        background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+<title>Pet Scheduler Dashboard</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-        .navbar {
-            background: #2c3e50;
-            color: white;
-            padding: 15px 30px;
-            font-size: 18px;
-        }
+:root{
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
+    --bg:#0f172a;
+    --card:#1e293b;
+    --card-hover:#263548;
 
-        h1 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
+    --primary:#06b6d4;
+    --success:#22c55e;
+    --danger:#ef4444;
 
-        .user-box {
-        
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 20px;
-        }
+    --text:#f1f5f9;
+    --text-muted:#94a3b8;
 
-        .logout-btn {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 20px;
-            background: #e74c3c;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-        }
+    --border:rgba(255,255,255,0.08);
 
-        .logout-btn:hover {
-            background: #c0392b;
-        }
-    </style>
+    --shadow:
+        0 10px 25px rgba(0,0,0,0.25);
+
+    --radius:18px;
+}
+
+body{
+
+    font-family:
+        "Segoe UI",
+        sans-serif;
+
+    min-height:100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(15,23,42,0.92),
+            rgba(15,23,42,0.95)
+        ),
+        url('./imgs/background-image.png');
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:var(--text);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 40px;
+
+    background:rgba(15,23,42,0.85);
+
+    backdrop-filter:blur(10px);
+
+    border-bottom:1px solid var(--border);
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+}
+
+.logo{
+
+    font-size:28px;
+    font-weight:700;
+}
+
+.user{
+
+    color:var(--text-muted);
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-container{
+
+    width:95%;
+    max-width:1400px;
+
+    margin:40px auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.dashboard-header{
+
+    margin-bottom:30px;
+}
+
+.dashboard-header h1{
+
+    font-size:42px;
+
+    margin-bottom:10px;
+}
+
+.dashboard-header p{
+
+    color:var(--text-muted);
+
+    font-size:18px;
+}
+
+/* =========================
+   TASK GRID
+========================= */
+
+.tasks-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(320px,1fr));
+
+    gap:24px;
+}
+
+/* =========================
+   TASK CARD
+========================= */
+
+.task-card{
+
+    background:rgba(30,41,59,0.92);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:24px;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:var(--shadow);
+
+    transition:
+        transform 0.2s,
+        background 0.2s;
+}
+
+.task-card:hover{
+
+    transform:translateY(-4px);
+
+    background:var(--card-hover);
+}
+
+/* =========================
+   TASK TOP
+========================= */
+
+.task-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.task-type{
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    background:rgba(6,182,212,0.15);
+
+    color:#67e8f9;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:14px;
+    font-weight:600;
+}
+
+.status{
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:13px;
+    font-weight:700;
+}
+
+.status.pending{
+
+    background:rgba(245,158,11,0.15);
+    color:#fbbf24;
+}
+
+.status.done{
+
+    background:rgba(34,197,94,0.15);
+    color:#4ade80;
+}
+
+/* =========================
+   TASK CONTENT
+========================= */
+
+.task-title{
+
+    font-size:24px;
+    font-weight:700;
+
+    margin-bottom:20px;
+}
+
+.task-info{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:14px;
+
+    margin-bottom:22px;
+}
+
+.info-row{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+}
+
+.info-label{
+
+    color:var(--text-muted);
+
+    font-size:14px;
+}
+
+.info-value{
+
+    font-weight:600;
+}
+
+.task-description{
+
+    background:rgba(255,255,255,0.03);
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:14px;
+
+    line-height:1.6;
+
+    color:#dbeafe;
+
+    margin-bottom:22px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.task-actions{
+
+    display:flex;
+    gap:12px;
+}
+
+.btn{
+
+    flex:1;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:
+        transform 0.2s,
+        opacity 0.2s;
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+}
+
+.btn-complete{
+
+    background:var(--success);
+    color:white;
+}
+
+.btn-delete{
+
+    background:var(--danger);
+    color:white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    .navbar{
+
+        padding:18px 20px;
+
+        flex-direction:column;
+
+        gap:10px;
+    }
+
+    .dashboard-header h1{
+
+        font-size:32px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
+<!-- NAVBAR -->
+<!-- DASHBOARD -->
 
-    <div class="dashboard-container">
-        <table class="prehled-ukolu">
-  <thead>
-    <tr>
-      <th>Typ úkolu</th>
-      <th>Kdo ho má splnit</th>
-      <th>Zvíře</th>
-      <th>Doba vytvoření</th>
-      <th>Popis</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Krmení</td>
-      <td>Jan Novák</td>
-      <td>Alík (Pes)</td>
-      <td>21. 5. 2026 09:15</td>
-      <td>Nasypat granule do misky.</td>
-    </tr>
-    </tbody>
-</table>
-            
-            
-        </div>    
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+
+        <h1>Úkoly pro mazlíčky</h1>
+
+        <p>
+            Přehled všech aktuálních úkolů v rodině.
+        </p>
+
     </div>
+
+    <div class="tasks-grid">
+
+        <!-- TASK CARD -->
+
+        <div class="task-card">
+
+            <div class="task-top">
+
+                <div class="task-type">
+                    🍖 Krmení
+                </div>
+
+                <div class="status pending" id="status1">
+                    Čeká
+                </div>
+
+            </div>
+
+            <div class="task-title">
+                Nakrmit Alíka
+            </div>
+
+            <div class="task-info">
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        Má splnit
+                    </div>
+
+                    <div class="info-value">
+                        Jan Novák
+                    </div>
+
+                </div>
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        Zvíře
+                    </div>
+
+                    <div class="info-value">
+                        🐶 Alík (Pes)
+                    </div>
+
+                </div>
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        Vytvořeno
+                    </div>
+
+                    <div class="info-value">
+                        21. 5. 2026 09:15
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="task-description">
+                Nasypat granule do misky a doplnit čerstvou vodu.
+            </div>
+
+            <div class="task-actions">
+
+                <button
+                    class="btn btn-complete"
+                    onclick="toggleComplete(this, 'status1')">
+
+                    ✔ Splněno
+
+                </button>
+
+                <button class="btn btn-delete">
+
+                    🗑 Smazat
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- SECOND TASK -->
+
+        <div class="task-card">
+
+            <div class="task-top">
+
+                <div class="task-type">
+                    🚶 Procházka
+                </div>
+
+                <div class="status pending" id="status2">
+                    Čeká
+                </div>
+
+            </div>
+
+            <div class="task-title">
+                Večerní venčení
+            </div>
+
+            <div class="task-info">
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        Má splnit
+                    </div>
+
+                    <div class="info-value">
+                        Petra Nováková
+                    </div>
+
+                </div>
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        Zvíře
+                    </div>
+
+                    <div class="info-value">
+                        🐕 Rex
+                    </div>
+
+                </div>
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        Vytvořeno
+                    </div>
+
+                    <div class="info-value">
+                        21. 5. 2026 18:00
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="task-description">
+                Minimálně 30 minut procházka v parku.
+            </div>
+
+            <div class="task-actions">
+
+                <button
+                    class="btn btn-complete"
+                    onclick="toggleComplete(this, 'status2')">
+
+                    ✔ Splněno
+
+                </button>
+
+                <button class="btn btn-delete">
+
+                    🗑 Smazat
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+
+<script>
+
+function toggleComplete(button, statusId){
+
+    const status =
+        document.getElementById(statusId);
+
+    if(status.classList.contains('pending')){
+
+        status.classList.remove('pending');
+        status.classList.add('done');
+
+        status.innerText = 'Splněno';
+
+        button.innerText = '✔ Hotovo';
+
+        button.style.opacity = '0.7';
+
+    } else {
+
+        status.classList.remove('done');
+        status.classList.add('pending');
+
+        status.innerText = 'Čeká';
+
+        button.innerText = '✔ Splněno';
+
+        button.style.opacity = '1';
+    }
+}
+
+</script>
 
 </body>
 </html>
