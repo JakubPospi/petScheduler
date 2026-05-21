@@ -345,3 +345,23 @@ h2 {
     margin: 0;
     padding: 0;
 }
+
+.tlacitko-rodina {
+  background-color: #2f7b80; /* Výrazná tyrkysová/azurová */
+  color: #ffffff; /* Bílé text pro maximální čitelnost */
+  font-block: bold;
+  font-weight: 700; /* Tučné písmo */
+  padding: 10px 20px; /* Větší prostor kolem textu */
+  border: none;
+  border-radius: 6px; /* Jemně zaoblené rohy */
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 173, 181, 0.4); /* Jemná záře v barvě tlačítka */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efekt při najetí myší */
+.tlacitko-rodina:hover {
+  background-color: #00adb5; /* Ještě jasnější barva */
+  transform: translateY(-2px); /* Tlačítko se lehce nadzvedne */
+  box-shadow: 0 6px 20px rgba(8, 94, 99, 0.6);
+}

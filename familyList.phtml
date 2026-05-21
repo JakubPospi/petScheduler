@@ -35,6 +35,13 @@
                     </td>
                 </tr>
             <?php endforeach; ?>
+            
         </tbody>
     </table>
+    <?php
+            if($uzivatel['role_id'] === 1){ 
+            ?>
+            <button class="tlacitko-rodina">Přidat člena rodiny</button>
+            
+            <?php }?>
 </div>
