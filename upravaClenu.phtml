@@ -90,9 +90,9 @@
                     <select name="user_to_edit" required>
                         <option value="" disabled selected>-- Vyber uživatele --</option>
                         <?php foreach ($clenove as $clen) { ?>
-                            <option value="<?= htmlspecialchars($clen['id']) ?>">
-                                <?= htmlspecialchars($clen['username']) ?> (ID: <?= htmlspecialchars($clen['id']) ?>)
-                            </option>
+                           <option value="<?= htmlspecialchars($clen['id']) ?>">
+                                <?= htmlspecialchars($clen['username']) ?> (ID: <?= htmlspecialchars($clen['id']) ?>) 
+                            </option> 
                         <?php } ?>
                     </select>      
                 </label>
