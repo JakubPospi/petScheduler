@@ -638,7 +638,7 @@ h2 {
   background-color: #00f4ff;
 }
 
-.modal-toggle-checkbox:checked ~ .modal {
+.modal-toggle-checkbox:checked ~ .modal-add { /*tady byla chyba v zobrazovani oken u pridavani clenu */
     display: flex;
 }
 /* Styl pro otevírací tlačítko "Přidat mazlíčka do rodiny" pod tabulkou */
