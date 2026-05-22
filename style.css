@@ -1204,3 +1204,21 @@ body{
 
     padding:40px;
 }
+.sidebar-logo {
+    background-color: #ffffff;    /* Bílé pozadí */
+    border-radius: 12px;          /* Zaoblené rohy */
+    padding: 20px;                /* Vnitřní prostor kolem loga */
+    margin-bottom: 40px;          /* Mezera mezi logem a menu */
+    
+    /* Vycentrování samotného obrázku uvnitř boxu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Stylování samotného obrázku loga uvnitř boxu */
+.sidebar-logo img {
+    max-width: 100%;              /* Aby nepřeteklo */
+    height: auto;                 /* Zachování poměru stran */
+    display: block;
+}
