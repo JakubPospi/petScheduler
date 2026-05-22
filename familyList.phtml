@@ -123,11 +123,11 @@
                     Koho chceš upravit:
                     <select name="user_to_edit" required>
                         <option value="" disabled selected>-- Vyber uživatele --</option>
-                        <?php foreach ($clenove as $clen): ?>
+                        <?php foreach ($clenove as $clen) { ?>
                             <option value="<?= htmlspecialchars($clen['id']) ?>">
                                 <?= htmlspecialchars($clen['username']) ?> (ID: <?= htmlspecialchars($clen['id']) ?>)
                             </option>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </select>      
                 </label>
 
@@ -155,7 +155,6 @@
                         <option value="2">Rodič</option>
                     </select>      
                 </label>
-                
                 <input type="submit" value="Uložit změny" class="submit-success">
             </form>
         </div>
