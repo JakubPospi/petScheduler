@@ -12,9 +12,7 @@ $stmt->execute([$uzivatel["family_id"]]);
 
 $clenove = $stmt->get_result(); 
 
-$stmtPets = $db->prepare("SELECT name, species FROM animals WHERE family_id = ?");
-$stmtPets->execute([$uzivatel["family_id"]]);
-$mazlicci = $stmtPets->get_result();
+
 
 require "./layout/header2.phtml";
 require "./familyList.phtml";
