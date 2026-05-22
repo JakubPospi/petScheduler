@@ -6,6 +6,7 @@ if ($uzivatel === null || empty($uzivatel["family_id"])) {
 }
 
 require "./layout/header2.phtml";
+require "./upravaClenu.phtml";
 require "./layout/footer.phtml";
 
 ?>
