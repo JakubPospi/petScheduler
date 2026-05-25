@@ -10,6 +10,7 @@
                         <tr>
                             <th>Jméno člena</th>
                             <th>Role</th>
+                            <th>Akce</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -27,10 +28,60 @@
                                         ?>
                                     </span>
                                 </td>
+                                <td>
+                                <?php if($uzivatel['role_id'] === 1): ?>
+                                    <label for="modal-user-edit-toggle-<?= $clen['id'] ?>" class="edit-pet-link" style="color: #38bdf8; cursor: pointer; font-weight: bold; margin-right: 15px;">
+                                        Upravit
+                                    </label>
+                                    
+                                    <label for="modal-user-delete-toggle-<?= $clen['id'] ?>" class="delete-pet-link" style="color: #f43f5e; cursor: pointer; font-weight: bold;">
+                                        Smazat
+                                    </label>
+                                <?php else: ?>
+                                    <span style="color: #64748b;">Bezpráví</span>
+                                <?php endif; ?>
+                            </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
 
-                
-           
+                    <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
+                    <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
+
+                    <div class="modal modal-add">
+                        <div class="modal-content">
+                            <label for="modal-toggle" class="close-btn">&times;</label>
+                            <h2>Nový člen rodiny</h2>
+                            
+                            <form action="add_member.php" method="POST" class="modal-form">
+                                <label>
+                                    Jméno:
+                                    <input type="text" name="username" required placeholder="Uživatelské jméno">
+                                </label>
+                                
+                                <label>
+                                    Email:
+                                    <input type="email" name="email" required placeholder="name@email.com">
+                                </label>
+                                
+                                <label>
+                                    Heslo:
+                                    <input type="password" name="password" required placeholder="••••••••">
+                                </label>
+
+                                <label>
+                                    Role:
+                                    <select name="role_id" required>
+                                        <option value="3">Dítě</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">Rodič</option>
+                                    </select>      
+                                </label>
+                                
+                                <input type="submit" value="Vytvořit a přidat">
+                            </form>
+                        </div>
+                    </div>
+                <input type="checkbox" id="modal-remove-toggle" class="modal-remove-toggle-checkbox">
+

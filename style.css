@@ -1315,6 +1315,7 @@ modal-pet-toggle:checked ~ .id-modal-add {
 
 }
 
+/* Editace zvirat */
 input[id^="modal-pet-edit-toggle-"]:checked ~ div[class^="modal id-modal-edit-"] {
     display: flex !important;
 }
