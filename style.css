@@ -1219,9 +1219,93 @@ body{
     align-items: center;
 }
 
-/* Stylování samotného obrázku loga uvnitř boxu */
+
 .sidebar-logo img {
     max-width: 100%;              /* Aby nepřeteklo */
     height: auto;                 /* Zachování poměru stran */
     display: block;
+}
+
+.task-create-form{
+    display:flex;
+    justify-content:center;
+    padding:40px;
+}
+
+.task-create-form form{
+    width:100%;
+    max-width:500px;
+    background:#1e293b;
+    padding:25px;
+    border-radius:14px;
+    border:1px solid #334155;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+input[type="date"]{
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #334155;
+    background:#0f172a;
+    color:white;
+    outline:none;
+    transition:0.2s;
+}
+
+
+input[type="date"]:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,0.2);
+}
+.task-input{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+label{
+    color:#cbd5e1;
+    font-size:14px;
+    font-weight:600;
+}
+
+select,textarea{
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #334155;
+    background:#0f172a;
+    color:white;
+    outline:none;
+    transition:0.2s;
+}
+
+select:focus,textarea:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,0.2);
+}
+
+button{
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#1d4ed8;
+    transform:translateY(-1px);
+}
+
+h1{
+    text-align:center;
+    color:white;
+    margin-top:20px;
 }
