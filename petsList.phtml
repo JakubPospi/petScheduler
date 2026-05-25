@@ -18,8 +18,12 @@
                             <td><?php echo htmlspecialchars($mazlicek['species']); ?></td>
                             <td>
                                 <?php if($uzivatel['role_id'] === 1): ?>
-                                    <label for="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="edit-pet-link" style="color: #38bdf8; cursor: pointer; font-weight: bold;">
+                                    <label for="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="edit-pet-link" style="color: #38bdf8; cursor: pointer; font-weight: bold; margin-right: 15px;">
                                         Upravit
+                                    </label>
+                                    
+                                    <label for="modal-pet-delete-toggle-<?= $mazlicek['id'] ?>" class="delete-pet-link" style="color: #f43f5e; cursor: pointer; font-weight: bold;">
+                                        Smazat
                                     </label>
                                 <?php else: ?>
                                     <span style="color: #64748b;">Bezpráví</span>
@@ -54,22 +58,18 @@
                                     Jméno:
                                     <input type="text" name="name" required placeholder="Jméno mazlíčka">
                                 </label>
-                                
                                 <label>
                                     Druh:
                                     <input type="text" name="species" required placeholder="Kočka, Pes, Křeček">
                                 </label>
-                                
                                 <label>
                                     Datum narození/pořizení:
                                     <input type="date" name="birthDate" required>
                                 </label>
-
                                 <label>
                                     Popis:
                                     <textarea name="desc" required placeholder="Má černé skvrny, má pěkné tlapky apod."></textarea>
                                 </label>    
-
                                 <input type="submit" value="Přidat mazlíčka do rodiny">
                             </form>
                         </div>
@@ -79,7 +79,6 @@
                 <?php foreach ($mazlicci as $mazlicek): ?>
                     <div class="modal-wrapper">
                         <input type="checkbox" id="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="modal-toggle-checkbox">
-                        
                         <div class="modal id-modal-edit-<?= $mazlicek['id'] ?>" style="display: none;">
                             <div class="modal-content">
                                 <label for="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="close-btn">&times;</label>
@@ -87,28 +86,46 @@
                                 
                                 <form action="edit_animal.php" method="POST" class="modal-form">
                                     <input type="hidden" name="animal_id" value="<?= $mazlicek['id'] ?>">
-
                                     <label>
                                         Nové jméno (ponech prázdné pro beze změny):
                                         <input type="text" name="name" placeholder="<?= htmlspecialchars($mazlicek['name']) ?>">
                                     </label>
-                                    
                                     <label>
                                         Nový druh:
                                         <input type="text" name="species" placeholder="<?= htmlspecialchars($mazlicek['species']) ?>">
                                     </label>
-                                    
                                     <label>
                                         Nové datum narození/pořizení:
                                         <input type="date" name="birthDate">
                                     </label>
-
                                     <label>
                                         Nový popis:
                                         <textarea name="desc" placeholder="Zadejte nový popis..."></textarea>
                                     </label>    
-
                                     <input type="submit" value="Uložit změny" class="submit-success">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+                <?php foreach ($mazlicci as $mazlicek): ?>
+                    <div class="modal-wrapper">
+                        <input type="checkbox" id="modal-pet-delete-toggle-<?= $mazlicek['id'] ?>" class="modal-toggle-checkbox">
+                        
+                        <div class="modal id-modal-delete-<?= $mazlicek['id'] ?>" style="display: none;">
+                            <div class="modal-content">
+                                <label for="modal-pet-delete-toggle-<?= $mazlicek['id'] ?>" class="close-btn">&times;</label>
+                                
+                                <h2>Smazat mazlíčka</h2>
+                                <p style="margin: 20px 0; color: #cbd5e1; font-size: 1.05em;">
+                                    Opravdu chceš trvale smazat mazlíčka <strong><?= htmlspecialchars($mazlicek['name']) ?></strong> ze systému? Tato akce je nevratná.
+                                </p>
+                                
+                                <form action="delete_animal.php" method="POST" class="modal-form">
+                                    <input type="hidden" name="animal_id" value="<?= $mazlicek['id'] ?>">
+                                    
+                                    <input type="submit" value="Ano, smazat mazlíčka" class="submit-danger" style="background-color: #f43f5e; width: 100%; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; color: white; border: none;">
                                 </form>
                             </div>
                         </div>
