@@ -1324,3 +1324,13 @@ input[id^="modal-pet-edit-toggle-"]:checked ~ div[class^="modal id-modal-edit-"]
 input[id^="modal-pet-delete-toggle-"]:checked ~ div[class^="modal id-modal-delete-"] {
     display: flex !important;
 }
+
+/* Editace clenu */
+input[id^="modal-user-edit-toggle-"]:checked ~ div[class^="modal id-modal-user-edit-"] {
+    display: flex !important;
+}
+
+/* Mazani clenu */
+input[id^="modal-user-delete-toggle-"]:checked ~ div[class^="modal id-modal-user-delete-"] {
+    display: flex !important;
+}

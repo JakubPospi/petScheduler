@@ -29,59 +29,134 @@
                                     </span>
                                 </td>
                                 <td>
-                                <?php if($uzivatel['role_id'] === 1): ?>
-                                    <label for="modal-user-edit-toggle-<?= $clen['id'] ?>" class="edit-pet-link" style="color: #38bdf8; cursor: pointer; font-weight: bold; margin-right: 15px;">
-                                        Upravit
-                                    </label>
-                                    
-                                    <label for="modal-user-delete-toggle-<?= $clen['id'] ?>" class="delete-pet-link" style="color: #f43f5e; cursor: pointer; font-weight: bold;">
-                                        Smazat
-                                    </label>
-                                <?php else: ?>
-                                    <span style="color: #64748b;">Bezpráví</span>
-                                <?php endif; ?>
-                            </td>
+                                    <?php if($uzivatel['role_id'] === 1): ?>
+                                        <label for="modal-user-edit-toggle-<?= $clen['id'] ?>" class="edit-pet-link" style="color: #38bdf8; cursor: pointer; font-weight: bold; margin-right: 15px;">
+                                            Upravit
+                                        </label>
+                                        
+                                        <?php if ($clen['id'] !== $uzivatel['id']): ?>
+                                            <label for="modal-user-delete-toggle-<?= $clen['id'] ?>" class="delete-pet-link" style="color: #f43f5e; cursor: pointer; font-weight: bold;">
+                                                Smazat
+                                            </label>
+                                        <?php else: ?>
+                                            <span style="color: #64748b; font-size: 0.9em;">(To jsi ty)</span>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <span style="color: #64748b;">Bezpráví</span>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
 
-                    <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
-                    <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
+                <?php if($uzivatel['role_id'] === 1): ?>
+                    <div class="action-buttons-row" style="margin-top: 20px;">
+                        
+                        <div class="modal-wrapper" style="display: inline-block;">
+                            <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
+                            <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
 
-                    <div class="modal modal-add">
-                        <div class="modal-content">
-                            <label for="modal-toggle" class="close-btn">&times;</label>
-                            <h2>Nový člen rodiny</h2>
-                            
-                            <form action="add_member.php" method="POST" class="modal-form">
-                                <label>
-                                    Jméno:
-                                    <input type="text" name="username" required placeholder="Uživatelské jméno">
-                                </label>
-                                
-                                <label>
-                                    Email:
-                                    <input type="email" name="email" required placeholder="name@email.com">
-                                </label>
-                                
-                                <label>
-                                    Heslo:
-                                    <input type="password" name="password" required placeholder="••••••••">
-                                </label>
-
-                                <label>
-                                    Role:
-                                    <select name="role_id" required>
-                                        <option value="3">Dítě</option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Rodič</option>
-                                    </select>      
-                                </label>
-                                
-                                <input type="submit" value="Vytvořit a přidat">
-                            </form>
+                            <div class="modal modal-add">
+                                <div class="modal-content">
+                                    <label for="modal-toggle" class="close-btn">&times;</label>
+                                    <h2>Nový člen rodiny</h2>
+                                    
+                                    <form action="add_member.php" method="POST" class="modal-form">
+                                        <label>
+                                            Jméno:
+                                            <input type="text" name="username" required placeholder="Uživatelské jméno">
+                                        </label>
+                                        <label>
+                                            Email:
+                                            <input type="email" name="email" required placeholder="name@email.com">
+                                        </label>
+                                        <label>
+                                            Heslo:
+                                            <input type="password" name="password" required placeholder="••••••••">
+                                        </label>
+                                        <label>
+                                            Role:
+                                            <select name="role_id" required>
+                                                <option value="3">Dítě</option>
+                                                <option value="2">Rodič</option>
+                                            </select>      
+                                        </label>
+                                        <input type="submit" value="Vytvořit a přidat">
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                <input type="checkbox" id="modal-remove-toggle" class="modal-remove-toggle-checkbox">
 
+                        <?php foreach ($clenove as $clen): ?>
+                            <div class="modal-wrapper">
+                                <input type="checkbox" id="modal-user-edit-toggle-<?= $clen['id'] ?>" class="modal-toggle-checkbox">
+                                
+                                <div class="modal id-modal-user-edit-<?= $clen['id'] ?>" style="display: none;">
+                                    <div class="modal-content">
+                                        <label for="modal-user-edit-toggle-<?= $clen['id'] ?>" class="close-btn">&times;</label>
+                                        <h2>Upravit člena: <?= htmlspecialchars($clen['username']) ?></h2>
+                                        
+                                        <form action="edit_member.php" method="POST" class="modal-form">
+                                            <input type="hidden" name="user_to_edit" value="<?= $clen['id'] ?>">
+
+                                            <label>
+                                                Nové jméno (ponech prázdné pro beze změny):
+                                                <input type="text" name="username" placeholder="<?= htmlspecialchars($clen['username']) ?>">
+                                            </label>
+                                            <label>
+                                                Nový Email:
+                                                <input type="email" name="email" placeholder="novy@email.com">
+                                            </label>
+                                            <label>
+                                                Nové Heslo (vyplň pouze pro změnu):
+                                                <input type="password" name="password" placeholder="••••••••">
+                                            </label>
+
+                                            <?php if ($clen['id'] !== $uzivatel['id']): ?>
+                                                <label>
+                                                    Nová Role:
+                                                    <select name="role_id">
+                                                        <option value="" disabled selected>-- Vyber novou roli --</option>
+                                                        <option value="3">Dítě</option>
+                                                        <option value="2">Rodič</option>
+                                                    </select>      
+                                                </label>
+                                            <?php endif; ?>
+
+                                            <input type="submit" value="Uložit změny" class="submit-success">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($clenove as $clen): ?>
+                            <?php if ($clen['id'] !== $uzivatel['id']): ?>
+                                <div class="modal-wrapper">
+                                    <input type="checkbox" id="modal-user-delete-toggle-<?= $clen['id'] ?>" class="modal-toggle-checkbox">
+                                    
+                                    <div class="modal id-modal-user-delete-<?= $clen['id'] ?>" style="display: none;">
+                                        <div class="modal-content">
+                                            <label for="modal-user-delete-toggle-<?= $clen['id'] ?>" class="close-btn">&times;</label>
+                                            <h2>Odebrat člena z rodiny</h2>
+                                            
+                                            <p style="margin: 20px 0; color: #cbd5e1; font-size: 1.05em;">
+                                                Opravdu chceš trvale odebrat uživatele <strong><?= htmlspecialchars($clen['username']) ?></strong> ze své rodiny? Tato akce je nevratná.
+                                            </p>
+                                            
+                                            <form action="remove_member.php" method="POST" class="modal-form">
+                                                <input type="hidden" name="user_to_remove" value="<?= $clen['id'] ?>">
+                                                <input type="submit" value="Ano, odebrat z rodiny" class="submit-danger" style="background-color: #f43f5e; width: 100%; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; color: white; border: none;">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </div>
