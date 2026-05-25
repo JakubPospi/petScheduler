@@ -2,20 +2,24 @@
 require "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
 
-$nazev_rodiny = "Žádná rodina"; 
+$stTasks = $db->prepare("
+SELECT 
+    t.*,
+    tt.name AS type_name,
+    u.username AS user_name,
+    a.name AS animal_name,
+    f.family_name AS family_name
+FROM tasks t
+    LEFT JOIN task_type tt ON t.type_id = tt.id
+    LEFT JOIN users u ON t.user_id = u.id
+    LEFT JOIN animals a ON t.animal_id = a.id
+    LEFT JOIN family f ON t.family_id = f.id
+    WHERE t.taskTime >= NOW()
+    ORDER BY t.taskCreated DESC
+");
 
-if ($uzivatel !== null && !empty($uzivatel["family_id"])) {
-
-    $stmt = $db->prepare("SELECT family_name FROM family WHERE id = ?");
-    $stmt->execute([$uzivatel["family_id"]]);
-    
-    $vysledek = $stmt->get_result();
-    $rodina = $vysledek->fetch_assoc();
-    
-    if ($rodina) {
-        $nazev_rodiny = $rodina["family_name"]; 
-    }
-}
+$stTasks->execute();
+$tasks = $stTasks->get_result();
 
 if($uzivatel === null){
 require "./layout/header.phtml";
