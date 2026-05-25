@@ -7,6 +7,7 @@
                 <tr>
                     <th>Jméno mazlíčka</th>
                     <th>Druh</th>
+                    <th>Akce</th> 
                 </tr>
             </thead>
             <tbody>
@@ -15,11 +16,20 @@
                         <tr>
                             <td><?php echo htmlspecialchars($mazlicek['name']); ?></td>
                             <td><?php echo htmlspecialchars($mazlicek['species']); ?></td>
+                            <td>
+                                <?php if($uzivatel['role_id'] === 1): ?>
+                                    <label for="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="edit-pet-link" style="color: #38bdf8; cursor: pointer; font-weight: bold;">
+                                        Upravit
+                                    </label>
+                                <?php else: ?>
+                                    <span style="color: #64748b;">Bezpráví</span>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="2" style="text-align: center; color: #94a3b8; padding: 20px;">
+                        <td colspan="3" style="text-align: center; color: #94a3b8; padding: 20px;">
                             Zatím žádní mazlíčci.
                         </td>
                     </tr>
@@ -29,6 +39,7 @@
 
         <?php if($uzivatel['role_id'] === 1){ ?>
             <div class="action-buttons-row">
+                
                 <div class="modal-wrapper">
                     <input type="checkbox" id="modal-pet-toggle" class="modal-toggle-checkbox">
                     <label for="modal-pet-toggle" class="add-pet-btn">Přidat mazlíčka do rodiny</label>
@@ -36,7 +47,6 @@
                     <div class="modal id-modal-add">
                         <div class="modal-content">
                             <label for="modal-pet-toggle" class="close-btn">&times;</label>
-                            
                             <h2>Nový mazlíček rodiny</h2>
                             
                             <form action="pets.php" method="POST" class="modal-form">
@@ -65,6 +75,46 @@
                         </div>
                     </div>
                 </div>
+
+                <?php foreach ($mazlicci as $mazlicek): ?>
+                    <div class="modal-wrapper">
+                        <input type="checkbox" id="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="modal-toggle-checkbox">
+                        
+                        <div class="modal id-modal-edit-<?= $mazlicek['id'] ?>" style="display: none;">
+                            <div class="modal-content">
+                                <label for="modal-pet-edit-toggle-<?= $mazlicek['id'] ?>" class="close-btn">&times;</label>
+                                <h2>Upravit mazlíčka: <?= htmlspecialchars($mazlicek['name']) ?></h2>
+                                
+                                <form action="edit_animal.php" method="POST" class="modal-form">
+                                    <input type="hidden" name="animal_id" value="<?= $mazlicek['id'] ?>">
+
+                                    <label>
+                                        Nové jméno (ponech prázdné pro beze změny):
+                                        <input type="text" name="name" placeholder="<?= htmlspecialchars($mazlicek['name']) ?>">
+                                    </label>
+                                    
+                                    <label>
+                                        Nový druh:
+                                        <input type="text" name="species" placeholder="<?= htmlspecialchars($mazlicek['species']) ?>">
+                                    </label>
+                                    
+                                    <label>
+                                        Nové datum narození/pořizení:
+                                        <input type="date" name="birthDate">
+                                    </label>
+
+                                    <label>
+                                        Nový popis:
+                                        <textarea name="desc" placeholder="Zadejte nový popis..."></textarea>
+                                    </label>    
+
+                                    <input type="submit" value="Uložit změny" class="submit-success">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
             </div>
         <?php } ?>
     </div>

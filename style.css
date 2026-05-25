@@ -1312,5 +1312,12 @@ h1{
 =======
 #modal-pet-toggle:checked ~ .id-modal-add {
     display: flex !important;
+<<<<<<< HEAD
 >>>>>>> 0cd6e14e23ea67a4e87b63ca8af550ea55ff7c91
+=======
+}
+
+input[id^="modal-pet-edit-toggle-"]:checked ~ div[class^="modal id-modal-edit-"] {
+    display: flex !important;
+>>>>>>> 038e3e8345cb162833929e0175acec5ea943fe15
 }
