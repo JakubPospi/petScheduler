@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // zahashování hesla
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // 1. vytvoření rodiny
-    $familyName = "rodina 1";
+    $i = 1.
+    $familyName = "rodina " . $i++;
 
     $sqlFamily = "INSERT INTO family (family_name) VALUES (?)";
     $stmtFamily = mysqli_prepare($db, $sqlFamily);
