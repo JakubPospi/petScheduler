@@ -1225,3 +1225,7 @@ body{
     height: auto;                 /* Zachování poměru stran */
     display: block;
 }
+
+#modal-pet-toggle:checked ~ .id-modal-add {
+    display: flex !important;
+}
