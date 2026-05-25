@@ -4,7 +4,7 @@ require "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
 
 
-if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["ulozTask"])!=NULL){
+if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["ulozTask"])){
 
     $typUkolu = $_POST['task_type'];
     $clenKteryMaSplnitTask = $_POST['user_id'];
