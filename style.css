@@ -1226,6 +1226,7 @@ body{
     display: block;
 }
 
+<<<<<<< HEAD
 .task-create-form{
     display:flex;
     justify-content:center;
@@ -1308,4 +1309,8 @@ h1{
     text-align:center;
     color:white;
     margin-top:20px;
+=======
+#modal-pet-toggle:checked ~ .id-modal-add {
+    display: flex !important;
+>>>>>>> 0cd6e14e23ea67a4e87b63ca8af550ea55ff7c91
 }

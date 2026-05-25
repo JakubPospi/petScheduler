@@ -10,6 +10,7 @@ $stmt->execute([$uzivatel["family_id"]]);
 
 $clenove = $stmt->get_result(); 
 
+
 require "./layout/header2.phtml";
 require "./upravaClenu.phtml";
 require "./layout/footer.phtml";
