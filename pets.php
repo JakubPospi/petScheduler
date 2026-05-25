@@ -5,7 +5,7 @@ $uzivatel = $_SESSION['uzivatel'];
 if (!isset($uzivatel) || $uzivatel === null) {
     die("Chyba: Uživatel není přihlášen nebo se nepodařilo načíst jeho data.");
 }
-  $stmtPets = $db->prepare("SELECT name, species FROM animals WHERE family_id = ?");
+  $stmtPets = $db->prepare("SELECT id, name, species FROM animals WHERE family_id = ?");
 $stmtPets->execute([$uzivatel["family_id"]]);
 $mazlicci = $stmtPets->get_result();
 

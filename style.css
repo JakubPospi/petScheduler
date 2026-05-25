@@ -1229,3 +1229,7 @@ body{
 #modal-pet-toggle:checked ~ .id-modal-add {
     display: flex !important;
 }
+
+input[id^="modal-pet-edit-toggle-"]:checked ~ div[class^="modal id-modal-edit-"] {
+    display: flex !important;
+}
