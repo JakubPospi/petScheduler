@@ -1,0 +1,15 @@
+<?php
+    $stUkoly = $db->prepare("SELECT * FROM task_type");
+    $stUkoly->execute();
+    $ukoly = $stUkoly->get_result();    
+    ?>
+<form method="POST">
+    <label for="Task_type">Typ úkolu</label>
+    <?php
+    foreach($ukol as $ukoly){
+        ?>
+        <select name="task_type" ><?php htmlspecialchars($ukol['name'])?></select>
+        <?php
+    }
+    ?>
+</form>
