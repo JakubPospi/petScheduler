@@ -6,12 +6,6 @@
                 
                 <div class="family-title-row" style="display: flex; align-items: center; width: 100%; margin-bottom: 20px;">
                     <h2 style="margin: 0; border: none;"><?php echo htmlspecialchars($nazev_rodiny); ?></h2>
-                    
-                    <?php if($uzivatel['role_id'] === 1): ?>
-                        <label for="modal-family-edit-toggle" class="edit-member-btn" style="color: #ffffff; cursor: pointer; font-weight: bold; font-size: 1.2em;">
-                            ✒️
-                        </label>
-                    <?php endif; ?>
                 </div>
                 
                 <table class="family-table">
@@ -85,6 +79,7 @@
                         <div class="modal-wrapper" style="display: inline-block;">
                             <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
                             <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
+                            <label for="modal-family-edit-toggle" class="edit-member-btn" style="color: #ffffff; cursor: pointer; font-weight: bold; font-size: 0.9em;">Přejmenovat rodinu</label>
 
                             <div class="modal modal-add">
                                 <div class="modal-content">
