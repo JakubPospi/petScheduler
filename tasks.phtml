@@ -1,3 +1,119 @@
+<div class="tasks-grid">
+
+<?php foreach ($tasks as $task): ?>
+<?php
+    $isOverdue = strtotime($task['taskTime']) < time();
+    $isDone = $task['is_done'];
+    $statusText = $isOverdue ? "Po termínu" : "Čeká";
+    $statusClass = $isOverdue ? "overdue" : "pending";
+    if($isDone === 1){
+        $statusText = "Splněno";
+        $statusClass = "done";
+    }
+    elseif($isDone === 0){
+        $statusText = "Čeká";
+        $statusClass = "pending";
+    } 
+    
+?>
+
+<div class="task-card">
+
+    <div class="task-top">
+
+        <div class="task-type">
+            <?= htmlspecialchars($task['type_name']) ?>
+        </div>
+
+        <div class="status <?= $statusClass ?>">
+            <?= $statusText ?>
+        </div>
+
+    </div>
+
+    <div class="task-title">
+        Úkol #<?= $task['id'] ?>
+    </div>
+
+    <div class="task-info">
+
+        <div class="info-row">
+            <div class="info-label">Má splnit</div>
+            <div class="info-value">
+                <?= htmlspecialchars($task['user_name']) ?>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Zvíře</div>
+            <div class="info-value">
+                🐾 <?= htmlspecialchars($task['animal_name']) ?>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Vytvořeno</div>
+            <div class="info-value">
+                <?= date('d. m. Y H:i', strtotime($task['taskCreated'])) ?>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-label">Splatnost</div>
+            <div class="info-value">
+                <?= date('d. m. Y', strtotime($task['taskTime'])) ?>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="task-description">
+        <?= htmlspecialchars($task['note']) ?>
+    </div>
+    <div class="task-actions">
+
+   <form action="delete_task.php" method="POST" style="display: inline-block;">
+        <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+        <button type="submit" class="btn btn-delete" onclick="return confirm('Opravdu chcete úkol smazat?');">
+            Smazat
+        </button>
+    </form>
+    </div>
+</div>
+
+<?php endforeach; ?>
+
+</div>
+<script>
+
+function toggleComplete(button, statusId){
+
+    const status = document.getElementById(statusId);
+
+    if(status.classList.contains('done')){
+        return;
+    }
+
+    status.classList.remove('pending');
+    status.classList.add('done');
+
+    status.innerText = 'Splněno';
+
+    button.innerText = '✔ Hotovo';
+
+    button.style.opacity = '0.7';
+
+    button.disabled = true;
+}
+
+function deleteTask(button){
+
+    const taskCard = button.closest('.task-card');
+
+    taskCard.remove();
+}
+
+</script>
 <form action="./add_tasks.php">
     <button>Přidat úkol     </button>
 </form>
