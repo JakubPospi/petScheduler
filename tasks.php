@@ -35,10 +35,11 @@ $stTasks = $db->prepare("
     LEFT JOIN animals a ON t.animal_id = a.id
     LEFT JOIN family f ON t.family_id = f.id
     WHERE t.user_id = ?
+    WHERE t.family_id = ?
         AND t.is_done = 1
     ORDER BY t.taskCreated DESC
     ");
-    $stTasks->bind_param("i", $uzivatel['id']);
+    $stTasks->bind_param("ii", $uzivatel['id'],$uzivatel['family_id']);
 }
 
 
