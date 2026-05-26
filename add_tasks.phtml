@@ -67,20 +67,7 @@
         ?>
     </select>
     </div>
-    <div class="task-input">
-    <label for="family_id">Rodina</label>
-    <select name="family_id" id="">
-        <?php
-        foreach($rodina as $rodinaS){
-        ?>
-        <option value="<?= $rodinaS['ID']?>">
-            <?= htmlspecialchars($rodinaS['family_name'])?>
-        </option>
-        <?php
-        }
-        ?>
-    </select>
-    </div>
+
 
     <div class="task-input">
     <label for="datum_splneni">Datum splnění</label>
