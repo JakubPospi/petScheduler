@@ -1,5 +1,5 @@
 <?php
-require "./utils/init.php";
+require_once "./utils/init.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['task_id'])) {
     $taskId = (int)$_POST['task_id'];

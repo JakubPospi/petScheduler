@@ -1,5 +1,5 @@
 <?php
-require "./utils/init.php";
+require_once "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
 
 if ($uzivatel === null || empty($uzivatel["family_id"])) {
