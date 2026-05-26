@@ -4,8 +4,18 @@
 
 <?php
     $isOverdue = strtotime($task['taskTime']) < time();
+    $isDone = $task['is_done'];
     $statusText = $isOverdue ? "Po termínu" : "Čeká";
     $statusClass = $isOverdue ? "overdue" : "pending";
+    if($isDone === 1){
+        $statusText = "Splněno";
+        $statusClass = "done";
+    }
+    elseif($isDone === 0){
+        $statusText = "Čeká";
+        $statusClass = "pending";
+    }
+    
 ?>
 
 <div class="task-card">
