@@ -9,7 +9,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["ulozTask"])){
     $typUkolu = $_POST['task_type'];
     $clenKteryMaSplnitTask = $_POST['user_id'];
     $mazlicek = $_POST['animal_id'];
-    $rodina = $_POST['family_id'];
     $popisekUkolu = $_POST['description'];
     $datumVytvoreni = date('Y-m-d H:i:s') ;
     $datumSplneni = $_POST['datum_splneni'];
@@ -22,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["ulozTask"])){
     }
 
 
-    mysqli_stmt_bind_param($stmt,"iiiisss",$typUkolu,$clenKteryMaSplnitTask,$mazlicek,$rodina,$datumSplneni,$datumVytvoreni,$popisekUkolu);
+    mysqli_stmt_bind_param($stmt,"iiiisss",$typUkolu,$clenKteryMaSplnitTask,$mazlicek,$uzivatel['family_id'],$datumSplneni,$datumVytvoreni,$popisekUkolu);
     $result = mysqli_execute($stmt);
 
     if ($result === false) {

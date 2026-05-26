@@ -176,12 +176,14 @@
 
 </div>
 
+<?php if($uzivatel['role_id']!=3){?>
 <div style="margin-top: 20px;">
     <form action="./add_tasks.php">
         <button class="btn-add-main">Přidat úkol</button>
     </form>
 </div>
 
+<?php }?>
 <script>
 function toggleComplete(button, statusId){
     const status = document.getElementById(statusId);
