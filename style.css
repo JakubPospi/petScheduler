@@ -1361,7 +1361,9 @@ h1{
     margin-top:20px;
 }
 
-modal-pet-toggle:checked ~ .id-modal-add {
+
+/* Pridani zvirat (CHYBA: chybel # prdc modal-pet-toggle:checked) */
+#modal-pet-toggle:checked ~ .id-modal-add { 
     display: flex !important;
 
 }
