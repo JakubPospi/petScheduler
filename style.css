@@ -987,7 +987,7 @@ body{
 .status {
     padding: 6px 12px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 17px;
     font-weight: 700;
 }
 
@@ -1007,9 +1007,9 @@ body{
 }
 
 .task-title {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 700;
-    color: #64748b;
+    color: #cbe6ee;
     margin-bottom: 6px;
 }
 
@@ -1042,7 +1042,7 @@ body{
 }
 
 .info-label {
-    color: var(--text-muted);
+    color:#3feff8;
     font-size: 13px;
 }
 
@@ -1066,8 +1066,8 @@ body{
     border-radius: 12px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 12px;
-    transition: transform 0.2s, opacity 0.2s, background 0.2s;
+    font-size: 17px;
+    transition: transform 0.2s, opacity 0.2s,  0.2s;
 }
 
 .btn:hover {
@@ -1270,6 +1270,11 @@ body{
     max-width: 100%;              /* Aby nepřeteklo */
     height: auto;                 /* Zachování poměru stran */
     display: block;
+}
+.tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
 }
 
 .task-create-form{
