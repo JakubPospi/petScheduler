@@ -5,12 +5,12 @@ $taskId = $_POST['task_id'];
 
 $st = $db->prepare("
     UPDATE tasks
-    SET is_done = 1
+    SET is_done = 0
     WHERE id = ?
 ");
 
 $st->bind_param("i", $taskId);
 $st->execute();
 
-header("Location: tasks.php");
+header("Location: dashboard.php");
 exit;

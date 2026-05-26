@@ -71,6 +71,13 @@
         <?= htmlspecialchars($task['note']) ?>
     </div>
     <div class="task-actions">
+     <form action="undo_task.php" method="POST" style="display:inline-block;">
+        <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+        <input type="hidden" name="action" value="undo">
+        <button class="btn btn-undo">
+            Vrátit zpět
+        </button>
+    </form>
 
    <form action="delete_task.php" method="POST" style="display: inline-block;">
         <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
