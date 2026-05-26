@@ -38,7 +38,7 @@ $stTasks = $db->prepare("
         AND t.is_done = 1
     ORDER BY t.taskCreated DESC
     ");
-    $stTasks->bind_param("ii", $uzivatel['id']);
+    $stTasks->bind_param("i", $uzivatel['id']);
 }
 
 
