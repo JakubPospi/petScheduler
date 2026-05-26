@@ -1386,12 +1386,12 @@ input[id^="modal-user-delete-toggle-"]:checked ~ div[class^="modal id-modal-user
     display: flex !important;
 }
 
-/* Zobrazení editačního modálu uživatelského profilu */
+/* Edit sam sebe */
 #modal-profile-edit-toggle:checked ~ .id-modal-profile-edit {
     display: flex !important;
 }
 
-/* Zobrazení modálu pro změnu hesla uživatele */
+/* Zmena hesla svojeho */
 #modal-password-edit-toggle:checked ~ .id-modal-password-edit {
     display: flex !important;
 }
