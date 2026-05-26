@@ -1380,3 +1380,13 @@ input[id^="modal-user-delete-toggle-"]:checked ~ div[class^="modal id-modal-user
 #modal-family-edit-toggle:checked ~ .id-modal-family-edit {
     display: flex !important;
 }
+
+/* Zobrazení editačního modálu uživatelského profilu */
+#modal-profile-edit-toggle:checked ~ .id-modal-profile-edit {
+    display: flex !important;
+}
+
+/* Zobrazení modálu pro změnu hesla uživatele */
+#modal-password-edit-toggle:checked ~ .id-modal-password-edit {
+    display: flex !important;
+}
