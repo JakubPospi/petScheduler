@@ -3,7 +3,16 @@
         <div class="tables-layout">
             
             <div class="table-column">
-                <h2><?php echo $nazev_rodiny;?></h2>
+                
+                <div class="family-title-row" style="display: flex; align-items: center; width: 100%; margin-bottom: 20px;">
+                    <h2 style="margin: 0; border: none;"><?php echo htmlspecialchars($nazev_rodiny); ?></h2>
+                    
+                    <?php if($uzivatel['role_id'] === 1): ?>
+                        <label for="modal-family-edit-toggle" class="edit-member-btn" style="color: #ffffff; cursor: pointer; font-weight: bold; font-size: 1.2em;">
+                            ✒️
+                        </label>
+                    <?php endif; ?>
+                </div>
                 
                 <table class="family-table">
                     <thead>
@@ -53,6 +62,26 @@
                 <?php if($uzivatel['role_id'] === 1): ?>
                     <div class="action-buttons-row" style="margin-top: 20px;">
                         
+                        <div class="modal-wrapper" style="display: block;">
+                            <input type="checkbox" id="modal-family-edit-toggle" class="modal-toggle-checkbox">
+                            
+                            <div class="modal id-modal-family-edit" style="display: none;">
+                                <div class="modal-content">
+                                    <label for="modal-family-edit-toggle" class="close-btn">&times;</label>
+                                    <h2>Přejmenovat rodinu</h2>
+                                    
+                                    <form action="edit_family.php" method="POST" class="modal-form">
+                                        <label>
+                                            Nový název rodiny:
+                                            <input type="text" name="family_name" required placeholder="<?= htmlspecialchars($nazev_rodiny) ?>">
+                                        </label>
+                                        
+                                        <input type="submit" value="Uložit nový název" class="submit-success">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="modal-wrapper" style="display: inline-block;">
                             <input type="checkbox" id="modal-toggle" class="modal-toggle-checkbox">
                             <label for="modal-toggle" class="add-member-btn">Přidat člena rodiny</label>
@@ -99,7 +128,6 @@
                                         
                                         <form action="edit_member.php" method="POST" class="modal-form">
                                             <input type="hidden" name="user_to_edit" value="<?= $clen['id'] ?>">
-
                                             <label>
                                                 Nové jméno (ponech prázdné pro beze změny):
                                                 <input type="text" name="username" placeholder="<?= htmlspecialchars($clen['username']) ?>">
