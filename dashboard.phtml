@@ -14,7 +14,7 @@
     elseif($isDone === 0){
         $statusText = "Čeká";
         $statusClass = "pending";
-    }
+    } 
     
 ?>
 
@@ -102,12 +102,10 @@ function toggleComplete(button, statusId){
 
     const status = document.getElementById(statusId);
 
-    // pokud už je splněno, nic nedělej
     if(status.classList.contains('done')){
         return;
     }
 
-    // označení jako splněno
     status.classList.remove('pending');
     status.classList.add('done');
 
@@ -117,16 +115,13 @@ function toggleComplete(button, statusId){
 
     button.style.opacity = '0.7';
 
-    // deaktivace tlačítka
     button.disabled = true;
 }
 
 function deleteTask(button){
 
-    // najde nejbližší kartičku úkolu
     const taskCard = button.closest('.task-card');
 
-    // smaže ji ze stránky
     taskCard.remove();
 }
 
