@@ -47,6 +47,22 @@ $stTasks->execute();
 
 $tasks = $stTasks->get_result()->fetch_all(MYSQLI_ASSOC);
 
+$pendingTasks = [];
+$overdueTasks = [];
+$doneTasks = [];
+
+foreach ($tasks as $task) {
+    $isOverdue = strtotime($task['taskTime']) < time();
+    $isDone = $task['is_done'];
+
+    if ($isDone == 1) {
+        $doneTasks[] = $task;
+    } elseif ($isOverdue) {
+        $overdueTasks[] = $task;
+    } else {
+        $pendingTasks[] = $task;
+    }
+}
 require "./layout/header2.phtml";
 require "./tasks.phtml";
 require "./layout/footer.phtml";
