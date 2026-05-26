@@ -510,7 +510,7 @@ h2 {
     cursor: pointer;
     font-weight: bold;
     font-size: 15px;
-    transition:  0.2s;
+    transition:  0.5s;
 }
 
 .add-member-btn:hover {
@@ -712,19 +712,18 @@ h2 {
 .edit-member-btn {
     display: inline-block;
     color: white;
-    padding: 7px 3px;
+    background-color: #38bdf8;
+    padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
     font-size: 15px;
     margin-left: 10px; 
     transition:  0.5s;
-    vertical-align: middle;
-    transform: translateY(-3px);
 }
 
 .edit-member-btn:hover {
-    background-color: #0d97d7;
+    background-color: #236784;
 }
 
 /* Styl pro potvrzovací tlačítko uvnitř editačního formuláře */
