@@ -10,6 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['task_id'])) {
     
 }
 
-header("Location: dashboard.php"); 
+header("Location: tasks.php"); 
 exit;
 ?>
