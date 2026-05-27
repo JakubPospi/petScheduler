@@ -59,8 +59,8 @@
         </div>
     </div>
     
-
     <div class="tasks-column">
+        
         <h3 class="column-title">Po termínu <span class="task-count"><?= count($overdueTasks) ?></span></h3>
         <div class="tasks-grid">
             <?php foreach ($overdueTasks as $task): ?>
@@ -116,7 +116,7 @@
             <?php endforeach; ?>
         </div>
     </div>
-
+                
     <div class="tasks-column">
         <h3 class="column-title">Splněno <span class="task-count"><?= count($doneTasks) ?></span></h3>
         <div class="tasks-grid">
