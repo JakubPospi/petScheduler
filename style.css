@@ -1,1404 +1,1533 @@
-  /* Reset základního nastavení */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+/* =====================================================
+   PET SCHEDULER — RESPONSIVE STYLESHEET
+   Design: Dark navy + cyan accent, mobile-first
+   Fonts: DM Sans (headings), DM Mono (badges/data)
+   ===================================================== */
 
-        body {
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-        }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-        /* Navigační menu (Navbar) */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #1a1a2e;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+/* =====================================================
+   CSS VARIABLES
+   ===================================================== */
+:root {
+  --bg:            #0a0f1e;
+  --bg-elevated:   #111827;
+  --bg-card:       #161f30;
+  --bg-card-hover: #1c2a40;
+  --bg-input:      #0d1526;
+  --bg-overlay:    rgba(0, 0, 0, 0.72);
 
-        .logo {
-            color: #ffffff;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
+  --primary:       #06b6d4;
+  --primary-dim:   rgba(6, 182, 212, 0.15);
+  --primary-glow:  rgba(6, 182, 212, 0.08);
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-        }
+  --success:       #22c55e;
+  --success-dim:   rgba(34, 197, 94, 0.14);
+  --danger:        #ef4444;
+  --danger-dim:    rgba(239, 68, 68, 0.15);
+  --warning:       #f59e0b;
+  --warning-dim:   rgba(245, 158, 11, 0.15);
 
-        .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
+  --text:          #f0f4f8;
+  --text-muted:    #8b9ab5;
+  --text-hint:     #4e607a;
+  --text-cyan:     #67e8f9;
 
-        /* Efekt při najetí myší na odkaz */
-        .nav-links a:hover {
-            color: #00adb5;
-        }
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-hover:  rgba(255, 255, 255, 0.14);
 
-        /* Hlavní sekce (Hero) */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: calc(100vh - 60px); /* Výška přes celou obrazovku minus navbar */
-            padding: 2rem;
-            background: linear-gradient(135deg, #1f4068, #162447);
-            color: white;
-        }
+  --radius-sm:     8px;
+  --radius-md:     12px;
+  --radius-lg:     18px;
+  --radius-pill:   999px;
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+  --shadow-card:   0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-modal:  0 20px 60px rgba(0, 0, 0, 0.6);
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
+  --sidebar-w:     256px;
+  --topbar-h:      68px;
+  --font-body:     'DM Sans', sans-serif;
+  --font-mono:     'DM Mono', monospace;
 
-        /* Akční tlačítko */
-        .btn {
-            background-color: #00adb5;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #007c82;
-        }
-
-        /* Responzivita pro mobily */
-        @media (max-width: 600px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-        }
-
-        /* Obal pro celou přihlašovací stránku - zajistí vycentrování boxu na střed */
-.login-page-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh; /* Přizpůsobí se výšce obrazovky (případně změň na 100vh) */
-    font-family: Arial, sans-serif;
+  --transition:    0.18s ease;
 }
 
-/* Hlavní kontejner pro přihlašovací formulář */
-.login-box {
-    background-color: #1e2640; /* Tmavě modrý box podle úvodní stránky */
-    color: white;
-    padding: 20px;
-    border-radius: 12px; /* Elegantní zaoblení rohů */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); /* Jemný stín pro hloubku */
-    width: 100%;
-    max-width: 400px; /* Maximální šířka boxu */
-    box-sizing: border-box;
+/* =====================================================
+   RESET & BASE
+   ===================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Nadpis "Přihlášení" */
-.login-box h1 {
-    margin-top: 0;
-    margin-bottom: 25px;
-    font-size: 2em;
-    text-align: center;
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* Styl pro popisky (labels) - dá text nad políčka */
-.login-box label {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-bottom: 20px;
-    font-size: 0.95em;
-    color: #e0e0e0;
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(5, 10, 22, 0.82), rgba(5, 10, 22, 0.82)),
+    url('./imgs/background-image.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Styl pro textová políčka (Username a Password) */
-.login-box input[type="text"],
-.login-box input[type="email"],
-.login-box input[type="password"]{
-    margin-top: 8px;
-    padding: 12px;
-    background-color: rgba(255, 255, 255, 0.05); /* Lehce průhledné pozadí */
-    border: 1px solid #3a4460;
-    border-radius: 6px;
-    color: white;
-    font-size: 1em;
-    transition: border-color 0.2s, background-color 0.2s;
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
 }
 
-/* Aktivní stav při kliknutí do políčka */
-.login-box input[type="text"]:focus,
-.login-box input[type="password"]:focus {
-    outline: none;
-    border-color: #3b82f6; /* Modré zvýraznění hranice */
-    background-color: rgba(255, 255, 255, 0.1);
+/* =====================================================
+   SCROLLBAR
+   ===================================================== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+
+/* =====================================================
+   APP LAYOUT (sidebar + main)
+   ===================================================== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
 }
 
-/* Styl pro tlačítko "Přihlásit se" */
-.login-box input[type="submit"] {
-    background-color: #2563eb; /* Výraznější modré tlačítko */
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    transition: background-color 0.2s;
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+.sidebar {
+  width: var(--sidebar-w);
+  background: rgba(10, 15, 30, 0.92);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 200;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform var(--transition);
 }
 
-/* Efekt při najetí myší na tlačítko */
-.login-box input[type="submit"]:hover {
-    background-color: #1d4ed8;
+.sidebar-logo {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Styl pro text pod formulářem */
-.register-text {
-    text-align: center;
-    font-size: 0.9em;
-    color: #9ca3af;
+.sidebar-logo img {
+  max-width: 100%;
+  height: 36px;
+  width: auto;
+  object-fit: contain;
 }
 
-/* Styl pro odkaz "Zaregistruj se" */
-.login-box a {
-    color: #3b82f6;
-    text-decoration: none;
-    font-weight: 500;
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
 }
 
-.login-box a:hover {
-    text-decoration: underline;
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
 }
 
-.dropdown-toggle::-webkit-details-marker {
-    display: none;
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--primary);
+  border-radius: 0 3px 3px 0;
+  transition: height var(--transition);
 }
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.sidebar-link.active,
+.sidebar-link:focus {
+  background: var(--primary-dim);
+  color: var(--text-cyan);
+}
+
+.sidebar-link.active::before {
+  height: 60%;
+}
+
+/* Mobile sidebar overlay backdrop */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  z-index: 190;
+}
+
+/* =====================================================
+   MAIN AREA
+   ===================================================== */
+.main-area {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* =====================================================
+   TOPBAR
+   ===================================================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  height: var(--topbar-h);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 28px;
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 150;
+  gap: 12px;
+}
+
+/* Hamburger (hidden on desktop) */
+.topbar-hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-hover);
+  color: var(--text-muted);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  transition: all var(--transition);
+  margin-right: auto;
+}
+
+.topbar-hamburger:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+/* =====================================================
+   USER DROPDOWN (topbar)
+   ===================================================== */
+.user-dropdown {
+  position: relative;
+}
+
+.user-dropdown summary {
+  list-style: none;
+}
+
+.user-dropdown summary::-webkit-details-marker { display: none; }
+
 .dropdown-toggle {
-    list-style: none; /* Pro Firefox a moderní prohlížeče */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  transition: all var(--transition);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
 }
 
-/* Pozicování položky v seznamu */
-.user-menu-item {
-    list-style: none;
-    position: relative;
+.dropdown-toggle:hover,
+.user-dropdown[open] .dropdown-toggle {
+  border-color: var(--primary);
+  background: var(--primary-glow);
+  color: var(--text-cyan);
 }
 
-/* Samotný klikací prvek (ikonka + jméno) */
-.dropdown-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #e2e8f0;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 16px;
-    user-select: none;
-    transition: background-color 0.2s;
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.dropdown-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
+.user-name { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* Samotné vyskakovací menu */
 .dropdown-menu {
-    position: absolute;
-    right: 0;
-    top: 120%;
-    background-color: #243447; /* Tmavé pozadí webu */
-    min-width: 150px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    z-index: 10002;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-modal);
+  min-width: 180px;
+  overflow: hidden;
+  z-index: 10000;
 }
 
-/* Položka "Odhlásit se" uvnitř menu */
-.dropdown-item {
-    display: block;
-    padding: 10px 16px;
-    color: #ff8080; /* Červený text */
-    text-decoration: none;
-    font-size: 14px;
-    transition: background-color 0.2s;
-    text-align: left;
-}
-
-.dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #ff4d4d;
-}
-.user-menu-item {
-    position: relative;
-    z-index: 999999;
+.dropdown-item,
+.dropdown-item-account {
+  display: block;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background var(--transition);
+  white-space: nowrap;
 }
 
 .dropdown-item-account {
-    display: block;
-    padding: 10px 16px;
-    color: #00a6ff; 
-    text-decoration: none;
-    font-size: 14px;
-    transition: background-color 0.2s;
-    text-align: left;
+  color: var(--primary);
+  border-bottom: 1px solid var(--border);
 }
 
 .dropdown-item-account:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #00d0ff; 
+  background: var(--primary-glow);
 }
 
-.container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #243447; /* Tvá tmavá barva */
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    color: #e2e8f0;
+.dropdown-item {
+  color: #ff8080;
 }
 
-h2 {
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
+.dropdown-item:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ff5252;
 }
 
-.family-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+/* =====================================================
+   CONTENT AREA
+   ===================================================== */
+.content {
+  flex: 1;
+  padding: 32px 28px;
 }
 
-.family-table th, 
-.family-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.family-table th {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-    font-weight: 600;
-}
-
-.family-table tr:hover {
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-.role-badge {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 13px;
-}
-
-/* Zarovnání hlavní navigace */
-.navbar {
-    background: #2c3e50;
-    color: white;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between; /* Levá část se přitiskne doleva, pravá doprava */
-    align-items: center;
-}
-
-/* Obal pro logo a odkaz na levé straně */
-.navbar-left {
-    display: flex;
-    align-items: center;
-    gap: 25px; /* Mezera mezi nápisem Pet Scheduler a odkazem Rodina */
-}
-
-/* Stylování samotného odkazu Rodina */
-.nav-link {
-    color: #ffffff; /* Bílá barva, aby to ladilo s textem v menu */
-    text-decoration: none;
-    font-size: 16px;
-    opacity: 0.8; /* Lehce ztlumené, aby logo dominantně vyčnívalo */
-    transition: opacity 0.2s, color 0.2s;
-}
-
-/* Efekt při najetí na odkaz Rodina */
-.nav-link:hover {
-    opacity: 1;
-    color: #3b82f6; /* Při najetí myší se zbarví do modra */
-    text-decoration: underline;
-}
-
-/* Vyčištění výchozího chování seznamu pro dropdown */
-.nav-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.tlacitko-rodina {
-  background-color: #2f7b80; /* Výrazná tyrkysová/azurová */
-  color: #ffffff; /* Bílé text pro maximální čitelnost */
-  font-block: bold;
-  font-weight: 700; /* Tučné písmo */
-  padding: 10px 20px; /* Větší prostor kolem textu */
-  border: none;
-  border-radius: 6px; /* Jemně zaoblené rohy */
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 173, 181, 0.4); /* Jemná záře v barvě tlačítka */
-  transition: all 0.2s ease-in-out;
-}
-
-/* Efekt při najetí myší */
-.tlacitko-rodina:hover {
-  background-color: #00adb5; /* Ještě jasnější barva */
-  transform: translateY(-2px); /* Tlačítko se lehce nadzvedne */
-  box-shadow: 0 6px 20px rgba(8, 94, 99, 0.6);
-}
-
-.prehled-ukolu {
+/* =====================================================
+   DASHBOARD HEADER
+   ===================================================== */
+.dashboard-container {
   width: 100%;
-  border-collapse: collapse; /* Zruší dvojité okraje */
-  font-family: sans-serif;
-  background-color: #f8fafc; /* Světlé pozadí z obrázku */
+  padding: 32px 28px;
 }
 
-/* Styl pro hlavičku */
-.prehled-ukolu th {
-  background-color: #ffffff; /* Čistě bílé pozadí pro odlišení */
-  color: #1e293b; /* Tmavý, dobře čitelný text */
-  text-align: left; /* Zarovnání textu doleva */
-  padding: 12px 16px; /* Dostatečný prostor kolem textu */
-  font-weight: 600; /* Polotučné písmo */
-  border-bottom: 2px solid #e2e8f0; /* Výraznější linka pod hlavičkou */
+.dashboard-header {
+  margin-bottom: 28px;
 }
 
-/* Styl pro datové řádky (záznamy) */
-.prehled-ukolu td {
-  padding: 12px 16px;
-  color: #334155;
-  border-bottom: 1px solid #e2e8f0; /* Jemná linka mezi záznamy */
+.dashboard-header h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Efekt při najetí myší na řádek se záznamem */
-.prehled-ukolu tbody tr:hover {
-  background-color: #f1f5f9;
+.dashboard-header p {
+  color: var(--text-muted);
+  font-size: 16px;
 }
 
-/* Úplně schováme pomocný checkbox */
-.modal-toggle-checkbox {
-    display: none;
+/* =====================================================
+   TASKS BOARD (kanban columns)
+   ===================================================== */
+.tasks-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  align-items: flex-start;
 }
 
-/* Výchozí stav modálu - je schovaný */
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px);
+.tasks-column {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-/* TATO ČÁST NAHRAZUJE JAVASCRIPT: 
-   Když se checkbox zaškrtne, najdi modál, který je v kódu za ním, a zobraz ho */
-.modal-toggle-checkbox:checked ~ .modal-add {
-    display: flex;
+.column-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* --- Zbytek designu okna (stejný jako prve) --- */
-.modal-content {
-    background-color: #1e2640;
-    color: white;
-    margin: 10% auto;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    width: 90%;
-    max-width: 420px;
-    position: relative;
-    box-sizing: border-box;
+.task-count {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.close-btn {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    color: #a0aec0;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s;
+.tasks-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.close-btn:hover {
-    color: #ef4444;
+/* =====================================================
+   TASK CARD
+   ===================================================== */
+.task-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), border-color var(--transition), background var(--transition);
 }
 
-.modal-content h2 {
-    margin-top: 0;
-    margin-bottom: 25px;
-    text-align: center;
-    font-size: 1.8em;
+.task-card:hover {
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
 }
 
-.modal-form label {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 18px;
-    font-size: 0.95em;
-    color: #e0e0e0;
+.task-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.modal-form input[type="text"],
-.modal-form input[type="email"],
-.modal-form input[type="password"],
-.modal-form select {
-    margin-top: 6px;
-    padding: 11px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid #3a4460;
-    border-radius: 6px;
-    color: white;
-    font-size: 1em;
-    width: 100%;
-    box-sizing: border-box;
+.task-type {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary-dim);
+  color: var(--text-cyan);
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
 }
 
-.modal-form select option {
-    background-color: #1e2640;
-    color: white;
+.status {
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
-.modal-form input[type="submit"] {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 13px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-    transition: background-color 0.2s;
+.status.pending  { background: var(--warning-dim); color: #fbbf24; }
+.status.overdue  { background: var(--danger-dim);  color: #f87171; }
+.status.done     { background: var(--success-dim); color: #4ade80; }
+
+.task-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
 }
 
-.modal-form input[type="submit"]:hover {
-    background-color: #1d4ed8;
+.task-description {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  line-height: 1.55;
+  color: #c8d8ec;
+  margin-bottom: 12px;
+  font-size: 14px;
 }
 
-.add-member-btn {
-    display: inline-block;
-    background-color: #1e6056; 
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    transition:  0.5s;
+.task-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
 }
 
-.add-member-btn:hover {
-    background-color: #14443c;
-}   
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-label {
+  color: var(--text-cyan);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.info-value {
+  font-weight: 600;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+/* =====================================================
+   TASK ACTIONS / BUTTONS
+   ===================================================== */
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.task-actions form { flex: 1; display: flex; }
+
+.btn {
+  flex: 1;
+  border: none;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+  text-align: center;
+  width: 100%;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn-undo {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.btn-undo:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+.btn-complete {
+  background: var(--success-dim);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+.btn-complete:hover { background: rgba(34, 197, 94, 0.25); }
+
+.btn-delete {
+  background: var(--danger-dim);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.btn-delete:hover { background: rgba(239, 68, 68, 0.25); }
+
+.btn-add-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: #021620;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-top: 20px;
+}
+
+.btn-add-main:hover {
+  background: #22d3ee;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+}
+
+/* =====================================================
+   TABLES & CONTAINER
+   ===================================================== */
 .container {
-  max-width: 1200px;        /* Upravte podle potřeby */
-  margin: 40px auto;        
-  background: transparent !important; 
-  box-shadow: none !important;        
-  padding: 0;
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 20px;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .tables-layout {
   display: flex;
   flex-direction: row;
-  gap: 140px;                
+  gap: 24px;
   width: 100%;
-  justify-content: space-between;
 }
 
 .table-column {
   flex: 1;
-  background-color: #1c2838; 
-  padding: 24px;           
-  border-radius: 8px;        
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-@media (max-width: 900px) {
-  .tables-layout {
-    flex-direction: column;
-    gap: 30px;
-  }
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
-.modal-toggle-checkbox {
-  display: none;
+.table-column h2 {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 20px;
+  color: var(--text);
 }
 
-/* 2. Základní nastavení modálního okna (overlay - ztmavení pozadí) */
-.modal {
-  display: none; /* Schované v základu */
-  position: fixed;
-  top: 0;
-  left: 0;
+/* Tables */
+.family-table {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.65); /* Tmavý průhledný závoj */
-  backdrop-filter: blur(4px); /* Moderní jemné rozmazání pozadí webu */
-  z-index: 9999; /* Aby bylo okno stoprocentně nad vším ostatním */
-  justify-content: center;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.family-table th,
+.family-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.family-table th {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.family-table td { color: var(--text); }
+
+.family-table tbody tr {
+  transition: background var(--transition);
+}
+
+.family-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.family-table tbody tr:last-child td { border-bottom: none; }
+
+/* Responsive table wrapper */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+}
+
+/* =====================================================
+   BADGES
+   ===================================================== */
+.role-badge {
+  display: inline-block;
+  background: var(--primary-dim);
+  color: var(--text-cyan);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+/* =====================================================
+   ACTION BUTTONS ROW
+   ===================================================== */
+.action-buttons-row {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   align-items: center;
 }
 
-
-/* 3. Vzhled samotné karty s formulářem uvnitř okna */
-.modal-content {
-  background-color: #1c2838; /* Stejná tmavá barva jako mají vaše tabulky */
-  color: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 400px; /* Šířka formuláře */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out; /* Jemný efekt objevení */
+.add-member-btn,
+.add-pet-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all var(--transition);
+  border: 1px solid;
 }
 
-/* 4. Zavírací křížek (X) */
+.add-member-btn {
+  background: rgba(30, 96, 86, 0.25);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.25);
+}
+.add-member-btn:hover { background: rgba(30, 96, 86, 0.45); transform: translateY(-1px); }
+
+.add-pet-btn {
+  background: rgba(30, 96, 86, 0.25);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.25);
+}
+.add-pet-btn:hover { background: rgba(30, 96, 86, 0.45); transform: translateY(-1px); }
+
+.remove-member-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  background: var(--danger-dim);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  transition: all var(--transition);
+}
+.remove-member-btn:hover { background: rgba(239, 68, 68, 0.25); transform: translateY(-1px); }
+
+.edit-member-btn,
+.edit-pet-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  transition: all var(--transition);
+}
+.edit-member-btn:hover,
+.edit-pet-link:hover { background: rgba(56, 189, 248, 0.22); transform: translateY(-1px); }
+
+.tlacitko-rodina {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 182, 212, 0.18);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 10px 20px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+.tlacitko-rodina:hover {
+  background: var(--primary-dim);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.2);
+}
+
+/* =====================================================
+   LOGIN / REGISTER
+   ===================================================== */
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -5%, rgba(6, 182, 212, 0.1) 0%, transparent 60%),
+    url('./imgs/background_image.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-box {
+  background: rgba(17, 24, 39, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 36px;
+}
+
+.login-box h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #fff 0%, var(--text-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-box label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.login-box input[type="text"],
+.login-box input[type="email"],
+.login-box input[type="password"] {
+  margin-top: 8px;
+  padding: 13px 16px;
+  background: var(--bg-input);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 15px;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+  -webkit-appearance: none;
+}
+
+.login-box input[type="text"]:focus,
+.login-box input[type="email"]:focus,
+.login-box input[type="password"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+  background: rgba(6, 182, 212, 0.05);
+}
+
+.login-box input[type="submit"] {
+  width: 100%;
+  background: var(--primary);
+  color: #021620;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  margin-top: 8px;
+  margin-bottom: 20px;
+  transition: all var(--transition);
+  -webkit-appearance: none;
+}
+
+.login-box input[type="submit"]:hover {
+  background: #22d3ee;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+  transform: translateY(-1px);
+}
+
+.register-text {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.login-box a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.login-box a:hover { text-decoration: underline; }
+
+/* =====================================================
+   MODALS
+   ===================================================== */
+.modal-toggle-checkbox,
+.modal-remove-toggle-checkbox,
+.modal-edit-toggle-checkbox { display: none !important; }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* CSS-only modal triggers */
+.modal-toggle-checkbox:checked ~ .modal-add,
+.modal-toggle-checkbox:checked ~ .modal { display: flex; }
+
+#modal-pet-toggle:checked ~ .id-modal-add { display: flex !important; }
+
+input[id^="modal-pet-edit-toggle-"]:checked ~ div[class^="modal id-modal-edit-"] { display: flex !important; }
+input[id^="modal-pet-delete-toggle-"]:checked ~ div[class^="modal id-modal-delete-"] { display: flex !important; }
+input[id^="modal-user-edit-toggle-"]:checked ~ div[class^="modal id-modal-user-edit-"] { display: flex !important; }
+input[id^="modal-user-delete-toggle-"]:checked ~ div[class^="modal id-modal-user-delete-"] { display: flex !important; }
+#modal-family-edit-toggle:checked ~ .id-modal-family-edit { display: flex !important; }
+#modal-profile-edit-toggle:checked ~ .id-modal-profile-edit { display: flex !important; }
+#modal-password-edit-toggle:checked ~ .id-modal-password-edit { display: flex !important; }
+#modal-edit-toggle:checked ~ .id-modal-edit { display: flex !important; }
+
+.modal-content {
+  background: var(--bg-card);
+  color: var(--text);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-hover);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  animation: modalIn 0.22s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+.modal-content h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
 .close-btn {
   position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 28px;
-  color: #94a3b8;
+  right: 18px;
+  top: 14px;
+  color: var(--text-hint);
+  font-size: 26px;
+  font-weight: 300;
   cursor: pointer;
-  transition: color 0.2s;
-}
-.close-btn:hover {
-  color: #ff4d4d; /* Červená při najetí */
+  line-height: 1;
+  transition: color var(--transition);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
 }
 
-/* 5. Styl formulářových prvků */
+.close-btn:hover { color: #ef4444; background: var(--danger-dim); }
+
+/* =====================================================
+   MODAL FORM
+   ===================================================== */
 .modal-form label {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 14px;
-  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .modal-form input[type="text"],
+.modal-form input[type="email"],
+.modal-form input[type="password"],
 .modal-form input[type="date"],
+.modal-form select,
 .modal-form textarea {
+  margin-top: 7px;
+  padding: 11px 14px;
+  background: var(--bg-input);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 14px;
+  font-family: var(--font-body);
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  background-color: #0f172a; /* Ještě o něco tmavší vnitřek inputů */
-  border: 1px solid #334155;
-  border-radius: 6px;
-  color: #ffffff;
-  font-family: inherit;
-  box-sizing: border-box; /* Aby inputy nepřetékaly ven */
+  box-sizing: border-box;
+  transition: all var(--transition);
+  -webkit-appearance: none;
 }
 
-/* Úprava pro textovou oblast popisu */
 .modal-form textarea {
   resize: vertical;
   min-height: 80px;
+  line-height: 1.5;
 }
 
-/* Styl pro tlačítko "Přidat mazlíčka" (Výrazné azurové) */
+.modal-form select option { background: var(--bg-card); color: var(--text); }
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
+}
+
 .modal-form input[type="submit"] {
   width: 100%;
-  background-color: #00adb5;
-  color: white;
+  background: var(--primary);
+  color: #021620;
   border: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-weight: 600;
+  padding: 13px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  margin-top: 10px;
-  transition:  0.2s;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  margin-top: 6px;
+  transition: all var(--transition);
+  -webkit-appearance: none;
 }
+
 .modal-form input[type="submit"]:hover {
-  background-color: #00f4ff;
+  background: #22d3ee;
+  transform: translateY(-1px);
 }
 
-.modal-toggle-checkbox:checked ~ .modal-add { /*tady byla chyba v zobrazovani oken u pridavani clenu */
-    display: flex;
-}
-/* Styl pro otevírací tlačítko "Přidat mazlíčka do rodiny" pod tabulkou */
-.add-pet-btn {
-  display: inline-block;
-  background-color: #2e7d32; /* Zelené jako u lidí, případně změňte */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 15px;
-  transition:  0.2s;
-}
-.add-pet-btn:hover {
-  background-color: #388e3c;
-}
-
-/* Animace pro plynulý pop-up efekt */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-/* Schováme nový druhý pomocný checkbox */
-.modal-remove-toggle-checkbox {
-    display: none;
-}
-
-/* Když se zaškrtne druhý checkbox, zobraz druhé okno*/ 
-.modal-remove-toggle-checkbox:checked ~ .remove-modal {
-    display: block;
-}
-/* Styl pro červené tlačítko "Odebrat člena" na hlavní stránce */
-.remove-member-btn {
-    display: inline-block;
-    background-color: #ef4444; /* Červená */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    margin-left: 10px; /* Mezera od zeleného tlačítka */
-    transition:  0.2s;
-}
-
-.remove-member-btn:hover {
-    background-color: #dc2626;
-}
-
-/* Destruktivní tlačítko uvnitř formuláře */
-.modal-form .submit-danger {
-    background-color: #ef4444;
-}
-
-.modal-form .submit-danger:hover {
-    background-color: #dc2626;
-}
-
-/* Schování pomocného checkboxu pro editaci */
-.modal-edit-toggle-checkbox {
-    display: none !important;
-}
-
-/* Zobrazení editačního modálu při zaškrtnutí */
-#modal-edit-toggle:checked ~ .id-modal-edit {
-    display: flex !important;
-}
-
-/* edit member */
-.edit-member-btn {
-    display: inline-block;
-    color: white;
-    background-color: #38bdf8;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    margin-left: 10px; 
-    transition:  0.5s;
-}
-
-.edit-member-btn:hover {
-    background-color: #236784;
-}
-
-/* Styl pro potvrzovací tlačítko uvnitř editačního formuláře */
 .modal-form .submit-success {
-    background-color: #6366f1;
+  background: rgba(34, 197, 94, 0.85);
+  color: #021a08;
+}
+.modal-form .submit-success:hover { background: #22c55e; }
+
+.modal-form .submit-danger {
+  background: rgba(239, 68, 68, 0.85) !important;
+  color: white !important;
+}
+.modal-form .submit-danger:hover { background: #ef4444 !important; }
+
+/* Modal wrapper keeps checkboxes from affecting layout */
+.modal-wrapper { position: relative; }
+
+/* =====================================================
+   TASK CREATE FORM PAGE
+   ===================================================== */
+.task-create-form {
+  display: flex;
+  justify-content: center;
+  padding: 32px 20px;
 }
 
-.modal-form .submit-success:hover {
-    background-color: #4f46e5;
-
-}
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-
-    --bg:#0f172a;
-    --card:#1e293b;
-    --card-hover:#263548;
-
-    --primary:#06b6d4;
-    --success:#22c55e;
-    --danger:#ef4444;
-
-    --text:#f1f5f9;
-    --text-muted:#94a3b8;
-
-    --border:rgba(255,255,255,0.08);
-
-    --shadow:
-        0 10px 25px rgba(0,0,0,0.25);
-
-    --radius:18px;
+.task-create-form form {
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-card);
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-body{
-
-    font-family:
-        "Segoe UI",
-        sans-serif;
-
-    min-height:100vh;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(15,23,42,0.92),
-            rgba(15,23,42,0.95)
-        ),
-        url('./imgs/background-image.png');
-
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-
-    color:var(--text);
+.task-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:20px 40px;
-
-    background:rgba(15,23,42,0.85);
-
-    backdrop-filter:blur(10px);
-
-    border-bottom:1px solid var(--border);
-
-    position:sticky;
-    top:0;
-
-    z-index:1000;
+.task-input label,
+label {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.logo{
-
-    font-size:28px;
-    font-weight:700;
+select, textarea {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-input);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition);
+  width: 100%;
+  -webkit-appearance: none;
 }
 
-.user{
-
-    color:var(--text-muted);
+select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
 }
 
-/* =========================
-   DASHBOARD
-========================= */
-
-.dashboard-container{
-
-    width:100%;
-    padding:40px;
+input[type="date"] {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-input);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition);
+  width: 100%;
+  -webkit-appearance: none;
 }
 
-/* =========================
-   HEADER
-========================= */
-
-.dashboard-header{
-
-    margin-bottom:30px;
+input[type="date"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
 }
 
-.dashboard-header h1{
-
-    font-size:42px;
-
-    margin-bottom:10px;
+/* Override ::-webkit-calendar-picker-indicator for dark */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
 }
 
-.dashboard-header p{
-
-    color:var(--text-muted);
-
-    font-size:18px;
+button {
+  padding: 13px 22px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: #021620;
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
 }
 
-/* =========================
-   TASK GRID
-========================= */
-
-/* =========================
-    STRUKTURA DESKY A SLOUPCŮ
-========================= */
-.tasks-board {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 0;
+button:hover {
+  background: #22d3ee;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.3);
 }
 
-.tasks-column {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--border);
-    border-radius: var(--radius, 16px);
-    flex: 1 1 300px; 
-    max-width: 100%;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(10px);
-    box-sizing: border-box;
+h1 {
+  text-align: center;
+  color: var(--text);
+  margin-top: 20px;
+  font-size: clamp(22px, 3vw, 32px);
 }
 
-.column-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 16px 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* =====================================================
+   OLD NAVBAR (index/login pages)
+   ===================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: rgba(10, 15, 30, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.task-count {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2px 10px;
-    border-radius: 999px;
-    font-size: 13px;
-    color: #94a3b8;
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 28px;
 }
 
-.tasks-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.logo {
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-@media (max-width: 1024px) {
-    .tasks-board {
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding-bottom: 15px;
-        -webkit-overflow-scrolling: touch;
-    }
-    .tasks-column {
-        flex: 0 0 320px;
-    }
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  align-items: center;
 }
 
-@media (max-width: 768px) {
-    .tasks-board {
-        flex-direction: column;
-        align-items: center;
-        overflow-x: visible;
-    }
-    
-    .tasks-column {
-        width: 100%;
-        max-width: 480px;
-        margin-bottom: 10px;
-    }
+.nav-links a, .nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color var(--transition);
 }
 
-.task-card {
-    background: rgba(30, 41, 59, 0.92);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadow);
-    transition: transform 0.2s, background 0.2s;
+.nav-links a:hover, .nav-link:hover { color: var(--primary); }
+
+/* =====================================================
+   HERO (landing page)
+   ===================================================== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100vh - 70px);
+  padding: 40px 24px;
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+  color: var(--text);
 }
 
-.task-card:hover {
-    transform: translateY(-2px);
-    background: var(--card-hover);
+.hero h1 {
+  font-size: clamp(32px, 6vw, 60px);
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #fff 0%, var(--text-cyan) 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.task-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.task-type {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(6, 182, 212, 0.15);
-    color: #67e8f9;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.status {
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 17px;
-    font-weight: 700;
-}
-
-.status.pending {
-    background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
-}
-
-.status.overdue {
-    background: rgba(239, 68, 68, 0.2);
-    color: #f87171;
-}
-
-.status.done {
-    background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
-}
-
-.task-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #cbe6ee;
-    margin-bottom: 6px;
-}
-
-.task-description {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    line-height: 1.5;
-    color: #dbeafe;
-    margin-bottom: 14px;
-    font-size: 15px;
-}
-
-.task-info {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 14px;
-    background: rgba(0, 0, 0, 0.15);
-    padding: 12px;
-    border-radius: 8px;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.info-label {
-    color:#3feff8;
-    font-size: 13px;
-}
-
-.info-value {
-    font-weight: 600;
-    font-size: 13px;
-}
-
-.status.overdue ~ .task-info .date-value {
-    color: #f87171;
-}
-
-.task-actions {
-    display: flex;
-    gap: 12px;
+.hero p {
+  font-size: clamp(16px, 2vw, 20px);
+  margin-bottom: 36px;
+  max-width: 560px;
+  color: var(--text-muted);
+  line-height: 1.7;
 }
 
 .btn {
-    border: none;
-    padding: 10px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 17px;
-    transition: transform 0.2s, opacity 0.2s,  0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: #021620;
+  padding: 14px 32px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 16px;
+  transition: all var(--transition);
+  border: none;
+  cursor: pointer;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
+  background: #22d3ee;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
 }
 
-.btn-undo {
-    background: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
-}
-.btn-undo:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.btn-delete {
-    background: var(--danger);
-    color: white;
+/* =====================================================
+   USER MENU (old nav items)
+   ===================================================== */
+.user-menu-item {
+  list-style: none;
+  position: relative;
+  z-index: 999999;
 }
 
-.btn-add-main {
-    background: #06b6d4;
-    color: #0f172a;
-    border: none;
-    padding: 12px 24px;
-    border-radius: var(--radius, 12px);
-    font-weight: 700;
-    cursor: pointer;
-    transition:  0.2s;
+/* =====================================================
+   PREHLED UKOLU (overview table)
+   ===================================================== */
+.prehled-ukolu {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
 }
 
-.btn-add-main:hover {
-    background: #22d3ee;
-}
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:700px){
-
-    .navbar{
-
-        padding:18px 20px;
-
-        flex-direction:column;
-
-        gap:10px;
-    }
-
-    .dashboard-header h1{
-
-        font-size:32px;
-    }
+.prehled-ukolu th {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-muted);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border);
 }
 
-.app-layout{
-
-    display:flex;
-
-    min-height:100vh;
+.prehled-ukolu td {
+  padding: 12px 16px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+.prehled-ukolu tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
 
-.sidebar{
-
-    width:260px;
-
-    background:#162033;
-
-    border-right:
-        1px solid rgba(255,255,255,0.06);
-
-    padding:30px 20px;
+/* =====================================================
+   FAMILY TITLE ROW
+   ===================================================== */
+.family-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-.sidebar-logo{
-
-    color:white;
-
-    font-size:28px;
-
-    font-weight:700;
-
-    margin-bottom:40px;
+/* =====================================================
+   MOBILE BOTTOM NAV (appears on small screens)
+   ===================================================== */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(10, 15, 30, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  z-index: 300;
+  padding: 0 8px;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.sidebar-menu{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
+.mobile-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-hint);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+  min-width: 56px;
 }
 
-.sidebar-link{
+.mobile-nav a svg { width: 22px; height: 22px; }
 
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    padding:14px 18px;
-
-    border-radius:12px;
-
-    color:#94a3b8;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-    transition:0.2s;
+.mobile-nav a:hover,
+.mobile-nav a.active {
+  color: var(--primary);
+  background: var(--primary-glow);
 }
 
-.sidebar-link:hover{
+/* =====================================================
+   RESPONSIVE — TABLET (max 1024px)
+   ===================================================== */
+@media (max-width: 1024px) {
+  .tasks-board {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    background:
-        rgba(255,255,255,0.05);
-
-    color:white;
-}
-
-.sidebar-link.active{
-
-    background:
-        rgba(6,182,212,0.15);
-
-    color:#67e8f9;
-}
-
-/* =========================
-   MAIN AREA
-========================= */
-
-.main-area{
-
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    min-height:100vh;
-}
-
-/* =========================
-   TOPBAR
-========================= */
-
-.topbar{
-   position: relative;
-    z-index: 10000;
-    height:80px;
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    align-items:center;
-
-    padding:0 30px;
-
-    background:
-        rgba(15,23,42,0.75);
-
-    backdrop-filter:blur(10px);
-
-    border-bottom:
-        1px solid rgba(255,255,255,0.06);
-}
-
-/* =========================
-   CONTENT
-========================= */
-
-.content{
-
-    flex:1;
-
-    padding:40px;
-}
-.sidebar-logo {
-    background-color: #ffffff;    /* Bílé pozadí */
-    border-radius: 12px;          /* Zaoblené rohy */
-    padding: 20px;                /* Vnitřní prostor kolem loga */
-    margin-bottom: 40px;          /* Mezera mezi logem a menu */
-    
-    /* Vycentrování samotného obrázku uvnitř boxu */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.sidebar-logo img {
-    max-width: 100%;              /* Aby nepřeteklo */
-    height: auto;                 /* Zachování poměru stran */
-    display: block;
-}
-.tasks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  .tables-layout {
+    flex-direction: column;
     gap: 20px;
+  }
+
+  .dashboard-container,
+  .content {
+    padding: 24px 20px;
+  }
 }
 
-.task-create-form{
-    display:flex;
-    justify-content:center;
-    padding:40px;
+/* =====================================================
+   RESPONSIVE — MOBILE (max 768px)
+   ===================================================== */
+@media (max-width: 768px) {
+
+  /* Hide desktop sidebar, show hamburger */
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay.visible { display: block; }
+
+  .main-area {
+    margin-left: 0;
+  }
+
+  .topbar {
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+  .topbar-hamburger { display: flex; align-items: center; }
+
+  /* Tasks: single column on mobile */
+  .tasks-board {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .dashboard-container,
+  .content {
+    padding: 20px 16px 80px; /* bottom pad for mobile nav */
+  }
+
+  /* Show mobile bottom nav */
+  .mobile-nav { display: flex; }
+
+  /* Login box */
+  .login-box {
+    padding: 28px 22px;
+    max-width: 100%;
+  }
+
+  /* Modal */
+  .modal-content {
+    padding: 24px 20px;
+    max-height: 85vh;
+    margin: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    animation: slideUp 0.25s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  /* Compact task cards on mobile */
+  .task-card { padding: 14px; }
+
+  .task-top { flex-direction: row; }
+
+  .task-actions { gap: 8px; }
+
+  .btn { padding: 10px 10px; font-size: 12px; }
+
+  /* Tables: scrollable */
+  .family-table th,
+  .family-table td {
+    padding: 10px 10px;
+    font-size: 13px;
+  }
+
+  /* Navbar (old) */
+  .navbar {
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .nav-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+  .hero h1 { font-size: clamp(28px, 8vw, 42px); }
+
+  .table-column { padding: 16px; }
+
+  /* Full-width action buttons on mobile */
+  .action-buttons-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-buttons-row > * { width: 100%; justify-content: center; }
+
+  .btn-add-main { width: 100%; justify-content: center; }
+
+  .task-create-form { padding: 20px 0; }
+  .task-create-form form { padding: 20px 16px; border-radius: var(--radius-md); }
 }
 
-.task-create-form form{
-    width:100%;
-    max-width:500px;
-    background:#1e293b;
-    padding:25px;
-    border-radius:14px;
-    border:1px solid #334155;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+/* =====================================================
+   RESPONSIVE — SMALL MOBILE (max 480px)
+   ===================================================== */
+@media (max-width: 480px) {
+  .dashboard-header h1 { font-size: 24px; }
+  .dashboard-header p  { font-size: 14px; }
 
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-input[type="date"]{
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #334155;
-    background:#0f172a;
-    color:white;
-    outline:none;
-    transition:0.2s;
+  .task-type, .status { font-size: 11px; padding: 4px 9px; }
+
+  .task-title  { font-size: 14px; }
+  .info-label, .info-value { font-size: 11px; }
+
+  .tasks-column { padding: 14px; border-radius: var(--radius-md); }
+
+  .column-title { font-size: 12px; }
+
+  .login-box h1 { font-size: 22px; }
+
+  .modal-content h2 { font-size: 17px; }
 }
 
+/* =====================================================
+   UTILITY
+   ===================================================== */
+.prehled-ukolu-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-input[type="date"]:focus{
-    border-color:#3b82f6;
-    box-shadow:0 0 0 3px rgba(59,130,246,0.2);
-}
-.task-input{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-label{
-    color:#cbd5e1;
-    font-size:14px;
-    font-weight:600;
+/* Focus visible (a11y) */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-select,textarea{
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #334155;
-    background:#0f172a;
-    color:white;
-    outline:none;
-    transition:0.2s;
-}
-
-select:focus,textarea:focus{
-    border-color:#3b82f6;
-    box-shadow:0 0 0 3px rgba(59,130,246,0.2);
-}
-
-button{
-    margin-top:10px;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
-}
-
-button:hover{
-    background:#1d4ed8;
-    transform:translateY(-1px);
-}
-
-h1{
-    text-align:center;
-    color:white;
-    margin-top:20px;
-}
-
-
-/* Pridani zvirat (CHYBA: chybel # prdc modal-pet-toggle:checked) */
-#modal-pet-toggle:checked ~ .id-modal-add { 
-    display: flex !important;
-
-}
-
-/* Editace zvirat */
-input[id^="modal-pet-edit-toggle-"]:checked ~ div[class^="modal id-modal-edit-"] {
-    display: flex !important;
-}
-
-/* Mazani zvirat */
-input[id^="modal-pet-delete-toggle-"]:checked ~ div[class^="modal id-modal-delete-"] {
-    display: flex !important;
-}
-
-/* Editace clenu */
-input[id^="modal-user-edit-toggle-"]:checked ~ div[class^="modal id-modal-user-edit-"] {
-    display: flex !important;
-}
-
-/* Mazani clenu */
-input[id^="modal-user-delete-toggle-"]:checked ~ div[class^="modal id-modal-user-delete-"] {
-    display: flex !important;
-}
-
-/* Prejmenovani rodiny */
-#modal-family-edit-toggle:checked ~ .id-modal-family-edit {
-    display: flex !important;
-}
-
-/* Edit sam sebe */
-#modal-profile-edit-toggle:checked ~ .id-modal-profile-edit {
-    display: flex !important;
-}
-
-/* Zmena hesla svojeho */
-#modal-password-edit-toggle:checked ~ .id-modal-password-edit {
-    display: flex !important;
+/* Prevent zoom on input focus (iOS) */
+@media (max-width: 768px) {
+  input, select, textarea { font-size: 16px !important; }
 }

@@ -1,9 +1,46 @@
 
-<footer>
+<footer style="padding: 16px 28px; color: var(--text-hint); font-size: 13px; border-top: 1px solid var(--border); display: flex; gap: 20px; flex-wrap: wrap;">
     <span>&copy; Vivicta</span>
-    <span>&phone; +420 123 456 789</span>
-    <span>&commat; vicita@email.com</span>
+    <span>&#9990; +420 123 456 789</span>
+    <span>&#64; vicita@email.com</span>
 </footer>
+
+        </main>
+    </div><!-- end main-area -->
+</div><!-- end app-layout -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var toggle  = document.getElementById('sidebar-toggle');
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebar-overlay');
+
+    function openSidebar(){
+        sidebar.classList.add('open');
+        overlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar(){
+        sidebar.classList.remove('open');
+        overlay.classList.remove('visible');
+        document.body.style.overflow = '';
+    }
+
+    if(toggle)  toggle.addEventListener('click', openSidebar);
+    if(overlay) overlay.addEventListener('click', closeSidebar);
+
+    /* Close sidebar when a nav link is tapped on mobile */
+    document.querySelectorAll('.sidebar-link').forEach(function(l){
+        l.addEventListener('click', closeSidebar);
+    });
+
+    /* Mark active link in sidebar + bottom nav */
+    var current = window.location.href;
+    document.querySelectorAll('.sidebar-link, .mobile-nav a').forEach(function(l){
+        if(l.href === current) l.classList.add('active');
+    });
+});
+</script>
 
 </body>
 </html>
