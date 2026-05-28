@@ -90,7 +90,7 @@ $todayDay   = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
                 <div class="cal-list-task-body">
                     <div class="cal-list-task-top">
                         <span class="cal-list-task-type"><?= htmlspecialchars($t['type_name']) ?></span>
-                        <span class="cal-list-task-time"><?= date('H:i', strtotime($t['taskTime'])) ?></span>
+                        <span class="cal-list-task-time"><?= date('H:i', strtotime($t['taskCreated'])) ?></span>
                     </div>
                     <div class="cal-list-task-meta">
                         🐾 <?= htmlspecialchars($t['animal_name']) ?>
