@@ -56,14 +56,13 @@
 
         </nav>
 
-        <!-- ADMIN MODE TOGGLE — only shown to role_id=1 -->
         <?php if (isset($uzivatel) && (int)$uzivatel['role_id'] === 1): ?>
         <?php
             $adminMode = $_SESSION['admin_mode'] ?? true;
         ?>
         <div class="sidebar-admin-toggle">
             <span class="sidebar-admin-label">
-                <?= $adminMode ? '🛡️ Admin režim' : '👤 Rodičovský režim' ?>
+                <?= $adminMode ? 'Admin režim' : 'Rodičovský režim' ?>
             </span>
             <form action="./toggle_admin_mode.php" method="POST">
                 <button type="submit" class="admin-toggle-btn <?= $adminMode ? 'active' : 'inactive' ?>">
