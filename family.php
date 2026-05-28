@@ -18,6 +18,11 @@ $rod->execute([$uzivatel["family_id"]]);
 $vysledek_rodiny = $rod->get_result()->fetch_assoc();
 $nazev_rodiny = $vysledek_rodiny['family_name'];
 
+$user_to_edit_id = intval($_POST['user_to_edit']);
+$vypis = $db->prepare("SELECT u.username, u.email, u.role_id, r.name FROM users u LEFT JOIN role_type r ON u.role_id = r.id_role WHERE u.id = ?");
+$vypis->execute([$user_to_edit_id]);
+$profil = $vypis->get_result()->fetch_assoc();
+
 
 require "./layout/header2.phtml";
 require "./familyList.phtml";

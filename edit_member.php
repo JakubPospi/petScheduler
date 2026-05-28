@@ -2,11 +2,17 @@
 require_once "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
 
+
+
 // Kontrola, zda je uživatel přihlášen, je Admin (role_id === 1) a data přišla přes POST
 if ($uzivatel !== null && $uzivatel['role_id'] === 1 && $_SERVER["REQUEST_METHOD"] === "POST") {
     
     // 1. Načtení ID uživatele, kterého jdeme upravovat
     $user_to_edit_id = intval($_POST['user_to_edit']);
+
+$vypis = $db->prepare("SELECT u.username, u.email, u.role_id, r.name FROM users u LEFT JOIN role_type r ON u.role_id = r.id_role WHERE u.id = ?");
+$vypis->execute([$user_to_edit_id]);
+$profil = $vypis->get_result()->fetch_assoc();
     
     // Načtení ostatních dat z formuláře
     $jmeno = trim($_POST['username']);
@@ -70,3 +76,4 @@ if ($uzivatel !== null && $uzivatel['role_id'] === 1 && $_SERVER["REQUEST_METHOD
     header("Location: dashboard.php");
     exit();
 }
+
