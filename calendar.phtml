@@ -1,0 +1,114 @@
+<?php
+$czechMonths = ['','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+$czechDays   = ['Ne','Po','Út','St','Čt','Pá','So'];
+$czechDaysFull = ['Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'];
+
+$daysInMonth  = (int)date('t', mktime(0,0,0,$month,1,$year));
+$firstDayOfWeek = (int)date('w', mktime(0,0,0,$month,1,$year)); // 0=Sun
+// Convert Sunday=0 to Monday-first (0=Mon)
+$startOffset = ($firstDayOfWeek === 0) ? 6 : $firstDayOfWeek - 1;
+
+$todayDay   = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
+?>
+
+<div class="calendar-page">
+
+    <!-- Header -->
+    <div class="cal-page-header">
+        <a href="?month=<?= $prevMonth ?>&year=<?= $prevYear ?>" class="cal-nav-btn">‹</a>
+        <h1 class="cal-page-title"><?= $czechMonths[$month] ?> <?= $year ?></h1>
+        <a href="?month=<?= $nextMonth ?>&year=<?= $nextYear ?>" class="cal-nav-btn">›</a>
+    </div>
+
+    <!-- Grid calendar -->
+    <div class="cal-grid-wrap">
+        <!-- Day headers -->
+        <div class="cal-grid">
+            <?php foreach ($czechDays as $d): ?>
+            <div class="cal-grid-dayname"><?= $d ?></div>
+            <?php endforeach; ?>
+
+            <!-- Empty offset cells -->
+            <?php for ($i = 0; $i < $startOffset; $i++): ?>
+            <div class="cal-grid-cell empty"></div>
+            <?php endfor; ?>
+
+            <!-- Day cells -->
+            <?php for ($day = 1; $day <= $daysInMonth; $day++):
+                $isToday    = ($day === $todayDay);
+                $hasTasks   = !empty($byDay[$day]);
+                $taskCount  = $hasTasks ? count($byDay[$day]) : 0;
+                $allDone    = $hasTasks && array_sum(array_column($byDay[$day], 'is_done')) === $taskCount;
+            ?>
+            <div class="cal-grid-cell <?= $isToday ? 'cal-today' : '' ?> <?= $hasTasks ? 'has-tasks' : '' ?>">
+                <span class="cal-grid-num"><?= $day ?></span>
+                <?php if ($hasTasks): ?>
+                <div class="cal-grid-dots">
+                    <?php foreach (array_slice($byDay[$day], 0, 3) as $t): ?>
+                    <span class="cal-dot <?= (int)$t['is_done'] ? 'done' : (strtotime($t['taskTime']) < time() ? 'overdue' : 'pending') ?>"></span>
+                    <?php endforeach; ?>
+                    <?php if ($taskCount > 3): ?>
+                    <span class="cal-dot-more">+<?= $taskCount - 3 ?></span>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+            <?php endfor; ?>
+        </div>
+    </div>
+
+    <!-- List view — tasks grouped by day -->
+    <div class="cal-list">
+        <h2 class="cal-list-title">Úkoly v <?= $czechMonths[$month] ?></h2>
+
+        <?php if (empty($byDay)): ?>
+        <div class="empty-state">
+            <span style="font-size:48px;">📭</span>
+            <p>Žádné úkoly v tomto měsíci</p>
+        </div>
+        <?php else: ?>
+
+        <?php foreach ($byDay as $day => $tasks):
+            $ts      = mktime(0,0,0,$month,$day,$year);
+            $dayName = $czechDaysFull[(int)date('w', $ts)];
+            $isToday = ($day === $todayDay);
+        ?>
+        <div class="cal-list-group">
+            <div class="cal-list-date <?= $isToday ? 'today' : '' ?>">
+                <span class="cal-list-daynum"><?= $day ?></span>
+                <span class="cal-list-dayname"><?= $dayName ?></span>
+                <?php if ($isToday): ?><span class="cal-today-badge">Dnes</span><?php endif; ?>
+            </div>
+
+            <?php foreach ($tasks as $t):
+                $done    = (int)$t['is_done'];
+                $overdue = !$done && strtotime($t['taskTime']) < time();
+                $cls     = $done ? 'done' : ($overdue ? 'overdue' : 'pending');
+            ?>
+            <div class="cal-list-task <?= $cls ?>">
+                <div class="cal-list-task-bar"></div>
+                <div class="cal-list-task-body">
+                    <div class="cal-list-task-top">
+                        <span class="cal-list-task-type"><?= htmlspecialchars($t['type_name']) ?></span>
+                        <span class="cal-list-task-time"><?= date('H:i', strtotime($t['taskTime'])) ?></span>
+                    </div>
+                    <div class="cal-list-task-meta">
+                        🐾 <?= htmlspecialchars($t['animal_name']) ?>
+                        &nbsp;·&nbsp;
+                        👤 <?= htmlspecialchars($t['user_name']) ?>
+                    </div>
+                </div>
+                <?php if ($done): ?>
+                <span class="cal-list-done-badge">✓ Splněno</span>
+                <?php elseif ($overdue): ?>
+                <span class="cal-list-overdue-badge">Po termínu</span>
+                <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endforeach; ?>
+
+        <?php endif; ?>
+    </div>
+
+</div>

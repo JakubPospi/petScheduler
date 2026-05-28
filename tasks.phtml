@@ -1,205 +1,105 @@
+<?php
+$role = (int)$uzivatel['role_id'];
+$isAdmin  = $role === 1;
+$isParent = $role === 2;
+$isChild  = $role === 3;
+$canDelete        = $isAdmin || $isParent; // parent+admin can delete
+$canUncomplete    = $isAdmin;              // only admin can undo completed
+$canComplete      = !$isChild ? true : true; // everyone can complete their own
+?>
+
 <div class="tasks-board">
 
+    <?php
+    $columns = [
+        ['label' => 'Čeká',      'tasks' => $pendingTasks, 'statusText' => 'Čeká',       'statusClass' => 'pending'],
+        ['label' => 'Po termínu','tasks' => $overdueTasks, 'statusText' => 'Po termínu', 'statusClass' => 'overdue'],
+        ['label' => 'Splněno',   'tasks' => $doneTasks,    'statusText' => 'Splněno',    'statusClass' => 'done'],
+    ];
+    foreach ($columns as $col):
+    ?>
     <div class="tasks-column">
-        <h3 class="column-title">Čeká <span class="task-count"><?= count($pendingTasks) ?></span></h3>
+        <h3 class="column-title">
+            <?= $col['label'] ?>
+            <span class="task-count"><?= count($col['tasks']) ?></span>
+        </h3>
         <div class="tasks-grid">
-            <?php foreach ($pendingTasks as $task): ?>
-                <?php
-                    $isOverdue = strtotime($task['taskTime']) < time();
-                    $statusText = "Čeká";
-                    $statusClass = "pending";
-                ?>  
-                <div class="task-card">
-                    <div class="task-top">
-                        <div class="task-type">
-                            <?= htmlspecialchars($task['type_name']) ?>
-                        </div>
-                        <div class="status <?= $statusClass ?>">
-                            <?= $statusText ?>
-                        </div>
+            <?php foreach ($col['tasks'] as $task): ?>
+            <div class="task-card">
+                <div class="task-top">
+                    <div class="task-type"><?= htmlspecialchars($task['type_name']) ?></div>
+                    <div class="status <?= $col['statusClass'] ?>"><?= $col['statusText'] ?></div>
+                </div>
+                <div class="task-title">Úkol #<?= $task['id'] ?></div>
+                <div class="task-description"><?= htmlspecialchars($task['note']) ?></div>
+                <div class="task-info">
+                    <div class="info-row">
+                        <div class="info-label">Má splnit</div>
+                        <div class="info-value"><?= htmlspecialchars($task['user_name']) ?></div>
                     </div>
-                    <div class="task-title">
-                        Úkol #<?= $task['id'] ?>
+                    <div class="info-row">
+                        <div class="info-label">Zvíře</div>
+                        <div class="info-value">🐾 <?= htmlspecialchars($task['animal_name']) ?></div>
                     </div>
-                    <div class="task-description">
-                        <?= htmlspecialchars($task['note']) ?>
+                    <div class="info-row">
+                        <div class="info-label">Vytvořeno</div>
+                        <div class="info-value"><?= date('d. m. Y H:i', strtotime($task['taskCreated'])) ?></div>
                     </div>
-                    <div class="task-info">
-                        <div class="info-row">
-                            <div class="info-label">Má splnit</div>
-                            <div class="info-value"><?= htmlspecialchars($task['user_name']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Zvíře</div>
-                            <div class="info-value">🐾 <?= htmlspecialchars($task['animal_name']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Vytvořeno</div>
-                            <div class="info-value"><?= date('d. m. Y H:i', strtotime($task['taskCreated'])) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Splatnost</div>
-                            <div class="info-value date-value"><?= date('d. m. Y', strtotime($task['taskTime'])) ?></div>
-                        </div>
-                    </div>
-                    <div class="task-actions">
-                        <form action="undo_task.php" method="POST" style="display:inline-block; flex: 1;">
-                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                            <input type="hidden" name="action" value="undo">
-                            <button class="btn btn-undo">Vrátit zpět</button>
-                        </form>
-                        <form action="delete_task.php" method="POST" style="display: inline-block; flex: 1;">
-                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                            <button type="submit" class="btn btn-delete" onclick="return confirm('Opravdu chcete úkol smazat?');">Smazat</button>
-                        </form>
+                    <div class="info-row">
+                        <div class="info-label">Splatnost</div>
+                        <div class="info-value"><?= date('d. m. Y', strtotime($task['taskTime'])) ?></div>
                     </div>
                 </div>
-                
+                <div class="task-actions">
+
+                    <?php if ($col['statusClass'] === 'done'): ?>
+                        <?php if ($canUncomplete): ?>
+                        <!-- Admin only: undo completed task -->
+                        <form action="undo_task.php" method="POST" style="flex:1;display:flex;">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <input type="hidden" name="action" value="undo">
+                            <button class="btn btn-undo">↩ Vrátit zpět</button>
+                        </form>
+                        <?php endif; ?>
+                        <?php if ($canDelete): ?>
+                        <!-- Parent/Admin: delete completed task -->
+                        <form action="delete_task.php" method="POST" style="flex:1;display:flex;">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('Smazat úkol?');">🗑 Smazat</button>
+                        </form>
+                        <?php endif; ?>
+                        <?php if ($isChild): ?>
+                        <div class="task-done-note">✓ Splněno</div>
+                        <?php endif; ?>
+
+                    <?php else: ?>
+                        <!-- Complete button — everyone sees this -->
+                        <form action="complete_task.php" method="POST" style="flex:1;display:flex;">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <button type="submit" class="btn btn-complete">✓ Splněno</button>
+                        </form>
+                        <?php if ($canDelete): ?>
+                        <!-- Parent/Admin only: delete pending/overdue task -->
+                        <form action="delete_task.php" method="POST" style="flex:1;display:flex;">
+                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('Smazat úkol?');">🗑 Smazat</button>
+                        </form>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                </div>
+            </div>
             <?php endforeach; ?>
         </div>
     </div>
-    
-    <div class="tasks-column">
-        
-        <h3 class="column-title">Po termínu <span class="task-count"><?= count($overdueTasks) ?></span></h3>
-        <div class="tasks-grid">
-            <?php foreach ($overdueTasks as $task): ?>
-                <?php
-                    $statusText = "Po termínu";
-                    $statusClass = "overdue";
-                ?>
-                <div class="task-card">
-                    <div class="task-top">
-                        <div class="task-type">
-                            <?= htmlspecialchars($task['type_name']) ?>
-                        </div>
-                        <div class="status <?= $statusClass ?>">
-                            <?= $statusText ?>
-                        </div>
-                    </div>
-                    <div class="task-title">
-                        Úkol #<?= $task['id'] ?>
-                    </div>
-                    <div class="task-description">
-                        <?= htmlspecialchars($task['note']) ?>
-                    </div>
-                    <div class="task-info">
-                        <div class="info-row">
-                            <div class="info-label">Má splnit</div>
-                            <div class="info-value"><?= htmlspecialchars($task['user_name']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Zvíře</div>
-                            <div class="info-value">🐾 <?= htmlspecialchars($task['animal_name']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Vytvořeno</div>
-                            <div class="info-value"><?= date('d. m. Y H:i', strtotime($task['taskCreated'])) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Splatnost</div>
-                            <div class="info-value date-value"><?= date('d. m. Y', strtotime($task['taskTime'])) ?></div>
-                        </div>
-                    </div>
-                    <div class="task-actions">
-                        <form action="undo_task.php" method="POST" style="display:inline-block; flex: 1;">
-                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                            <input type="hidden" name="action" value="undo">
-                            <button class="btn btn-undo">Vrátit zpět</button>
-                        </form>
-                        <form action="delete_task.php" method="POST" style="display: inline-block; flex: 1;">
-                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                            <button type="submit" class="btn btn-delete" onclick="return confirm('Opravdu chcete úkol smazat?');">Smazat</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-                
-    <div class="tasks-column">
-        <h3 class="column-title">Splněno <span class="task-count"><?= count($doneTasks) ?></span></h3>
-        <div class="tasks-grid">
-            <?php foreach ($doneTasks as $task): ?>
-                <?php
-                    $statusText = "Splněno";
-                    $statusClass = "done";
-                ?>
-                <div class="task-card">
-                    <div class="task-top">
-                        <div class="task-type">
-                            <?= htmlspecialchars($task['type_name']) ?>
-                        </div>
-                        <div class="status <?= $statusClass ?>">
-                            <?= $statusText ?>
-                        </div>
-                    </div>
-                    <div class="task-title">
-                        Úkol #<?= $task['id'] ?>
-                    </div>
-                    <div class="task-description">
-                        <?= htmlspecialchars($task['note']) ?>
-                    </div>
-                    <div class="task-info">
-                        <div class="info-row">
-                            <div class="info-label">Má splnit</div>
-                            <div class="info-value"><?= htmlspecialchars($task['user_name']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Zvíře</div>
-                            <div class="info-value">🐾 <?= htmlspecialchars($task['animal_name']) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Vytvořeno</div>
-                            <div class="info-value"><?= date('d. m. Y H:i', strtotime($task['taskCreated'])) ?></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Splatnost</div>
-                            <div class="info-value date-value"><?= date('d. m. Y', strtotime($task['taskTime'])) ?></div>
-                        </div>
-                    </div>
-                    <div class="task-actions">
-                        <form action="undo_task.php" method="POST" style="display:inline-block; flex: 1;">
-                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                            <input type="hidden" name="action" value="undo">
-                            <button class="btn btn-undo">Vrátit zpět</button>
-                        </form>
-                        <form action="delete_task.php" method="POST" style="display: inline-block; flex: 1;">
-                            <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                            <button type="submit" class="btn btn-delete" onclick="return confirm('Opravdu chcete úkol smazat?');">Smazat</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
+    <?php endforeach; ?>
 
 </div>
 
-<?php if($uzivatel['role_id']!=3){?>
+<?php if (!$isChild): ?>
 <div style="margin-top: 20px;">
     <form action="./add_tasks.php">
-        <button class="btn-add-main">Přidat úkol</button>
+        <button class="btn-add-main">+ Přidat úkol</button>
     </form>
 </div>
-
-<?php }?>
-<script>
-function toggleComplete(button, statusId){
-    const status = document.getElementById(statusId);
-    if(status.classList.contains('done')){
-        return;
-    }
-    status.classList.remove('pending');
-    status.classList.add('done');
-    status.innerText = 'Splněno';
-    button.innerText = '✔ Hotovo';
-    button.style.opacity = '0.7';
-    button.disabled = true;
-}
-
-function deleteTask(button){
-    const taskCard = button.closest('.task-card');
-    taskCard.remove();
-}
-</script>
+<?php endif; ?>

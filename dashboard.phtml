@@ -1,123 +1,150 @@
-<div class="tasks-grid">
-
-<?php foreach ($tasks as $task): ?>
-
 <?php
-    $isOverdue = strtotime($task['taskTime']) < time();
-    $isDone = $task['is_done'];
-    $statusText = $isOverdue ? "Po termínu" : "Čeká";
-    $statusClass = $isOverdue ? "overdue" : "pending";
-    if($isDone === 1){
-        $statusText = "Splněno";
-        $statusClass = "done";
-    }
-    elseif($isDone === 0){
-        $statusText = "Čeká";
-        $statusClass = "pending";
-    } 
-    
+$role     = (int)$uzivatel['role_id'];
+$isAdmin  = $role === 1;
+$isParent = $role === 2;
+$isChild  = $role === 3;
+$canDelete = $isAdmin || $isParent;
+
+// Group tasks by due date for calendar widget (upcoming 5 days)
+$calendarTasks = [];
+foreach ($tasks as $t) {
+    $day = date('Y-m-d', strtotime($t['taskTime']));
+    $calendarTasks[$day][] = $t;
+}
+ksort($calendarTasks);
+$calendarSlice = array_slice($calendarTasks, 0, 5, true);
 ?>
 
-<div class="task-card">
+<div class="dashboard-header">
+    <h1>
+        <?php
+        $hour = (int)date('H');
+        if ($hour < 12)      echo 'Dobré ráno';
+        elseif ($hour < 18)  echo 'Dobrý den';
+        else                 echo 'Dobrý večer';
+        ?>, <?= htmlspecialchars($uzivatel['username']) ?> 👋
+    </h1>
+    <p>Přehled vašich úkolů a nadcházejících událostí</p>
+</div>
 
-    <div class="task-top">
+<div class="dashboard-grid">
 
-        <div class="task-type">
-            <?= htmlspecialchars($task['type_name']) ?>
+    <!-- ── TASK CARDS ── -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">Aktivní úkoly</h2>
+            <?php if (!$isChild): ?>
+            <a href="./add_tasks.php" class="btn-add-main" style="margin-top:0; padding: 8px 16px; font-size:13px;">+ Přidat</a>
+            <?php endif; ?>
         </div>
 
-        <div class="status <?= $statusClass ?>">
-            <?= $statusText ?>
+        <?php if (empty($tasks)): ?>
+        <div class="empty-state">
+            <span style="font-size:48px;">🎉</span>
+            <p>Žádné aktivní úkoly!</p>
         </div>
-
+        <?php else: ?>
+        <div class="tasks-grid">
+            <?php foreach ($tasks as $task):
+                $isOverdue   = strtotime($task['taskTime']) < time();
+                $isDone      = (int)$task['is_done'];
+                $statusText  = $isDone ? 'Splněno' : ($isOverdue ? 'Po termínu' : 'Čeká');
+                $statusClass = $isDone ? 'done'    : ($isOverdue ? 'overdue'    : 'pending');
+            ?>
+            <div class="task-card">
+                <div class="task-top">
+                    <div class="task-type"><?= htmlspecialchars($task['type_name']) ?></div>
+                    <div class="status <?= $statusClass ?>"><?= $statusText ?></div>
+                </div>
+                <div class="task-title">Úkol #<?= $task['id'] ?></div>
+                <div class="task-info">
+                    <div class="info-row">
+                        <div class="info-label">Má splnit</div>
+                        <div class="info-value"><?= htmlspecialchars($task['user_name']) ?></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Zvíře</div>
+                        <div class="info-value">🐾 <?= htmlspecialchars($task['animal_name']) ?></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Splatnost</div>
+                        <div class="info-value"><?= date('d. m. Y', strtotime($task['taskTime'])) ?></div>
+                    </div>
+                </div>
+                <div class="task-description"><?= htmlspecialchars($task['note']) ?></div>
+                <div class="task-actions">
+                    <?php if (!$isDone): ?>
+                    <form action="complete_task.php" method="POST" style="flex:1;display:flex;">
+                        <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                        <button type="submit" class="btn btn-complete">✓ Splněno</button>
+                    </form>
+                    <?php endif; ?>
+                    <?php if ($canDelete): ?>
+                    <form action="delete_task.php" method="POST" style="flex:1;display:flex;">
+                        <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Smazat úkol?');">🗑 Smazat</button>
+                    </form>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
     </div>
 
-    <div class="task-title">
-        Úkol #<?= $task['id'] ?>
-    </div>
-
-    <div class="task-info">
-
-        <div class="info-row">
-            <div class="info-label">Má splnit</div>
-            <div class="info-value">
-                <?= htmlspecialchars($task['user_name']) ?>
-            </div>
+    <!-- ── CALENDAR WIDGET ── -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">📅 Kalendář úkolů</h2>
+            <a href="./calendar.php" class="cal-view-all">Zobrazit vše →</a>
         </div>
 
-        <div class="info-row">
-            <div class="info-label">Zvíře</div>
-            <div class="info-value">
-                🐾 <?= htmlspecialchars($task['animal_name']) ?>
-            </div>
+        <?php if (empty($calendarSlice)): ?>
+        <div class="empty-state">
+            <span style="font-size:48px;">📭</span>
+            <p>Žádné nadcházející úkoly</p>
         </div>
+        <?php else: ?>
+        <div class="cal-widget">
+            <?php
+            $czechMonths = ['','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+            $czechDays   = ['Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'];
+            $lastMonth   = '';
+            foreach ($calendarSlice as $dateStr => $dayTasks):
+                $ts        = strtotime($dateStr);
+                $month     = $czechMonths[(int)date('n', $ts)];
+                $dayName   = $czechDays[(int)date('w', $ts)];
+                $dayNum    = date('j', $ts);
+                $isToday   = $dateStr === date('Y-m-d');
+                $isPast    = $ts < strtotime('today');
+            ?>
+            <?php if ($month !== $lastMonth): $lastMonth = $month; ?>
+            <div class="cal-month-label"><?= $month ?></div>
+            <?php endif; ?>
 
-        <div class="info-row">
-            <div class="info-label">Vytvořeno</div>
-            <div class="info-value">
-                <?= date('d. m. Y H:i', strtotime($task['taskCreated'])) ?>
+            <div class="cal-day-row">
+                <div class="cal-day-label <?= $isToday ? 'today' : ($isPast ? 'past' : '') ?>">
+                    <span class="cal-day-num"><?= $dayNum ?></span>
+                    <span class="cal-day-name"><?= $dayName ?></span>
+                </div>
+                <div class="cal-day-tasks">
+                    <?php foreach ($dayTasks as $t):
+                        $done = (int)$t['is_done'];
+                    ?>
+                    <div class="cal-task-item <?= $done ? 'cal-done' : '' ?>">
+                        <div class="cal-task-dot"></div>
+                        <div class="cal-task-info">
+                            <span class="cal-task-name"><?= htmlspecialchars($t['type_name']) ?> — <?= htmlspecialchars($t['animal_name']) ?></span>
+                            <span class="cal-task-time"><?= date('H:i', strtotime($t['taskTime'])) ?></span>
+                        </div>
+                        <?php if ($done): ?><span class="cal-done-tick">✓</span><?php endif; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
+            <?php endforeach; ?>
         </div>
-
-        <div class="info-row">
-            <div class="info-label">Splatnost</div>
-            <div class="info-value">
-                <?= date('d. m. Y', strtotime($task['taskTime'])) ?>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="task-description">
-        <?= htmlspecialchars($task['note']) ?>
-    </div>
-
-    <div class="task-actions">
-
-        <form action="complete_task.php" method="POST" style="display: inline-block;">
-        <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-        <button type="submit" class="btn btn-complete">
-            Splněno
-        </button>
-    </form>
-
-      
-
+        <?php endif; ?>
     </div>
 
 </div>
-
-<?php endforeach; ?>
-
-</div>
-
-<script>
-
-function toggleComplete(button, statusId){
-
-    const status = document.getElementById(statusId);
-
-    if(status.classList.contains('done')){
-        return;
-    }
-
-    status.classList.remove('pending');
-    status.classList.add('done');
-
-    status.innerText = 'Splněno';
-
-    button.innerText = '✔ Hotovo';
-
-    button.style.opacity = '0.7';
-
-    button.disabled = true;
-}
-
-function deleteTask(button){
-
-    const taskCard = button.closest('.task-card');
-
-    taskCard.remove();
-}
-
-</script>
