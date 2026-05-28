@@ -2533,3 +2533,33 @@ body.theme-light .topbar-hamburger {
   border-color: var(--border);
   color: var(--text-muted);
 }
+
+/* =====================================================
+   DEFINICE PRO KARTU ÚČTU (PŘEPÍNÁNÍ MOTIVŮ)
+   ===================================================== */
+
+/* Tmavý motiv */
+.account-details-card {
+  background-color: #1e293b !important;
+  border: 1px solid #334155 !important;
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Světlý motiv */
+body.theme-light .account-details-card {
+  background-color: var(--bg-card) !important;       /* Čistě bílé pozadí */
+  border: 1px solid var(--border) !important;        /* Jemný mentolový okraj */
+  box-shadow: var(--shadow-card) !important;         /* Elegantní stín */
+}
+
+/* Text uvnitř karty */
+body.theme-light .account-details-card strong {
+  color: var(--text) !important;                    
+}
+
+body.theme-light .account-details-card span[style*="color: #64748b"],
+body.theme-light .account-details-card span {
+  color: var(--text-muted) !important;               
+}
