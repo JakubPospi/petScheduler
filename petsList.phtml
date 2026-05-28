@@ -88,11 +88,11 @@
                                     <input type="hidden" name="animal_id" value="<?= $mazlicek['id'] ?>">
                                     <label>
                                         Nové jméno (ponech prázdné pro beze změny):
-                                        <input type="text" name="name" placeholder="<?= htmlspecialchars($mazlicek['name']) ?>">
+                                        <input type="text" name="name" required value="<?= htmlspecialchars($mazlicek['name']); ?>">
                                     </label>
                                     <label>
                                         Nový druh:
-                                        <input type="text" name="species" placeholder="<?= htmlspecialchars($mazlicek['species']) ?>">
+                                        <input type="text" name="species" required value="<?= htmlspecialchars($mazlicek['species']); ?>">
                                     </label>
                                     <label>
                                         Nové datum narození/pořizení:
@@ -100,7 +100,7 @@
                                     </label>
                                     <label>
                                         Nový popis:
-                                        <textarea name="desc" placeholder="Zadejte nový popis..."></textarea>
+                                            <textarea name="desc" required><?= htmlspecialchars($mazlicek['description']); ?></textarea>
                                     </label>    
                                     <input type="submit" value="Uložit změny" class="submit-success">
                                 </form>
