@@ -31,6 +31,9 @@ if (isset($_POST['username'])) {
     $uzivatel = mysqli_fetch_assoc($result);
 
     if ($uzivatel && password_verify($password, $uzivatel['passwd'])) {
+        $uzivatel['role_id']   = (int)$uzivatel['role_id'];
+        $uzivatel['id']        = (int)$uzivatel['id'];
+        $uzivatel['family_id'] = (int)$uzivatel['family_id'];
 
         $_SESSION['uzivatel'] = $uzivatel;
 

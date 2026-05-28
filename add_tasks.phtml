@@ -1,88 +1,71 @@
 <?php
+    // Only fetch users and animals from the SAME family
+    $family_id = $uzivatel['family_id'];
+
     $stUkoly = $db->prepare("SELECT * FROM task_type");
     $stUkoly->execute();
     $ukoly = $stUkoly->get_result();
-    
-    
-    $stUzivatel = $db->prepare("SELECT * FROM users");
-    $stUzivatel->execute();
+
+    // Only family members
+    $stUzivatel = $db->prepare("SELECT id, username FROM users WHERE family_id = ?");
+    $stUzivatel->execute([$family_id]);
     $uzivatele = $stUzivatel->get_result();
 
-    $stMazlicci = $db->prepare("SELECT * FROM animals");
-    $stMazlicci->execute();
+    // Only family animals
+    $stMazlicci = $db->prepare("SELECT id, name FROM animals WHERE family_id = ?");
+    $stMazlicci->execute([$family_id]);
     $mazlicci = $stMazlicci->get_result();
+?>
 
-    $stFamily = $db->prepare("SELECT * FROM family");
-    $stFamily->execute();
-    $rodina = $stFamily->get_result();
-
-    ?>
-<?php if($uzivatel['role_id'] === 1 || $uzivatel['role_id'] === 2){ ?>
+<?php if($uzivatel['role_id'] === 1 || $uzivatel['role_id'] === 2): ?>
 <h1>Vytvoření nového úkolu</h1>
 <div class="task-create-form">
 
 <form method="POST">
     <div class="task-input">
-    <label for="task_type">Typ úkolu</label>
-
-    <select name="task_type" id="task_type">
-
-        <?php
-        foreach($ukoly as $ukol){
-        ?>
-            <option value="<?= $ukol['id'] ?>">
-                <?= htmlspecialchars($ukol['name']) ?>
-            </option>
-        <?php
-        }
-        ?>
-
-    </select>
-    </div>
-    <div class="task-input">
-    <label for="user_id">Člen</label>
-    <select name="user_id" id="">
-        <?php
-        foreach($uzivatele as $uzivatel){
-        ?>
-        <option value="<?= $uzivatel['id']?>">
-            <?= htmlspecialchars($uzivatel['username'])?>
-        </option>
-        <?php
-        }
-        ?>
-    </select>
-    </div>
-    <div class="task-input">
-    <label for="animal_id">Zvíře</label>
-    <select name="animal_id" id="">
-        <?php
-        foreach($mazlicci as $mazlicek){
-        ?>
-        <option value="<?= $mazlicek['id']?>">
-            <?= htmlspecialchars($mazlicek['name'])?>
-        </option>
-        <?php
-        }
-        ?>
-    </select>
-    </div>
-
-
-    <div class="task-input">
-    <label for="datum_splneni">Datum splnění</label>
-        <input type="date" name="datum_splneni">
+        <label for="task_type">Typ úkolu</label>
+        <select name="task_type" id="task_type">
+            <?php foreach($ukoly as $ukol): ?>
+                <option value="<?= $ukol['id'] ?>">
+                    <?= htmlspecialchars($ukol['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="task-input">
-        <label for="descpription">Popisek </label>
-        <textarea name="description" id=""></textarea>
+        <label for="user_id">Člen rodiny</label>
+        <select name="user_id" id="user_id">
+            <?php foreach($uzivatele as $u): ?>
+                <option value="<?= $u['id'] ?>">
+                    <?= htmlspecialchars($u['username']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
-    <button name="ulozTask">    
-        Uložit
-    </button>
 
+    <div class="task-input">
+        <label for="animal_id">Zvíře</label>
+        <select name="animal_id" id="animal_id">
+            <?php foreach($mazlicci as $mazlicek): ?>
+                <option value="<?= $mazlicek['id'] ?>">
+                    <?= htmlspecialchars($mazlicek['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="task-input">
+        <label for="datum_splneni">Datum splnění</label>
+        <input type="date" name="datum_splneni" id="datum_splneni">
+    </div>
+
+    <div class="task-input">
+        <label for="description">Popisek</label>
+        <textarea name="description" id="description"></textarea>
+    </div>
+
+    <button name="ulozTask">Uložit</button>
 </form>
 </div>
-
-<?php } ?>
+<?php endif; ?>

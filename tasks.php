@@ -10,7 +10,7 @@ $uzivatel = $_SESSION['uzivatel'];
 $family_id = $uzivatel['family_id'];
 
 // Pokud je Admin (role 1), vidí úkoly všech členů, ale striktně POUZE ze své rodiny
-if ($uzivatel['role_id'] === 1) {
+if ((int)$uzivatel['role_id'] === 1) {
     $stTasks = $db->prepare("
         SELECT 
             t.*,
@@ -28,7 +28,26 @@ if ($uzivatel['role_id'] === 1) {
     ");
     $stTasks->bind_param("i", $family_id);
     
-// Běžný uživatel vidí pouze úkoly přiřazené jemu a ze své rodiny
+// Rodič vidí všechny úkoly své rodiny, dítě jen své vlastní
+} elseif ((int)$uzivatel['role_id'] === 2) {
+    $stTasks = $db->prepare("
+        SELECT 
+            t.*,
+            tt.name AS type_name,
+            u.username AS user_name,
+            a.name AS animal_name,
+            f.family_name AS family_name
+        FROM tasks t
+        LEFT JOIN task_type tt ON t.type_id = tt.id
+        LEFT JOIN users u ON t.user_id = u.id
+        LEFT JOIN animals a ON t.animal_id = a.id
+        LEFT JOIN family f ON t.family_id = f.id
+        WHERE t.family_id = ?
+        ORDER BY t.taskCreated DESC
+    ");
+    $stTasks->bind_param("i", $family_id);
+
+// Dítě vidí pouze úkoly přiřazené jemu
 } else {
     $stTasks = $db->prepare("
         SELECT 
