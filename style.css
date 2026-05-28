@@ -2050,3 +2050,262 @@ h1 {
   .cal-page-header { margin-bottom: 20px; }
   .cal-grid-wrap { padding: 12px; }
 }
+
+/* =====================================================
+   THEME TOGGLE BUTTON (topbar)
+   ===================================================== */
+.theme-toggle-btn {
+  background: none;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  padding: 7px 11px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all var(--transition);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  box-shadow: none;
+  transform: none;
+}
+.theme-toggle-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-glow);
+  transform: rotate(20deg) scale(1.1);
+  box-shadow: none;
+}
+
+/* =====================================================
+   LIGHT THEME — .theme-light on <body>
+   Palette: warm white + sky blue + soft teal accents
+   ===================================================== */
+body.theme-light {
+  --bg:            #f0f6ff;
+  --bg-elevated:   #e4edf8;
+  --bg-card:       #ffffff;
+  --bg-card-hover: #f5f9ff;
+  --bg-input:      #eaf1fb;
+  --bg-overlay:    rgba(15, 30, 60, 0.45);
+
+  --primary:       #0284c7;
+  --primary-dim:   rgba(2, 132, 199, 0.12);
+  --primary-glow:  rgba(2, 132, 199, 0.07);
+
+  --success:       #16a34a;
+  --success-dim:   rgba(22, 163, 74, 0.12);
+  --danger:        #dc2626;
+  --danger-dim:    rgba(220, 38, 38, 0.1);
+  --warning:       #d97706;
+  --warning-dim:   rgba(217, 119, 6, 0.12);
+
+  --text:          #0f172a;
+  --text-muted:    #475569;
+  --text-hint:     #94a3b8;
+  --text-cyan:     #0369a1;
+
+  --border:        rgba(0, 0, 0, 0.08);
+  --border-hover:  rgba(0, 0, 0, 0.15);
+
+  --shadow-card:   0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-modal:  0 12px 48px rgba(0, 0, 0, 0.18);
+
+  background-image:
+    linear-gradient(rgba(240, 246, 255, 0.92), rgba(240, 246, 255, 0.92)),
+    url('./imgs/background-image.png');
+  color: var(--text);
+}
+
+/* Light mode — sidebar */
+body.theme-light .sidebar {
+  background: rgba(255, 255, 255, 0.96);
+  border-right: 1px solid var(--border);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-light .sidebar-link {
+  color: #475569;
+}
+body.theme-light .sidebar-link:hover {
+  background: rgba(2, 132, 199, 0.07);
+  color: #0f172a;
+}
+body.theme-light .sidebar-link.active {
+  background: var(--primary-dim);
+  color: var(--primary);
+}
+
+/* Light mode — topbar */
+body.theme-light .topbar {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Light mode — cards */
+body.theme-light .task-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+body.theme-light .task-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Light mode — task info block */
+body.theme-light .task-info {
+  background: rgba(0, 0, 0, 0.03);
+}
+body.theme-light .task-description {
+  background: rgba(0, 0, 0, 0.02);
+  color: #334155;
+}
+
+/* Light mode — tasks column */
+body.theme-light .tasks-column {
+  background: rgba(240, 246, 255, 0.7);
+}
+
+/* Light mode — status badges */
+body.theme-light .status.pending { background: rgba(217, 119, 6, 0.1);  color: #b45309; }
+body.theme-light .status.overdue { background: rgba(220, 38, 38, 0.1);  color: #b91c1c; }
+body.theme-light .status.done    { background: rgba(22, 163, 74, 0.1);  color: #15803d; }
+
+/* Light mode — buttons */
+body.theme-light .btn-undo {
+  background: rgba(2, 132, 199, 0.08);
+  color: #0369a1;
+  border-color: rgba(2, 132, 199, 0.25);
+}
+body.theme-light .btn-undo:hover {
+  background: rgba(2, 132, 199, 0.15);
+  color: #0284c7;
+}
+body.theme-light .btn-complete {
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
+  border-color: rgba(22, 163, 74, 0.3);
+}
+body.theme-light .btn-complete:hover { background: rgba(22, 163, 74, 0.2); }
+
+body.theme-light .btn-delete {
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+  border-color: rgba(220, 38, 38, 0.25);
+}
+body.theme-light .btn-delete:hover { background: rgba(220, 38, 38, 0.15); }
+
+body.theme-light .btn-add-main {
+  background: var(--primary);
+  color: #ffffff;
+}
+body.theme-light .btn-add-main:hover {
+  background: #0369a1;
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3);
+}
+
+/* Light mode — table */
+body.theme-light .family-table th {
+  background: rgba(0, 0, 0, 0.04);
+  color: #64748b;
+}
+body.theme-light .family-table tbody tr:hover {
+  background: rgba(2, 132, 199, 0.04);
+}
+
+/* Light mode — modal */
+body.theme-light .modal-content {
+  background: #ffffff;
+  border-color: var(--border);
+  box-shadow: var(--shadow-modal);
+}
+body.theme-light .dropdown-menu {
+  background: #ffffff;
+  border-color: var(--border);
+}
+
+/* Light mode — inputs */
+body.theme-light .modal-form input,
+body.theme-light .modal-form select,
+body.theme-light .modal-form textarea,
+body.theme-light select,
+body.theme-light textarea,
+body.theme-light input[type="date"] {
+  background: #f8fafc;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #0f172a;
+}
+
+body.theme-light .modal-form input:focus,
+body.theme-light .modal-form select:focus,
+body.theme-light .modal-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+
+/* Light mode — scrollbar */
+body.theme-light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Light mode — calendar */
+body.theme-light .cal-grid-cell.has-tasks {
+  background: rgba(2, 132, 199, 0.05);
+  border-color: rgba(2, 132, 199, 0.15);
+}
+body.theme-light .cal-grid-cell.cal-today {
+  background: rgba(2, 132, 199, 0.1) !important;
+  border-color: rgba(2, 132, 199, 0.35) !important;
+}
+body.theme-light .cal-grid-wrap,
+body.theme-light .dash-section,
+body.theme-light .table-column {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Light mode — admin toggle */
+body.theme-light .sidebar-admin-toggle {
+  border-top-color: var(--border);
+}
+body.theme-light .admin-toggle-btn.active {
+  background: rgba(217, 119, 6, 0.1);
+  color: #b45309;
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+/* Light mode — login box */
+body.theme-light .login-box {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: var(--border);
+}
+body.theme-light .login-box input[type="text"],
+body.theme-light .login-box input[type="email"],
+body.theme-light .login-box input[type="password"] {
+  background: #f1f5f9;
+  border-color: rgba(0,0,0,0.12);
+  color: #0f172a;
+}
+body.theme-light .login-box input[type="submit"] {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* Light mode — role badge */
+body.theme-light .role-badge {
+  background: rgba(2, 132, 199, 0.1);
+  color: #0369a1;
+}
+body.theme-light .task-type {
+  background: rgba(2, 132, 199, 0.1);
+  color: #0369a1;
+}
+
+/* Light mode — sidebar logo shadow */
+body.theme-light .sidebar-logo {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid var(--border);
+}
+
+/* Light mode — topbar hamburger */
+body.theme-light .topbar-hamburger {
+  border-color: var(--border);
+  color: var(--text-muted);
+}
