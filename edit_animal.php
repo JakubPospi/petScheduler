@@ -1,6 +1,11 @@
 <?php
 require "./utils/init.php";
 $uzivatel = $_SESSION['uzivatel'];
+$isAdmin = (
+    isset($_SESSION['uzivatel']) &&
+    (int)$_SESSION['uzivatel']['role_id'] === 1
+);
+
 
 // Kontrola práv (Přihlášen, Admin a metoda POST)
 if ($uzivatel !== null && $uzivatel['role_id'] === 1 && $_SERVER["REQUEST_METHOD"] === "POST") {

@@ -34,10 +34,11 @@ if (isset($_POST['username'])) {
 
         $_SESSION['uzivatel'] = $uzivatel;
 
-        if ((int)$uzivatel['role_id'] === 1) {
+        if ($uzivatel['role_id'] === 1) {
             $_SESSION['admin_mode'] = true;
         }
 
+        
         if (!isset($_SESSION['theme'])) {
             $_SESSION['theme'] = 'dark';
         }
