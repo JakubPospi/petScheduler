@@ -3,7 +3,7 @@ $role = (int)$uzivatel['role_id'];
 $isAdmin  = $role === 1;
 $isParent = $role === 2;
 $isChild  = $role === 3;
-$canDelete        = $isAdmin || $isParent; // parent+admin can delete
+$canDelete        = $isAdmin; // parent+admin can delete
 $canUncomplete    = $isAdmin || $isParent || $isChild;              // only admin can undo completed
 $canComplete      = !$isChild ? true : true; // everyone can complete their own
 ?>
