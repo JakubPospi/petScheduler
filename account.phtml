@@ -64,26 +64,36 @@
                     </div>
 
                     <div class="modal-wrapper">
-                        <input type="checkbox" id="modal-password-edit-toggle" class="modal-toggle-checkbox">
-                        
-                        <div class="modal id-modal-password-edit" style="display: none;">
-                            <div class="modal-content">
-                                <label for="modal-password-edit-toggle" class="close-btn">&times;</label>
-                                <h2>Změna přístupového hesla</h2>
-                                
-                                <form action="account.php" method="POST" class="modal-form">
-                                    <input type="hidden" name="action" value="change_password">
-                                    
-                                    <label>
-                                        Nové heslo:
-                                        <input type="password" name="password" required placeholder="••••••••" minlength="4">
-                                    </label>
-                                    
-                                    <input type="submit" value="Aktualizovat heslo" class="submit-success">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+    <input type="checkbox" id="modal-password-edit-toggle" class="modal-toggle-checkbox">
+    
+    <div class="modal id-modal-password-edit" style="display: none;">
+        <div class="modal-content">
+            <label for="modal-password-edit-toggle" class="close-btn">&times;</label>
+            <h2>Změna přístupového hesla</h2>
+            
+            <form action="account.php" method="POST" class="modal-form">
+                <input type="hidden" name="action" value="change_password">
+                
+                <label>
+                    Současné (staré) heslo:
+                    <input type="password" name="old_password" required placeholder="••••••••">
+                </label>
+
+                <label>
+                    Nové heslo:
+                    <input type="password" name="new_password" required placeholder="••••••••" minlength="4">
+                </label>
+
+                <label>
+                    Potvrzení nového hesla:
+                    <input type="password" name="new_password_confirm" required placeholder="••••••••" minlength="4">
+                </label>
+                
+                <input type="submit" value="Aktualizovat heslo" class="submit-success">
+            </form>
+        </div>
+    </div>
+</div>
 
                 </div> </div>
         </div>
