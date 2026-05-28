@@ -5,34 +5,34 @@
             <div class="table-column" style="max-width: 600px; margin: 0 auto;">
                 <h2>Můj účet</h2>
                 
-                <div class="account-details-card" style="background-color: #1e293b; padding: 25px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #334155;">
+                <div class="account-details-card">
                     <div style="margin-bottom: 15px;">
-                        <span style="color: #64748b; display: block; font-size: 0.85em; text-transform: uppercase; font-weight: bold;">Uživatelské jméno</span>
-                        <strong style="font-size: 1.2em; color: white;"><?php echo htmlspecialchars($profil['username']); ?></strong>
-                    </div>
+        <span style="color: var(--text-muted); display: block; font-size: 0.85em; text-transform: uppercase; font-weight: bold;">Uživatelské jméno</span>
+        <strong style="font-size: 1.2em; color: var(--text);"><?php echo htmlspecialchars($profil['username']); ?></strong>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <span style="color: var(--text-muted); display: block; font-size: 0.85em; text-transform: uppercase; font-weight: bold;">E-mailová adresa</span>
+        <strong style="font-size: 1.2em; color: var(--text);"><?php echo htmlspecialchars($profil['email']); ?></strong>
+    </div>
                     
-                    <div style="margin-bottom: 15px;">
-                        <span style="color: #64748b; display: block; font-size: 0.85em; text-transform: uppercase; font-weight: bold;">E-mailová adresa</span>
-                        <strong style="font-size: 1.2em; color: white;"><?php echo htmlspecialchars($profil['email']); ?></strong>
-                    </div>
+    <div style="margin-bottom: 25px;">
+        <span style="color: var(--text-muted); display: block; font-size: 0.85em; text-transform: uppercase; font-weight: bold;">Systémová role</span>
+        <span class="role-badge" style="display: inline-block; margin-top: 5px;">
+            <?php echo htmlspecialchars($profil['role_name']); ?>
+        </span>
+    </div>
                     
-                    <div style="margin-bottom: 25px;">
-                        <span style="color: #64748b; display: block; font-size: 0.85em; text-transform: uppercase; font-weight: bold;">Systémová role</span>
-                        <span class="role-badge" style="display: inline-block; margin-top: 5px;">
-                            <?php echo htmlspecialchars($profil['role_name']); ?>
-                        </span>
-                    </div>
-                    
-                    <div style="display: flex; gap: 15px;">
-                        <label for="modal-profile-edit-toggle" class="add-member-btn" style="margin: 0; flex: 1; text-align: center;">
-                            Upravit údaje
-                        </label>
-                        
-                        <label for="modal-password-edit-toggle" class="edit-family-btn" style="color: #38bdf8; cursor: pointer; font-weight: bold; font-size: 0.9em; text-decoration: none; border: 1px solid #38bdf8; padding: 10px 15px; border-radius: 6px; background-color: rgba(56, 189, 248, 0.1); flex: 1; text-align: center; transition: background 0.2s;">
-                            Změnit heslo
-                        </label>
-                    </div>
-                </div>
+    <div style="display: flex; gap: 15px;">
+        <label for="modal-profile-edit-toggle" class="add-member-btn" style="margin: 0; flex: 1; text-align: center;">
+            Upravit údaje
+        </label>
+        
+        <label for="modal-password-edit-toggle" class="edit-member-btn" style="cursor: pointer; font-weight: bold; font-size: 0.9em; text-decoration: none; padding: 10px 15px; border-radius: 6px; flex: 1; text-align: center; transition: background 0.2s;">
+            Změnit heslo
+        </label>
+</div>
+    </div>
 
                 <div class="action-buttons-row">
                     
