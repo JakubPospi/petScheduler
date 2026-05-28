@@ -16,7 +16,8 @@
 
 </head>
 
-<body>
+<?php $theme = $_SESSION['theme'] ?? 'dark'; ?>
+<body class="theme-<?= $theme ?>">
 
 <div class="app-layout">
 
@@ -86,6 +87,17 @@
             <button class="topbar-hamburger" id="sidebar-toggle" aria-label="Otevřít menu">
                 &#9776;
             </button>
+
+            <!-- Theme toggle -->
+            <form action="./toggle_theme.php" method="POST" style="margin-right: auto;">
+                <button type="submit" class="theme-toggle-btn" title="Přepnout motiv">
+                    <?php if (($_SESSION['theme'] ?? 'dark') === 'dark'): ?>
+                        ☀️
+                    <?php else: ?>
+                        🌙
+                    <?php endif; ?>
+                </button>
+            </form>
 
             <details class="user-dropdown">
 
