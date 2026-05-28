@@ -520,7 +520,7 @@ h1, h2, h3, h4 {
 }
 
 .info-value {
-  font-weight: 600;
+  font-weight: 100;
   font-size: 12px;
   font-family: var(--font-mono);
   color: var(--text);
