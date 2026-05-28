@@ -31,6 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         if (!empty($old_password) && !empty($new_password) && !empty($new_password_confirm)) {
             
+            // Příprava pole pro ukládání chyb do session
+            $_SESSION['password_errors'] = [];
+            
             // 1. Krok: Vytáhneme stávající hash hesla z databáze
             $stmt_check = $db->prepare("SELECT passwd FROM users WHERE id = ?");
             $stmt_check->execute([$user_id]);
@@ -41,23 +44,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 
                 // 2. Krok: Ověření, že staré heslo souhlasí s databází
                 if (!password_verify($old_password, $current_hashed_password)) {
-                    die("Chyba: Zadané staré heslo není správné.");
+                    $_SESSION['password_errors']['old_password'] = "Zadané současné heslo není správné.";
                 }
                 
-                // 3. Krok: Ověření, že se dvě nová hesla rovnají
-                if ($new_password !== $new_password_confirm) {
-                    die("Chyba: Nová hesla se neshodují.");
-                }
-                
-                // 4. Krok: Ověření, že nové heslo NENÍ stejné jako staré
+                // 3. Krok: Ověření, že se nové heslo NENÍ stejné jako staré
                 if ($old_password === $new_password) {
-                    die("Chyba: Nové heslo nesmí být stejné jako staré heslo.");
+                    $_SESSION['password_errors']['new_password'] = "Nové heslo nesmí být stejné jako staré heslo.";
+                }
+                
+                // 4. Krok: Ověření, že se dvě nová hesla rovnají
+                if ($new_password !== $new_password_confirm) {
+                    $_SESSION['password_errors']['new_password_confirm'] = "Nová hesla se neshodují.";
+                }
+                
+                // Pokud nastaly nějaké chyby, uložíme příznak pro otevření modalu a přesměrujeme zpět
+                if (!empty($_SESSION['password_errors'])) {
+                    $_SESSION['open_password_modal'] = true;
+                    header("Location: account.php");
+                    exit();
                 }
                 
                 // Pokud všechny kontroly prošly, zahešujeme a uložíme nové heslo
                 $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
                 $stmt = $db->prepare("UPDATE users SET passwd = ? WHERE id = ?");
                 $stmt->execute([$hashed_password, $user_id]);
+                
+                // Volitelné: Zde můžeš nastavit i zprávu o úspěchu, např. $_SESSION['success_msg'] = "Heslo změněno.";
             }
         }
     }
