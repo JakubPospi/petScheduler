@@ -95,11 +95,3 @@ $canComplete      = !$isChild ? true : true; // everyone can complete their own
     <?php endforeach; ?>
 
 </div>
-
-<?php if (!$isChild): ?>
-<div style="margin-top: 20px;">
-    <form action="./add_tasks.php">
-        <button class="btn-add-main">+ Přidat úkol</button>
-    </form>
-</div>
-<?php endif; ?>

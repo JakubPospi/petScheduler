@@ -1,73 +1,130 @@
 <?php
-$czechMonths = ['','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
-$czechDays   = ['Ne','Po','Út','St','Čt','Pá','So'];
-$czechDaysFull = ['Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'];
+$czechMonths  = ['','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+$czechDays    = ['Ne','Po','Út','St','Čt','Pá','So'];
+$czechDaysFull= ['Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'];
 
-$daysInMonth  = (int)date('t', mktime(0,0,0,$month,1,$year));
-$firstDayOfWeek = (int)date('w', mktime(0,0,0,$month,1,$year)); // 0=Sun
-// Convert Sunday=0 to Monday-first (0=Mon)
-$startOffset = ($firstDayOfWeek === 0) ? 6 : $firstDayOfWeek - 1;
+$daysInMonth    = (int)date('t', mktime(0,0,0,$month,1,$year));
+$firstDayOfWeek = (int)date('w', mktime(0,0,0,$month,1,$year));
+$startOffset    = ($firstDayOfWeek === 0) ? 6 : $firstDayOfWeek - 1;
+$todayDay       = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
 
-$todayDay   = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
+// Build JSON data for JS popup (keyed by day number)
+$calData = [];
+foreach ($byDay as $day => $tasks) {
+    $calData[$day] = array_map(function($t) {
+        $done    = (int)$t['is_done'];
+        $overdue = !$done && strtotime($t['taskTime']) < time();
+        return [
+            'type'    => htmlspecialchars($t['type_name'], ENT_QUOTES),
+            'animal'  => htmlspecialchars($t['animal_name'], ENT_QUOTES),
+            'user'    => htmlspecialchars($t['user_name'], ENT_QUOTES),
+            'time'    => date('H:i', strtotime($t['taskTime'])),
+            'note'    => htmlspecialchars($t['note'] ?? '', ENT_QUOTES),
+            'status'  => $done ? 'done' : ($overdue ? 'overdue' : 'pending'),
+        ];
+    }, $tasks);
+}
 ?>
+
+<!-- Task popup overlay -->
+<div class="cal-popup-overlay" id="calPopupOverlay"></div>
+
+<!-- Task popup panel -->
+<div class="cal-popup" id="calPopup">
+    <div class="cal-popup-header">
+        <div class="cal-popup-date" id="calPopupDate"></div>
+        <button class="cal-popup-close" id="calPopupClose">✕</button>
+    </div>
+    <div class="cal-popup-list" id="calPopupList"></div>
+</div>
 
 <div class="calendar-page">
 
-    <!-- Header -->
+    <!-- Month nav header -->
     <div class="cal-page-header">
         <a href="?month=<?= $prevMonth ?>&year=<?= $prevYear ?>" class="cal-nav-btn">‹</a>
         <h1 class="cal-page-title"><?= $czechMonths[$month] ?> <?= $year ?></h1>
         <a href="?month=<?= $nextMonth ?>&year=<?= $nextYear ?>" class="cal-nav-btn">›</a>
     </div>
 
-    <!-- Grid calendar -->
+    <!-- Compact grid -->
     <div class="cal-grid-wrap">
-        <!-- Day headers -->
         <div class="cal-grid">
+
+            <!-- Day name headers -->
             <?php foreach ($czechDays as $d): ?>
             <div class="cal-grid-dayname"><?= $d ?></div>
             <?php endforeach; ?>
 
-            <!-- Empty offset cells -->
+            <!-- Empty offset -->
             <?php for ($i = 0; $i < $startOffset; $i++): ?>
             <div class="cal-grid-cell empty"></div>
             <?php endfor; ?>
 
             <!-- Day cells -->
             <?php for ($day = 1; $day <= $daysInMonth; $day++):
-                $isToday    = ($day === $todayDay);
-                $hasTasks   = !empty($byDay[$day]);
-                $taskCount  = $hasTasks ? count($byDay[$day]) : 0;
-                $allDone    = $hasTasks && array_sum(array_column($byDay[$day], 'is_done')) === $taskCount;
+                $isToday  = ($day === $todayDay);
+                $hasTasks = !empty($byDay[$day]);
+                $tasks    = $byDay[$day] ?? [];
+                $counts   = ['pending'=>0,'overdue'=>0,'done'=>0];
+                foreach ($tasks as $t) {
+                    $d = (int)$t['is_done'];
+                    if ($d) $counts['done']++;
+                    elseif (strtotime($t['taskTime']) < time()) $counts['overdue']++;
+                    else $counts['pending']++;
+                }
             ?>
-            <div class="cal-grid-cell <?= $isToday ? 'cal-today' : '' ?> <?= $hasTasks ? 'has-tasks' : '' ?>">
+            <div
+                class="cal-grid-cell <?= $isToday ? 'cal-today' : '' ?> <?= $hasTasks ? 'has-tasks' : '' ?>"
+                <?= $hasTasks ? "data-day=\"$day\" data-month=\"$month\" data-year=\"$year\" onclick=\"openCalPopup($day, $month, $year)\"" : '' ?>
+                title="<?= $hasTasks ? count($tasks).' úkol(y)' : '' ?>"
+            >
                 <span class="cal-grid-num"><?= $day ?></span>
                 <?php if ($hasTasks): ?>
                 <div class="cal-grid-dots">
-                    <?php foreach (array_slice($byDay[$day], 0, 3) as $t): ?>
-                    <span class="cal-dot <?= (int)$t['is_done'] ? 'done' : (strtotime($t['taskTime']) < time() ? 'overdue' : 'pending') ?>"></span>
-                    <?php endforeach; ?>
-                    <?php if ($taskCount > 3): ?>
-                    <span class="cal-dot-more">+<?= $taskCount - 3 ?></span>
+                    <?php if ($counts['overdue'] > 0): ?>
+                    <span class="cal-dot overdue"></span>
+                    <?php endif; ?>
+                    <?php if ($counts['pending'] > 0): ?>
+                    <span class="cal-dot pending"></span>
+                    <?php endif; ?>
+                    <?php if ($counts['done'] > 0): ?>
+                    <span class="cal-dot done"></span>
+                    <?php endif; ?>
+                    <?php if (count($tasks) > 3): ?>
+                    <span class="cal-dot-more">+<?= count($tasks) - 3 ?></span>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
             </div>
             <?php endfor; ?>
+
+        </div>
+
+        <!-- Dot legend -->
+        <div class="cal-dot-legend">
+            <div class="cal-dot-legend-item">
+                <span class="cal-dot pending"></span> Čeká
+            </div>
+            <div class="cal-dot-legend-item">
+                <span class="cal-dot overdue"></span> Po termínu
+            </div>
+            <div class="cal-dot-legend-item">
+                <span class="cal-dot done"></span> Splněno
+            </div>
         </div>
     </div>
 
-    <!-- List view — tasks grouped by day -->
+    <!-- List view below -->
     <div class="cal-list">
-        <h2 class="cal-list-title">Úkoly v <?= $czechMonths[$month] ?></h2>
+        <h2 class="cal-list-title">Úkoly — <?= $czechMonths[$month] ?> <?= $year ?></h2>
 
         <?php if (empty($byDay)): ?>
         <div class="empty-state">
-            <span style="font-size:48px;">📭</span>
+            <span style="font-size:40px;">📭</span>
             <p>Žádné úkoly v tomto měsíci</p>
         </div>
         <?php else: ?>
-
         <?php foreach ($byDay as $day => $tasks):
             $ts      = mktime(0,0,0,$month,$day,$year);
             $dayName = $czechDaysFull[(int)date('w', $ts)];
@@ -79,7 +136,6 @@ $todayDay   = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
                 <span class="cal-list-dayname"><?= $dayName ?></span>
                 <?php if ($isToday): ?><span class="cal-today-badge">Dnes</span><?php endif; ?>
             </div>
-
             <?php foreach ($tasks as $t):
                 $done    = (int)$t['is_done'];
                 $overdue = !$done && strtotime($t['taskTime']) < time();
@@ -90,16 +146,19 @@ $todayDay   = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
                 <div class="cal-list-task-body">
                     <div class="cal-list-task-top">
                         <span class="cal-list-task-type"><?= htmlspecialchars($t['type_name']) ?></span>
-                        <span class="cal-list-task-time"><?= date('H:i', strtotime($t['taskCreated'])) ?></span>
+                        <span class="cal-list-task-time"><?= date('H:i', strtotime($t['taskTime'])) ?></span>
                     </div>
                     <div class="cal-list-task-meta">
                         🐾 <?= htmlspecialchars($t['animal_name']) ?>
                         &nbsp;·&nbsp;
                         👤 <?= htmlspecialchars($t['user_name']) ?>
                     </div>
+                    <?php if (!empty($t['note'])): ?>
+                    <div class="cal-list-task-note"><?= htmlspecialchars($t['note']) ?></div>
+                    <?php endif; ?>
                 </div>
                 <?php if ($done): ?>
-                <span class="cal-list-done-badge">Splněno</span>
+                <span class="cal-list-done-badge">✓ Splněno</span>
                 <?php elseif ($overdue): ?>
                 <span class="cal-list-overdue-badge">Po termínu</span>
                 <?php endif; ?>
@@ -107,8 +166,63 @@ $todayDay   = (date('n') == $month && date('Y') == $year) ? (int)date('j') : 0;
             <?php endforeach; ?>
         </div>
         <?php endforeach; ?>
-
         <?php endif; ?>
     </div>
 
 </div>
+
+<!-- Embed task data for JS -->
+<script>
+const CAL_DATA = <?= json_encode($calData) ?>;
+const CAL_MONTH_NAME = <?= json_encode($czechMonths[$month]) ?>;
+const CAL_DAY_NAMES  = <?= json_encode($czechDaysFull) ?>;
+
+const statusLabel = { pending: 'Čeká', overdue: 'Po termínu', done: 'Splněno' };
+const statusClass = { pending: 'pending', overdue: 'overdue', done: 'done' };
+
+function openCalPopup(day, month, year) {
+    const tasks = CAL_DATA[day] || [];
+    const ts    = new Date(year, month - 1, day);
+    const dayName = CAL_DAY_NAMES[ts.getDay()];
+
+    document.getElementById('calPopupDate').textContent =
+        `${day}. ${CAL_MONTH_NAME} ${year}  —  ${dayName}`;
+
+    const list = document.getElementById('calPopupList');
+    list.innerHTML = '';
+
+    tasks.forEach(t => {
+        const item = document.createElement('div');
+        item.className = 'cal-popup-item ' + statusClass[t.status];
+        item.innerHTML = `
+            <div class="cal-popup-item-bar"></div>
+            <div class="cal-popup-item-body">
+                <div class="cal-popup-item-top">
+                    <span class="cal-popup-item-type">${t.type}</span>
+                    <span class="cal-popup-item-time">${t.time}</span>
+                </div>
+                <div class="cal-popup-item-meta">🐾 ${t.animal} &nbsp;·&nbsp; 👤 ${t.user}</div>
+                ${t.note ? `<div class="cal-popup-item-note">${t.note}</div>` : ''}
+                <span class="cal-popup-item-status ${statusClass[t.status]}">${statusLabel[t.status]}</span>
+            </div>`;
+        list.appendChild(item);
+    });
+
+    document.getElementById('calPopup').classList.add('open');
+    document.getElementById('calPopupOverlay').classList.add('visible');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCalPopup() {
+    document.getElementById('calPopup').classList.remove('open');
+    document.getElementById('calPopupOverlay').classList.remove('visible');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('calPopupClose').addEventListener('click', closeCalPopup);
+document.getElementById('calPopupOverlay').addEventListener('click', closeCalPopup);
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCalPopup();
+});
+</script>
