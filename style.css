@@ -3002,3 +3002,188 @@ body.theme-light .edit-family-name-btn {
 body.theme-light .edit-family-name-btn:hover {
   background: rgba(13, 148, 136, 0.2);
 }
+
+/* =====================================================
+   TASK TYPES WIDGET
+   ===================================================== */
+.task-types-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  min-height: 32px;
+}
+
+.task-type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  transition: all var(--transition);
+}
+
+/* Custom (family) types — deletable */
+.task-type-chip.custom {
+  background: var(--primary-dim);
+  color: var(--text-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+.task-type-chip.custom:hover {
+  background: rgba(6, 182, 212, 0.22);
+  border-color: rgba(6, 182, 212, 0.45);
+}
+
+/* Global types — locked, subtle */
+.task-type-chip.global {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.task-type-chip-name {
+  white-space: nowrap;
+}
+
+.task-type-chip-del {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  transition: all var(--transition);
+  box-shadow: none;
+  transform: none;
+  line-height: 1;
+}
+.task-type-chip-del:hover {
+  opacity: 1;
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  transform: none;
+  box-shadow: none;
+}
+
+.task-type-chip-global {
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+/* Add form */
+.task-type-add-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.task-type-add-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 14px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: all var(--transition);
+  -webkit-appearance: none;
+}
+.task-type-add-input::placeholder { color: var(--text-hint); }
+.task-type-add-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
+  background: rgba(6, 182, 212, 0.04);
+}
+
+.task-type-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--primary);
+  color: #021620;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  box-shadow: none;
+}
+.task-type-add-btn:hover {
+  background: #22d3ee;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .task-type-add-form { flex-direction: row; }
+  .task-type-add-btn  { padding: 10px 14px; }
+}
+
+/* Light theme */
+body.theme-light .task-type-chip.custom {
+  background: rgba(13, 148, 136, 0.12);
+  color: #0d9488;
+  border-color: rgba(13, 148, 136, 0.3);
+}
+body.theme-light .task-type-chip.custom:hover {
+  background: rgba(13, 148, 136, 0.2);
+}
+body.theme-light .task-type-chip.global {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+body.theme-light .task-type-add-input {
+  background: #f0fdf9;
+  border-color: rgba(13, 148, 136, 0.2);
+  color: #0f2820;
+}
+body.theme-light .task-type-add-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.14);
+}
+body.theme-light .task-type-add-btn {
+  background: linear-gradient(135deg, #0d9488, #0891b2);
+  color: #ffffff;
+}
+body.theme-light .task-type-add-btn:hover {
+  background: linear-gradient(135deg, #0f766e, #0e7490);
+}
+
+/* =====================================================
+   APP FOOTER
+   ===================================================== */
+.app-footer {
+  padding: 14px 28px;
+  color: var(--text-hint);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: rgba(10, 15, 30, 0.6);
+}
+
+body.theme-light .app-footer {
+  background: rgba(255, 255, 255, 0.6);
+  border-top-color: var(--border);
+}
+
+@media (max-width: 768px) {
+  .app-footer { padding: 12px 16px; gap: 12px; font-size: 12px; }
+}

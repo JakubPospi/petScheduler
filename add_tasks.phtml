@@ -2,8 +2,9 @@
     // Only fetch users and animals from the SAME family
     $family_id = $uzivatel['family_id'];
 
-    $stUkoly = $db->prepare("SELECT * FROM task_type");
-    $stUkoly->execute();
+    // Global types + this family's custom types
+    $stUkoly = $db->prepare("SELECT id, name FROM task_type WHERE family_id IS NULL OR family_id = ? ORDER BY name ASC");
+    $stUkoly->execute([$family_id]);
     $ukoly = $stUkoly->get_result();
 
     // Only family members
